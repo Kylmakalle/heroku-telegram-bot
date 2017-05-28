@@ -27,7 +27,7 @@ heroku ps:stop bot # or stop bot dyno
 
 ## Deploying via [Heroku Dashboard](https://dashboard.heroku.com) (GUI)
 1. [Fork](https://github.com/Kylmakalle/heroku-telegram-bot/fork) this repo to your account. 
-2. [Edit files](https://github.com/Kylmakalle/heroku-telegram-bot/new/master?readme=1#edit-files)
+2. [Edit files](https://github.com/Kylmakalle/heroku-telegram-bot#edit-files)
 3. Go to [Dashboard](https://dashboard.heroku.com), login, Press _New_ and choose _Create new app._
 4. Fill in an _App Name_ and choose _Runtime Region._
 5. Connect your GitHub repo at _Deploy_ page.
