@@ -21,8 +21,9 @@ git push heroku master # deploy app to heroku
 heroku config:set TELEGRAM_TOKEN=123456789:AAABBBCCCDDDEEEFFFGGGHHHIIIJJJKKKLL # set config vars, insert your own
 heroku config:set SOME_API_TOKEN=qwertyuiop1234567890
                 ...
-heroku ps:scale bot=1 # start 1 bot dyno
-heroku ps:stop bot # or stop bot dyno
+heroku ps:scale bot=1 # start bot dyno
+heroku logs --trail # If for some reason it’s not working, check the logs
+heroku ps:stop bot #stop bot dyno
 ```
 
 ## Deploying via [Heroku Dashboard](https://dashboard.heroku.com) (GUI)
@@ -39,10 +40,14 @@ heroku ps:stop bot # or stop bot dyno
     1. Install _Heroku Redis_ add-on _(Optionaly)_
     2. Press on a small pen button, move slider and then click _Confirm_, that will start bot dyno.
     3. Simply move slider back if you need to stop bot dyno, remember to click _Confirm_.
+    4. If for some reason it’s not working, check the logs here 
+    
+    ![Logs](http://i.imgur.com/rIHU6zF.png)
 
 ### More about
 - https://devcenter.heroku.com/articles/dynos
 - https://devcenter.heroku.com/articles/config-vars
 - https://devcenter.heroku.com/articles/heroku-redis
+- https://devcenter.heroku.com/articles/error-codes
 
 Thanks to [Roman Zaynetdinov](https://github.com/zaynetro) for awesome and easy CLI guide.
