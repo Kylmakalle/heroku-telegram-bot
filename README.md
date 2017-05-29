@@ -14,7 +14,7 @@ Install [Heroku Toolbelt](https://toolbelt.heroku.com/), then:
 ```
 cd heroku-telegram-bot
 heroku login
-heroku create appname --region eu # create app in eu region, common regions: eu, us
+heroku create --region eu appname # create app in eu region, common regions: eu, us
 heroku addons:create heroku-redis:hobby-dev -a appname # (Optionaly) installing redis
 heroku buildpacks:set heroku/python # set python buildpack
 git push heroku master # deploy app to heroku
