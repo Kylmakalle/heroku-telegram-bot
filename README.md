@@ -22,7 +22,7 @@ heroku config:set TELEGRAM_TOKEN=123456789:AAABBBCCCDDDEEEFFFGGGHHHIIIJJJKKKLL #
 heroku config:set SOME_API_TOKEN=qwertyuiop1234567890
                 ...
 heroku ps:scale bot=1 # start bot dyno
-heroku logs --trail # If for some reason it’s not working, check the logs
+heroku logs --tail # If for some reason it’s not working, check the logs
 heroku ps:stop bot #stop bot dyno
 ```
 
