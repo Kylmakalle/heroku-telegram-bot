@@ -7,6 +7,13 @@ Install [Heroku Toolbelt](https://toolbelt.heroku.com/), then:
 `git clone https://github.com/Kylmakalle/heroku-telegram-bot.git`
 ### Edit files
 1. Edit [bot.py](https://github.com/Kylmakalle/heroku-telegram-bot/blob/master/bot.py) file with your code
+
+    1. **ATTENTION!** Do not collapse/delete/comment `some_token = os.environ[SOME_TOKEN]` style stings _(you can delete redis setup line if you do not need it)_, **do not change them with your REAL tokens**, all tokens will be setted up below in this guide!
+    
+    2. [More About Config Vars](https://devcenter.heroku.com/articles/config-vars)
+    3. Also, don't do like [this](http://i.imgur.com/Yni1jZX.png), it's insecure, **realy.**
+
+
 2. Edit [requirments.txt](https://github.com/Kylmakalle/heroku-telegram-bot/blob/master/requirements.txt) with your code's dependencies
 3. Specify your python [runtime](https://github.com/Kylmakalle/heroku-telegram-bot/blob/master/runtime.txt), avaliable versions listed [here](https://devcenter.heroku.com/articles/python-runtimes)
 
