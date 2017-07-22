@@ -114,6 +114,9 @@ class Weapon(object):
     def special_second(self, user):
         pass
 
+    def special_end(self, user):
+        pass
+
 
 class Tazer(Weapon):
     def effect(self, user):
