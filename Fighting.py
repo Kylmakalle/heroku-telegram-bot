@@ -194,6 +194,7 @@ def manifest_first_q(Fight):
 # Основные действия
 def manifest_second_q(Fight):
     for p in Fight.actors:
+        p.weapon.special_second(p)
         # Перезарядка
         if p.turn == 'reload' + str(Fight.round):
             p.energy = p.maxenergy
