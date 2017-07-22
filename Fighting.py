@@ -351,6 +351,7 @@ def get_results(Fight):
         Fight.string.add(u'\U00002757'+ "|" + 'Команда ' + Fight.Team2.actors[0].name + ' нанесла больше урона!')
         utils.ApplyDamage(Fight.Team1.actors)
     for p in Fight.actors:
+        p.weapon.special_end(p)
         for a in p.abilities:
             a.special_end(a, p)
         for a in p.enditems:
