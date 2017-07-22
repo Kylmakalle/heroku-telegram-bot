@@ -408,6 +408,13 @@ def action(call):
                     elif call.data[0:6] == 'skills':
                         bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
                         utils.sendskills(Actor)
+                    elif call.data[0:13] == 'weaponspecial':
+                        print(actor.name + ' целится.')
+                        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+                                              text="Контратака.")
+                        actor.weapon.special(actor, call)
+                        actor.turn = 'weaponspecial'
+                        actor.fight.playerpool.remove(actor)
                     elif call.data[0:6] == 'cancel':
                         bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
                         Fighting.send_action(Actor, Actor.Fight)
