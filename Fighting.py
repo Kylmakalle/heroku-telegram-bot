@@ -480,6 +480,7 @@ def fight(Game, Fight):
     for p in Game.players:
         if p.chat_id == 197216910:
             p.weapon = Weapon_list.spear
+            p.weapon.aquare(p)
         p.hp = p.maxhp
         p.energy = p.maxenergy
         p.Alive = True
