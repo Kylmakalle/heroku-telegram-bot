@@ -412,9 +412,9 @@ def action(call):
                         print(actor.name + ' целится.')
                         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                               text="Контратака.")
-                        actor.weapon.special(actor, call)
-                        actor.turn = 'weaponspecial'
-                        actor.fight.playerpool.remove(actor)
+                        Actor.weapon.special(Actor, call)
+                        Actor.turn = 'weaponspecial'
+                        Actor.Fight.playerpool.remove(Actor)
                     elif call.data[0:6] == 'cancel':
                         bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
                         Fighting.send_action(Actor, Actor.Fight)
