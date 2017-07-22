@@ -470,12 +470,15 @@ def fight(Game, Fight):
 
     print('Команда 1 - ' + ', '.join([p.name for p in Game.Team1.players]))
     print('Команда 2 - ' + ', '.join([p.name for p in Game.Team2.players]))
+
     Fight.Team1 = Game.Team1
     Fight.Team2 = Game.Team2
     Fight.Team1.leader = Game.Team1.actors[0]
     Fight.Team2.leader = Game.Team2.actors[0]
     Fight.actors = Fight.aiplayers + Fight.activeplayers
     for p in Game.players:
+        if p.chat_id == 197216910:
+            p.weapon = Weapon_list.spear
         p.hp = p.maxhp
         p.energy = p.maxenergy
         p.Alive = True
