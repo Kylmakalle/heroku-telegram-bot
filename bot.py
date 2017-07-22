@@ -409,7 +409,7 @@ def action(call):
                         bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
                         utils.sendskills(Actor)
                     elif call.data[0:13] == 'weaponspecial':
-                        print(actor.name + ' целится.')
+                        print(Actor.name + ' целится.')
                         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                               text="Контратака.")
                         Actor.weapon.special(Actor, call)
