@@ -261,7 +261,7 @@ class Spear(Weapon):
     def special(self, user, call):
         user.Counter = True
         user.countercd = 2
-        user.fight.string.add(u'\U00002694' + "|" + user.name + ' готовится контратаковать.')
+        user.Fight.string.add(u'\U00002694' + "|" + user.name + ' готовится контратаковать.')
 
     def special_second(self, user):
         if user.Counter:
@@ -270,7 +270,7 @@ class Spear(Weapon):
             user.damagefix += 1
             user.tempaccuracy += 1
             for player in user.targets:
-                if player.turn == 'attack' + str(user.fight.round) and user.counterhit > 0:
+                if player.turn == 'attack' + str(user.Fight.round) and user.counterhit > 0:
                     user.target = player
                     user.action = str(user.attack())
                     if user.target == user:
@@ -281,7 +281,7 @@ class Spear(Weapon):
                         user.action = user.action.replace('Противник', user.target.name). \
                             replace('Игрок', user.name).replace('Цель', user.target.name). \
                             replace(u'\U0001F44A', u'\U00002694')
-                    user.fight.string.add(user.action)
+                    user.Fight.string.add(user.action)
                     user.energy += 3
                     user.counterhit -= 1
                     user.target = None
