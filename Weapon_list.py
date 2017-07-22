@@ -211,6 +211,94 @@ class Sniper(Weapon):
     desc6 = 'Игрок стреляет в Противник из Снайперской винтовки, но не попадает.'
 
 
+class Spear(Weapon):
+    def hit(self,user):
+        n = 0
+        d = 0
+        dmax = self.dice
+        print(user.name + " стреляет из " + str(self.name) + '. Его энергия - ' + str(
+            user.energy) + '. Его точность и бонусная точность оружия - ' + ' '
+              + str(user.accuracy) + ' ' + str(self.bonus) +
+              '. Шанс попасть - ' + str(11 - user.energy - self.bonus - user.accuracy - user.tempaccuracy) + "+!")
+        while d != dmax:
+            x = random.randint(1, 10)
+            print(user.name + ' Выпало ' + str(x))
+            if x > 10 - user.energy - self.bonus - user.accuracy - user.tempaccuracy:
+                n += 1
+            d += 1
+        for a in user.abilities:
+            n = a.onhit(a,n, user)
+
+        # бонусный урон персонажа
+        if n != 0:
+            n += user.bonusdamage + self.damage - 1
+        # уходит энергия
+        user.energy -= self.energy
+        # применяется урон
+        user.target.damagetaken += n + user.truedamage
+        # применяется потеря жизней
+        if user.target.hploss < self.mult and n + user.truedamage != 0:
+            user.target.hploss = self.mult
+        # энергия загоняется в 0
+        return n
+
+    def aquare(self,user):
+        user.Counter = False
+        user.countercd = 0
+        user.counterhit = 2
+
+    def get_action(self, user, call):
+        keyboard1 = types.InlineKeyboardMarkup()
+        targets = user.targets
+        user.turn = call.data
+        for c in targets:
+            keyboard1.add(types.InlineKeyboardButton(text=c.name, callback_data=str('op' + str(c.chat_id))))
+        if user.countercd == 0 and user.energy > 1:
+            keyboard1.add(types.InlineKeyboardButton(text="Контратака", callback_data=str('weaponspecial')))
+        keyboard1.add(types.InlineKeyboardButton(text='Отмена', callback_data=str('opcancel')))
+        bot.send_message(user.chat_id, 'Выберите противника.', reply_markup=keyboard1)
+
+    def special(self, user, call):
+        user.Counter = True
+        user.countercd = 2
+        user.fight.string.add(u'\U00002694' + "|" + user.name + ' готовится контратаковать.')
+
+    def special_second(self, user):
+        if user.Counter:
+            user.energy -= 2
+            user.bonusdamage += 1
+            user.damagefix += 1
+            user.tempaccuracy += 1
+            for player in user.targets:
+                if player.turn == 'attack' + str(user.fight.round) and user.counterhit > 0:
+                    user.target = player
+                    user.action = str(user.attack())
+                    if user.target == user:
+                        user.action = user.action.replace('Противник', 'себя').\
+                            replace('Игрок', user.name).replace('Цель', user.target.name).\
+                            replace(u'\U0001F44A',u'\U00002694')
+                    else:
+                        user.action = user.action.replace('Противник', user.target.name). \
+                            replace('Игрок', user.name).replace('Цель', user.target.name). \
+                            replace(u'\U0001F44A', u'\U00002694')
+                    user.fight.string.add(user.action)
+                    user.energy += 3
+                    user.counterhit -= 1
+                    user.target = None
+            user.counterhit = 2
+            user.Counter = False
+
+    def special_end(self, user):
+        if user.countercd > 0:
+            user.countercd -= 1
+    desc1 = 'Игрок бьет Противник Копьем.'
+    desc2 = 'Игрок бьет Противник Копьем.'
+    desc3 = 'Игрок бьет Противник Копьем.'
+    desc4 = 'Игрок бьет Противник Копьем, но не попадает.'
+    desc5 = 'Игрок бьет Противник Копьем, но не попадает.'
+    desc6 = 'Игрок бьет Противник Копьем, но не попадает.'
+
+
 class Flamethrower(Weapon):
     def hit(self,user):
         n = 0
@@ -516,7 +604,7 @@ bow.desc3 = 'Игрок стреляет в Противник из Лука А�
 bow.desc4 = 'Игрок стреляет в Противник из Лука Асгард, но не попадает.'
 bow.desc5 = 'Игрок стреляет в Противник из Лука Асгард, но не попадает.'
 bow.desc6 = 'Игрок стреляет в Противник из Лука Асгард, но не попадает.'
-
+spear = Spear(4, 1, 3, 1, 1, True, False, True, 'Копье', '1-4' + u'\U0001F44A' + "|" + '3' +  u'\U000026A1')
 Sawn_off = Weapon(4, 1, 3, 1, 1, False, True, True, 'Обрез', '1-4' + u'\U0001F4A5' + "|" + '3' + u'\U000026A1', pellets=True)
 Sawn_off.desc1 = 'Игрок стреляет в Противник из Обреза.'
 Sawn_off.desc2 = 'Игрок стреляет в Противник из Обреза.'
