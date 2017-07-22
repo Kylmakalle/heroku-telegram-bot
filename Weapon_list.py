@@ -275,7 +275,7 @@ class Spear(Weapon):
             for player in user.targets:
                 if player.turn == 'attack' + str(user.Fight.round) and user.counterhit > 0:
                     user.target = player
-                    user.action = str(user.attack())
+                    user.action = str(user.attack(user.target))
                     if user.target == user:
                         user.action = user.action.replace('Противник', 'себя').\
                             replace('Игрок', user.name).replace('Цель', user.target.name).\
