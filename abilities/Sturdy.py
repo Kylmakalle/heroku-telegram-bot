@@ -6,12 +6,12 @@ import special_abilities
 
 class Sturdy(special_abilities.Ability):
     name ="Двужильность"
-    info = 'Увеличивает максимум жизней на 2.'
+    info = 'Увеличивает максимум жизней на 1. Вы получаете устойчивость к кровотечению.'
     RangeOnly = False
     MeleeOnly = False
     TeamOnly = False
     def aquare(self, user):
-        user.maxhp += 2
-        user.hp += 2
+        user.maxhp += 1
+        user.hp += 1
 
 special_abilities.abilities.append(Sturdy)
