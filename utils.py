@@ -170,7 +170,6 @@ def get_ability(player):
     keyboard = types.InlineKeyboardMarkup()
     maxchoiceint = 5
     choice = []
-    choice.append(special_abilities.Necromancer)
     while len(choice) < maxchoiceint:
         x = special_abilities.abilities[random.randint(0, len(special_abilities.abilities)-1)]
         if player.weapon.Melee:
