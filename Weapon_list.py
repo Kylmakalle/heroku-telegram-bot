@@ -1,7 +1,7 @@
-import utils
 import random
 import telebot
 import config
+import utils
 
 types = telebot.types
 bot = telebot.TeleBot(config.token)
@@ -10,7 +10,7 @@ fullweaponlist = []
 
 
 class Weapon(object):
-    def __init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring, standart=True, pellets=False):
+    def __init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring, standart=True, pellets=False, natural=False):
         self.dice = dice
         self.damage = damage
         self.energy = energy
@@ -23,6 +23,7 @@ class Weapon(object):
         self.damagestring = damagestring
         self.standart = standart
         self.pellets = pellets
+        self.natural = natural
         if self.standart == True:
             weaponlist.append(self)
         fullweaponlist.append(self)
@@ -81,7 +82,7 @@ class Weapon(object):
                 for a in user.abilities:
                     d = a.onhitdesc(a,d,user)
         else:
-            d =  str(u'\U0001F4A8' + "|" + getattr(self,str('desc' + str(random.randint(4, 6)))))
+            d = str(u'\U0001F4A8' + "|" + getattr(self,str('desc' + str(random.randint(4, 6)))))
         return d
 
     # Отправка вариантов
@@ -98,7 +99,7 @@ class Weapon(object):
         elif len(targets) == 1:
             p.target = targets[0]
             try:
-                p.Fight.playerpool.remove(p)
+                p.fight.playerpool.remove(p)
             except:
                 print('Упс.')
         else:
@@ -111,10 +112,17 @@ class Weapon(object):
     def special(self, user, call):
         pass
 
+    #На конец хода
+    def special_end(self, user):
+        pass
+
     def special_second(self, user):
         pass
 
-    def special_end(self, user):
+    def lose(self,user):
+        pass
+
+    def effect(self, user):
         pass
 
 
@@ -184,6 +192,10 @@ class Sniper(Weapon):
         user.aimtarget = None
         user.bonusaccuracy = 0
 
+    def lose(self,user):
+        del user.aimtarget
+        del user.bonusaccuracy
+
     def get_action(self, p, call):
         keyboard1 = types.InlineKeyboardMarkup()
         enemyteam = p.targets
@@ -199,14 +211,15 @@ class Sniper(Weapon):
         bot.send_message(p.chat_id, 'Выберите противника.', reply_markup=keyboard1)
 
     def special(self, user, call):
-        if user.aimtarget!=call.data[3:]:
+        if user.aimtarget != call.data[3:]:
             user.aimtarget = call.data[3:]
             user.bonusaccuracy = 5
         else:
             user.bonusaccuracy +=5
         if user.energy + self.bonus + user.accuracy + user.bonusaccuracy >= 10:
             bot.send_message(user.chat_id, 'Точность максимальна!')
-        print ('scheck')
+        user.fight.string.add(u'\U0001F3AF' + "|" + user.name + ' целится.')
+        print('scheck')
 
 
     desc1 = 'Игрок стреляет в Противник из Снайперской винтовки.'
@@ -253,6 +266,11 @@ class Spear(Weapon):
         user.countercd = 0
         user.counterhit = 2
 
+    def lose(self,user):
+        del user.Counter
+        del user.countercd
+        del user.counterhit
+
     def get_action(self, user, call):
         keyboard1 = types.InlineKeyboardMarkup()
         targets = user.targets
@@ -267,7 +285,7 @@ class Spear(Weapon):
     def special(self, user, call):
         user.Counter = True
         user.countercd = 2
-        user.Fight.string.add(u'\U00002694' + "|" + user.name + ' готовится контратаковать.')
+        user.fight.string.add(u'\U00002694' + "|" + user.name + ' готовится контратаковать.')
 
     def special_second(self, user):
         if user.Counter:
@@ -276,9 +294,9 @@ class Spear(Weapon):
             user.damagefix += 1
             user.tempaccuracy += 1
             for player in user.targets:
-                if player.turn == 'attack' + str(user.Fight.round) and user.counterhit > 0:
+                if player.turn == 'attack' + str(user.fight.round) and user.counterhit > 0:
                     user.target = player
-                    user.action = str(user.attack(user.target))
+                    user.action = str(user.attack())
                     if user.target == user:
                         user.action = user.action.replace('Противник', 'себя').\
                             replace('Игрок', user.name).replace('Цель', user.target.name).\
@@ -287,7 +305,7 @@ class Spear(Weapon):
                         user.action = user.action.replace('Противник', user.target.name). \
                             replace('Игрок', user.name).replace('Цель', user.target.name). \
                             replace(u'\U0001F44A', u'\U00002694')
-                    user.Fight.string.add(user.action)
+                    user.fight.string.add(user.action)
                     user.energy += 3
                     user.counterhit -= 1
                     user.target = None
@@ -322,8 +340,7 @@ class Flamethrower(Weapon):
             d += 1
         if n != 0:
             user.target.firecounter += 1
-            user.target.offfire = user.Fight.round + 2
-
+            user.target.offfire = user.fight.round + 2
             n += user.bonusdamage + self.damage - 1
         else:
             pass
@@ -366,8 +383,8 @@ class Flamethrower(Weapon):
 
 class Bleeding(Weapon):
     def __init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring, chance,
-                 standart=True):
-        Weapon.__init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring,standart=standart)
+                 standart=True,natural=False):
+        Weapon.__init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring,standart=standart,natural=natural)
         self.chance = chance
         if self.standart == True:
             weaponlist.append(self)
@@ -397,7 +414,10 @@ class Bleeding(Weapon):
         if n!=0:
             n += user.bonusdamage + self.damage - 1
             for a in user.abilities:
-                n = a.onhit(a,n, user)
+                n = a.onhit(a, n, user)
+
+        for a in user.abilities:
+            n = a.onhit(a, n, user)
         else:
             pass
         n += user.truedamage
@@ -431,11 +451,81 @@ class Bleeding(Weapon):
             return str(u'\U0001F4A8' + "|" + getattr(self,str('desc' + str(random.randint(4, 6)))))
 
 
+class Burning(Weapon):
+    def __init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring, chance,
+                 standart=True,natural=False):
+        Weapon.__init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring,standart=standart,natural=natural)
+        self.chance = chance
+        if self.standart:
+            weaponlist.append(self)
+
+    def hit(self,user):
+        n = 0
+        d = 0
+        dmax = self.dice
+        print(user.name + " стреляет из " + str(self.name) + '. Его энергия - ' + str(
+            user.energy) + '. Его точность и бонусная точность оружия - ' + ' '
+              + str(user.accuracy) + ' ' + str(self.bonus) +
+              '. Шанс попасть - ' + str(11 - user.energy - self.bonus - user.accuracy - user.tempaccuracy) + "+!")
+        while d != dmax:
+            x = random.randint(1, 10)
+            print(user.name + ' Выпало ' + str(x))
+            if x > 10 - user.energy - self.bonus - user.accuracy - user.tempaccuracy:
+                n += 1
+            d += 1
+        if n != 0 and random.randint(1,10)< self.chance:
+            user.target.firecounter += 1
+            user.target.offfire = user.fight.round + 2
+            user.Hitability = True
+
+            # бонусный урон персонажа
+        # уходит энергия
+        user.energy -= self.energy
+        if n!=0:
+            n += user.bonusdamage + self.damage - 1
+            for a in user.abilities:
+                n = a.onhit(a, n, user)
+
+        for a in user.abilities:
+            n = a.onhit(a, n, user)
+        else:
+            pass
+        n += user.truedamage
+        user.target.damagetaken += n
+        # применяется урон
+
+        # применяется потеря жизней
+        if user.target.hploss < self.mult and n!= 0:
+            user.target.hploss = self.mult
+        # энергия загоняется в 0
+
+        if user.energy < 0: user.energy = 0
+
+        print('bleed')
+        return n
+
+    def getDesc(self, damagetaken,user):
+        if damagetaken != 0:
+            if not self.Melee:
+                d = str(u'\U0001F4A5' + "|" + getattr(self,str('desc' + str(random.randint(1, 3)))) + " Нанесено " + str(damagetaken) + ' урона.')
+            else:
+                d = str(u'\U0001F44A' + "|" + getattr(self,str('desc' + str(random.randint(1, 3)))) + " Нанесено " + str(damagetaken) + ' урона.')
+            if user.target.firecounter == 1 and user.Hitability:
+                d += u'\U0001F525' + "|" + user.target.name + ' загорелся!'
+            elif user.target.firecounter > 1 and user.Hitability:
+                d += u'\U0001F525' + "|" 'Огонь усиливается!'
+            for a in user.abilities:
+                d = a.onhitdesc(a,d,user)
+            return d
+        else:
+            return str(u'\U0001F4A8' + "|" + getattr(self,str('desc' + str(random.randint(4, 6)))))
+
+
 class Stunning(Weapon):
     def __init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring, chance,
-                 standart=True):
+                 standart=True,natural=False):
         Weapon.__init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring,
-                        standart=standart)
+                        standart=standart,natural=natural)
         self.chance = chance
         if self.standart == True:
             weaponlist.append(self)
@@ -464,6 +554,8 @@ class Stunning(Weapon):
             for a in user.abilities:
                 n = a.onhit(a,n, user)
 
+        for a in user.abilities:
+            n = a.onhit(a,n, user)
         else:
             pass
         n += user.truedamage
@@ -483,7 +575,7 @@ class Stunning(Weapon):
         if random.randint(1,10)< self.chance:
             if user.target.stuncounter < 1:
                 user.target.stuncounter = 1
-            user.Fight.string.add(u'\U0001F300' + '|' + user.target.name + ' оглушен!')
+            user.fight.string.add(u'\U0001F300' + '|' + user.target.name + ' оглушен!')
         user.weaponeffect.remove(self)
 
     def getDesc(self, damagetaken,user):
@@ -494,16 +586,257 @@ class Stunning(Weapon):
             else:
                 d = str(u'\U0001F44A' + "|" + getattr(self,str('desc' + str(random.randint(1, 3)))) + " Нанесено " + str(damagetaken) + ' урона.')
             for a in user.abilities:
-                d = a.onhitdesc(a,d,user)
+                d = a.onhitdesc(a, d, user)
             return d
         else:
             return str(u'\U0001F4A8' + "|" + getattr(self,str('desc' + str(random.randint(4, 6)))))
 
 
-class BowBleeding(Weapon):
+class Crippling(Weapon):
     def __init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring, chance,
+                 standart=True,natural=False):
+        Weapon.__init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring,
+                        standart=standart,natural=natural)
+        self.chance = chance
+        if self.standart == True:
+            weaponlist.append(self)
+
+    def hit(self,user):
+        n = 0
+        d = 0
+        dmax = self.dice
+        print(user.name + " стреляет из " + str(self.name) + '. Его энергия - ' + str(
+            user.energy) + '. Его точность и бонусная точность оружия - ' + ' '
+              + str(user.accuracy) + ' ' + str(self.bonus) +
+              '. Шанс попасть - ' + str(11 - user.energy - self.bonus - user.accuracy - user.tempaccuracy) + "+!")
+        while d != dmax:
+            x = random.randint(1, 10)
+            print(user.name + ' Выпало ' + str(x))
+            if x > 10 - user.energy - self.bonus - user.accuracy - user.tempaccuracy:
+                n += 1
+            d += 1
+
+
+            # бонусный урон персонажа
+        # уходит энергия
+        user.energy -= self.energy
+        if n!=0:
+            n += user.bonusdamage + self.damage - 1
+            for a in user.abilities:
+                n = a.onhit(a,n, user)
+
+        for a in user.abilities:
+            n = a.onhit(a,n, user)
+        else:
+            pass
+        n += user.truedamage
+        user.target.damagetaken += n
+        # применяется урон
+
+        # применяется потеря жизней
+        if user.target.hploss < self.mult and n!= 0:
+            user.target.hploss = self.mult
+        # энергия загоняется в 0
+        if user.energy < 0: user.energy = 0
+        return n
+
+    def effect(self, user):
+        if random.randint(1, 10) <= self.chance:
+            if user.target.toughness > 1:
+                user.target.toughness -= 1
+            user.fight.string.add(u'\U0001F915' + '|' + user.target.name + ' покалечен ('
+                                  + str(6 - user.target.toughness) + ')!')
+        user.weaponeffect.remove(self)
+
+    def getDesc(self, damagetaken,user):
+        if damagetaken != 0:
+            user.weaponeffect.append(self)
+            if not self.Melee:
+                d = str(u'\U0001F4A5' + "|" + getattr(self,str('desc' + str(random.randint(1, 3)))) + " Нанесено " + str(damagetaken) + ' урона.')
+            else:
+                d = str(u'\U0001F44A' + "|" + getattr(self,str('desc' + str(random.randint(1, 3)))) + " Нанесено " + str(damagetaken) + ' урона.')
+            for a in user.abilities:
+                d = a.onhitdesc(a, d, user)
+            return d
+        else:
+            return str(u'\U0001F4A8' + "|" + getattr(self,str('desc' + str(random.randint(4, 6)))))
+
+
+class Dropping(Weapon):
+    def __init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring, chance,
+                 standart=True,natural=False):
+        Weapon.__init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring,
+                        standart=standart,natural=natural)
+        self.chance = chance
+        if self.standart:
+            weaponlist.append(self)
+
+    def aquare(self, user):
+        user.dropcd = 0
+
+    def lose(self, user):
+        del user.dropcd
+
+    def get_action(self, p, call):
+        keyboard1 = types.InlineKeyboardMarkup()
+        enemyteam = p.targets
+        p.turn = call.data
+        for c in enemyteam:
+            if p.dropcd != 0 or c.weapon.natural:
+                keyboard1.add(types.InlineKeyboardButton(text=c.name, callback_data=str('op' + str(c.chat_id))))
+            else:
+                keyboard1.add(types.InlineKeyboardButton(text=c.name, callback_data=str('op' + str(c.chat_id))),
+                              types.InlineKeyboardButton(text="Выбить оружие", callback_data=str('aim' + str(c.chat_id))))
+
+        keyboard1.add(types.InlineKeyboardButton(text='Отмена', callback_data=str('opcancel')))
+        bot.send_message(p.chat_id, 'Выберите противника.', reply_markup=keyboard1)
+
+    def hit(self,user):
+        n = 0
+        d = 0
+        dmax = self.dice
+        print(user.name + " стреляет из " + str(self.name) + '. Его энергия - ' + str(
+            user.energy) + '. Его точность и бонусная точность оружия - ' + ' '
+              + str(user.accuracy) + ' ' + str(self.bonus) +
+              '. Шанс попасть - ' + str(11 - user.energy - self.bonus - user.accuracy - user.tempaccuracy) + "+!")
+        while d != dmax:
+            x = random.randint(1, 10)
+            print(user.name + ' Выпало ' + str(x))
+            if x > 10 - user.energy - self.bonus - user.accuracy - user.tempaccuracy:
+                n += 1
+            d += 1
+
+
+            # бонусный урон персонажа
+        # уходит энергия
+        user.energy -= self.energy
+        if n!=0:
+            n += user.bonusdamage + self.damage - 1
+            for a in user.abilities:
+                n = a.onhit(a,n, user)
+
+        for a in user.abilities:
+            n = a.onhit(a,n, user)
+        else:
+            pass
+        n += user.truedamage
+        user.target.damagetaken += n
+        # применяется урон
+
+        # применяется потеря жизней
+        if user.target.hploss < self.mult and n!= 0:
+            user.target.hploss = self.mult
+        # энергия загоняется в 0
+        if user.energy < 0: user.energy = 0
+        return n
+
+    def effect(self, user):
+        if user.target.turn == 'attack' + str(user.fight.round) and random.randint(1, 10) <= self.chance:
+            if not user.target.weapon.natural:
+                user.target.lostweapon = user.target.weapon
+                user.fight.string.add(u'\U0001F450' + '|' + user.target.name + ' теряет свое оружие!')
+        elif user.target.turn == 'reload' + str(user.fight.round):
+            if not user.target.weapon.natural:
+                user.target.lostweapon = user.target.weapon
+                user.fight.string.add(u'\U0001F450' + '|' + user.target.name + ' теряет свое оружие!')
+        user.weaponeffect.remove(self)
+
+    def getDesc(self, damagetaken, user):
+        if damagetaken != 0:
+            if not self.Melee:
+                d = str(u'\U0001F4A5' + "|" + getattr(self,str('desc' + str(random.randint(1, 3)))) + " Нанесено " + str(damagetaken) + ' урона.')
+            else:
+                d = str(u'\U0001F44A' + "|" + getattr(self,str('desc' + str(random.randint(1, 3)))) + " Нанесено " + str(damagetaken) + ' урона.')
+            for a in user.abilities:
+                d = a.onhitdesc(a, d, user)
+            return d
+        else:
+            return str(u'\U0001F4A8' + "|" + getattr(self,str('desc' + str(random.randint(4, 6)))))
+
+    def special(self, user, call):
+        user.target = utils.actor_from_id(call.data[3:], user.game)
+        user.dropcd = 4
+
+    def special_second(self, user):
+        if user.dropcd > 0:
+            user.dropcd -= 1
+        if user.turn == 'aim':
+            damagetaken = self.hit(user)
+            user.energy -= 1
+            if damagetaken != 0:
+                user.weaponeffect.append(self)
+                d = str(
+                    u'\U000026D3' + "|" + user.name + ' пытается выбить оружие из рук ' + user.target.name + "! Нанесено " + str(
+                        damagetaken) + ' урона.')
+            else:
+                d = str(
+                    u'\U0001F4A8' + "|" + user.name + ' пытается выбить оружие из рук ' + user.target.name + "!")
+            for a in user.abilities:
+                d = a.onhitdesc(a, d, user)
+            user.fight.string.add(d)
+
+
+class Katana(Weapon):
+    def get_action(self, p, call):
+        keyboard1 = types.InlineKeyboardMarkup()
+        enemyteam = p.targets
+        p.turn = call.data
+        for c in enemyteam:
+            if c.hp > 1 or p.energy < 4:
+                keyboard1.add(types.InlineKeyboardButton(text=c.name, callback_data=str('op' + str(c.chat_id))))
+            else:
+                keyboard1.add(types.InlineKeyboardButton(text=c.name, callback_data=str('op' + str(c.chat_id))),
+                              types.InlineKeyboardButton(text="Казнь", callback_data=str('execute' + str(c.chat_id))))
+
+        keyboard1.add(types.InlineKeyboardButton(text='Отмена', callback_data=str('opcancel')))
+        bot.send_message(p.chat_id, 'Выберите противника.', reply_markup=keyboard1)
+
+    def special_second(self, user):
+        if user.turn == 'execute':
+            if user.target.hp == 1:
+                user.target.hp = 0
+                damagetaken = self.hit(user)
+                if damagetaken != 0:
+                    d = str(
+                        u'\U00003299' + u'\U0001F494' + "|" + user.name + ' наносит стремительный удар по ' + user.target.name
+                        + " оставляя страшную рану! Нанесено " + str(damagetaken) + ' урона. ' + user.target.name +
+                        ' теряет жизнь!')
+                else:
+                    d = str(
+                        u'\U0001F4A8' + "|" + user.name
+                        + ' стремительно взмахивает Катаной, но не попадает по ' + user.target.name + "!")
+                for a in user.abilities:
+                    d = a.onhitdesc(a, d, user)
+                user.fight.string.add(d)
+                self.energy -= 3
+
+
+class ULTRA(Weapon):
+    def __init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring, double,
                  standart=True):
         Weapon.__init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring,standart=standart)
+        self.double=double
+        if self.standart == True:
+            weaponlist.append(self)
+            
+    def aquare(self,user):
+        user.longreload = 0
+        user.DisabledReload = False
+        
+    def special_second(self, user):
+        if user.turn == 'reload' + str(user.fight.round):
+            user.DisabledReload = True
+            user.Disabled = True
+            user.longreload = user.fight.round + 1
+        if user.fight.round == user.longreload:
+            user.Disabled = False
+            user.DisabledReload = False
+            
+
+class BowBleeding(Weapon):
+    def __init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring, chance,
+                 standart=True,natural=False):
+        Weapon.__init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring,standart=standart,natural=natural)
         self.chance = chance
         if self.standart == True:
             weaponlist.append(self)
@@ -563,9 +896,12 @@ class BowBleeding(Weapon):
     def aquare(self,user):
         user.bonusaccuracy = 0
 
+    def lose(self,user):
+        user.bonusaccuracy = 0
+        user.Armed = False
+
     def get_action(self, p, call):
         keyboard1 = types.InlineKeyboardMarkup()
-        enemyteam = p.targets
         p.turn = call.data
         for c in p.targets:
                 keyboard1.add(types.InlineKeyboardButton(text=c.name, callback_data=str('op' + str(c.chat_id))))
@@ -586,13 +922,25 @@ class BowBleeding(Weapon):
             if random.randint(1, 10) < (user.bonusaccuracy-1)*6:
                 if user.target.stuncounter < 1:
                     user.target.stuncounter = 1
-                user.Fight.string.add(u'\U0001F300' + '|' + user.target.name + ' оглушен!')
+                user.fight.string.add(u'\U0001F300' + '|' + user.target.name + ' оглушен!')
         user.weaponeffect.remove(self)
 
         user.bonusaccuracy = 0
         user.Armed = False
-
-
+katana=Katana(3, 1, 2, 2, 1, True, False, False, 'Катана','1-3' + u'\U0001F525' + "|" + '2' + u'\U000026A1', standart=False)
+katana.desc1 = 'Игрок бьет Противник Катаной!'
+katana.desc2 = 'Игрок бьет Противник Катаной!'
+katana.desc3 = 'Игрок бьет Противник Катаной!'
+katana.desc4 = 'Игрок бьет Противник Катаной, но не попадает.'
+katana.desc5 = 'Игрок бьет Противник Катаной, но не попадает.'
+katana.desc6 = 'Игрок бьет Противник Катаной, но не попадает.'
+ultra=ULTRA(3,1,2,2,1,True,False,True,'анусосжигатеь','500' , True, standart=False)
+ultra.desc1 = 'Игрок бьет Противник Ножом!'
+ultra.desc2 = 'Игрок бьет Противник Ножом!'
+ultra.desc3 = 'Игрок бьет Противник Ножом!'
+ultra.desc4 = 'Игрок бьет Противник Ножом, но не попадает.'
+ultra.desc5 = 'Игрок бьет Противник Ножом, но не попадает.'
+ultra.desc6 = 'Игрок бьет Противник Ножом, но не попадает.'
 tazer = Tazer(3, 1, 2, 2, 1, True, False, True, 'Полицейская Дубинка', '1-3' + u'\U0001F44A' + "|" + '2' + u'\U000026A1')
 sniper = Sniper(1, 8, 5, -3, 1, False, False, False, 'Снайперская винтовка','8' + u'\U0001F4A5' + "|" + '5' + u'\U000026A1')
 flamethrower = Flamethrower(1, 1, 3, 3, 1, False, False, False, 'Огнемет','1' + u'\U0001F525' + "|" + '3' + u'\U000026A1')
@@ -603,7 +951,28 @@ knife.desc3 = 'Игрок бьет Противник Ножом!'
 knife.desc4 = 'Игрок бьет Противник Ножом, но не попадает.'
 knife.desc5 = 'Игрок бьет Противник Ножом, но не попадает.'
 knife.desc6 = 'Игрок бьет Противник Ножом, но не попадает.'
-bow = BowBleeding(2, 2, 1, 0, 1, False, False, False, 'Лук Асгард','2-3!' + u'\U0001F525' + "|" + '1!' + u'\U000026A1',3, standart=False)
+tourch = Burning(2, 1, 2, 3, 1, True, False, False, 'Факел','1-2' + u'\U0001F525' + "|" + '2' + u'\U000026A1', 8)
+tourch.desc1 = 'Игрок бьет Противник Факелом!'
+tourch.desc2 = 'Игрок бьет Противник Факелом!'
+tourch.desc3 = 'Игрок бьет Противник Факелом!'
+tourch.desc4 = 'Игрок бьет Противник Факелом, но не попадает.'
+tourch.desc5 = 'Игрок бьет Противник Факелом, но не попадает.'
+tourch.desc6 = 'Игрок бьет Противник Факелом, но не попадает.'
+hatchet = Crippling(3, 1, 2, 2, 1, True, False, False, 'Топор','1-3' + u'\U0001F525' + "|" + '2' + u'\U000026A1', 8)
+hatchet.desc1 = 'Игрок бьет Противник Топором!'
+hatchet.desc2 = 'Игрок бьет Противник Топором!'
+hatchet.desc3 = 'Игрок бьет Противник Топором!'
+hatchet.desc4 = 'Игрок бьет Противник Топором, но не попадает.'
+hatchet.desc5 = 'Игрок бьет Противник Топором, но не попадает.'
+hatchet.desc6 = 'Игрок бьет Противник Топором, но не попадает.'
+chain = Dropping(3, 1, 2, 2, 1, True, False, False, 'Цепь','1-3' + u'\U0001F525' + "|" + '2' + u'\U000026A1', 4)
+chain.desc1 = 'Игрок бьет Противник Цепью!'
+chain.desc2 = 'Игрок бьет Противник Цепью!'
+chain.desc3 = 'Игрок бьет Противник Цепью!'
+chain.desc4 = 'Игрок бьет Противник Цепью, но не попадает.'
+chain.desc5 = 'Игрок бьет Противник Цепью, но не попадает.'
+chain.desc6 = 'Игрок бьет Противник Цепью, но не попадает.'
+bow = BowBleeding(2, 2, 1, 0, 1, False, False, False, 'Лук Асгард','2-3!' + u'\U0001F525' + "|" + '1!' + u'\U000026A1', 3, standart=False)
 bow.desc1 = 'Игрок стреляет в Противник из Лука Асгард.'
 bow.desc2 = 'Игрок стреляет в Противник из Лука Асгард.'
 bow.desc3 = 'Игрок стреляет в Противник из Лука Асгард.'
@@ -646,3 +1015,17 @@ Bat.desc3 = 'Игрок бьет Противник Бейсбольной Би�
 Bat.desc4 = 'Игрок бьет Противник Бейсбольной Битой, но не попадает.'
 Bat.desc5 = 'Игрок бьет Противник Бейсбольной Битой, но не попадает.'
 Bat.desc6 = 'Игрок бьет Противник Бейсбольной Битой, но не попадает.'
+fangs = Bleeding(3, 1, 2, 1, 1, True, True, True, 'Клыки', '1-3' + u'\U0001F4A5' + "|" + '2' + u'\U000026A1', 4, standart=False, natural=True)
+fangs.desc1 = 'Игрок набрасывается на Противник.'
+fangs.desc2 = 'Игрок набрасывается на Противник.'
+fangs.desc3 = 'Игрок набрасывается на Противник.'
+fangs.desc4 = 'Игрок пытается укусить Противник, но не попадает.'
+fangs.desc5 = 'Игрок пытается укусить Противник, но не попадает.'
+fangs.desc6 = 'Игрок пытается укусить Противник, но не попадает.'
+fists = Weapon(1, 1, 1, 4, 1, True, True, True, 'Кулаки', '1-2' + u'\U0001F4A5' + "|" + '1' + u'\U000026A1', standart=False, natural=True)
+fists.desc1 = 'Игрок бьет Противник Кулаком.'
+fists.desc2 = 'Игрок бьет Противник Кулаком.'
+fists.desc3 = 'Игрок бьет Противник Кулаком.'
+fists.desc4 = 'Игрок бьет Противник Кулаком, но не попадает.'
+fists.desc5 = 'Игрок бьет Противник Кулаком, но не попадает.'
+fists.desc6 = 'Игрок бьет Противник Кулаком, но не попадает.'

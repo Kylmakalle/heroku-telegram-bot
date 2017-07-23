@@ -6,12 +6,14 @@ import special_abilities
 
 
 class AI_player(object):
-    def __init__(self, name, Game, team):
+    def __init__(self, name, game, team):
         # Переменные для бота
+        self.lostweapon = None
+        self.toughness = 6
         self.weapon = None
         self.name = name
-        self.Game = Game
-        self.Fight = Game.Fight
+        self.game = game
+        self.fight = game.fight
         self.chat_id = random.randint(1,1000)
         self.info = Main_classes.Actionstring(self.chat_id)
         self.turn = None
@@ -28,6 +30,7 @@ class AI_player(object):
         self.abilities = []
         self.targets = []
         self.Blocked = False
+        self.Losthp = False
         self.hypnosysresist = 40
         # Временные переменные боя
         self.hp = 3
@@ -56,29 +59,29 @@ class AI_player(object):
         self.useditems = []
         self.enditems = []
 
-    def attack(self, opponent):
+    def attack(self):
             n = self.weapon.hit(self)
             if n != 0: self.Hit = True
             return self.weapon.getDesc(n, self)
 
-    def aiaction1q(self, Fight):
+    def aiaction1q(self, fight):
             pass
-    def aiaction2q(self, Fight):
+    def aiaction2q(self, fight):
         pass
-    def aiactionlastq(self, Fight):
+    def aiactionlastq(self, fight):
         pass
-    def aiactionend(self, Fight):
+    def aiactionend(self, fight):
         pass
-    def appear(self, Fight):
+    def appear(self, fight):
         pass
 
 
 class Dog(AI_player):
 
-    def __init__(self, name, Game, team):
-        AI_player.__init__(self, name, Game, team)
+    def __init__(self, name, game, team):
+        AI_player.__init__(self, name, game, team)
         self.abilities = [Bloodthurst]
-        self.weapon = fangs
+        self.weapon = Weapon_list.fangs
         self.servant = False
         self.leader = None
         self.offfire = None
@@ -96,15 +99,13 @@ class Dog(AI_player):
                 self.turn = 'skip' + str(Fight.round)
 
         elif self.Inmelee:
-                minhp = 10
-                for player in utils.GetOtherTeam(self).actors:
-                    if player.hp < minhp:
-                        minhp = player.hp
+                self.target = utils.get_other_team(self).actors[
+                random.randint(0, len(utils.get_other_team(self).actors) - 1)]
+                for player in utils.get_other_team(self).actors:
+                    if 0 < player.hp < self.target.hp:
                         self.target = player
-
-
-                if random.randint(1,3) == 1 and self.energy > 1:
-                    self.target = utils.GetOtherTeam(self).actors[random.randint(0,len(utils.GetOtherTeam(self).actors) - 1)]
+                if random.randint(1, 3) == 1 and self.energy > 1:
+                    self.target = utils.get_other_team(self).actors[random.randint(0,len(utils.get_other_team(self).actors) - 1)]
                     self.turn = 'attack' + str(Fight.round)
                 elif self.target.hp == 1 and self.energy > 0:
                     self.tempaccuracy += 3
@@ -139,21 +140,14 @@ class Dog(AI_player):
         x = random.randint(1,5)
         print(str(x))
         if self.leader != None:
-            if self.leader.hp <= 0 and x > 3 and len(utils.GetOtherTeam(self).actors) > 0\
-                    and len(utils.GetOtherTeam(self).actors) >= len(self.team.actors) and self.hp > 0 and self.hp < 3:
+            if self.leader.hp <= 0 and x > 3 and len(utils.get_other_team(self).actors) > 0\
+                    and len(utils.get_other_team(self).actors) >= len(self.team.actors) and self.hp > 0 and self.hp < 3:
                 self.Alive = False
                 Fight.string.add(u'\U00002620' + ' |' + self.name + ' трусливо сбегает с поля боя.')
                 self.team.actors.remove(self)
                 Fight.aiplayers.remove(self)
                 Fight.actors.remove(self)
 
-fangs = Weapon_list.Bleeding(3, 1, 2, 1, 1, True, True, True, 'Клыки', '1-3' + u'\U0001F4A5' + "|" + '2' + u'\U000026A1', 4, standart = False)
-fangs.desc1 = 'Игрок набрасывается на Противник.'
-fangs.desc2 = 'Игрок набрасывается на Противник.'
-fangs.desc3 = 'Игрок набрасывается на Противник.'
-fangs.desc4 = 'Игрок пытается укусить Противник, но не попадает.'
-fangs.desc5 = 'Игрок пытается укусить Противник, но не попадает.'
-fangs.desc6 = 'Игрок пытается укусить Противник, но не попадает.'
 
 
 class Bloodthurst(special_abilities.Ability):
@@ -161,8 +155,8 @@ class Bloodthurst(special_abilities.Ability):
 
 
 class DogLeader(AI_player):
-    def __init__(self, name, Game, team, teambonus):
-        AI_player.__init__(self, name, Game, team)
+    def __init__(self, name, game, team, teambonus):
+        AI_player.__init__(self, name, game, team)
         self.abilities = [special_abilities.Gasmask, Bloodthurst, Howl, special_abilities.Armorer, Leader]
         self.teambonus = teambonus
         self.maxhp = 3 + teambonus
@@ -180,7 +174,7 @@ class DogLeader(AI_player):
 
     def get_turn(self, Fight):
         if float(self.hp)<=self.maxhp/2 and self.final is False:
-            self.Fight.string.add(u'\U00002757' + "|"+self.name + ' злобно рычит!')
+            self.fight.string.add(u'\U00002757' + "|"+self.name + ' злобно рычит!')
             self.bonusdamage += self.teambonus - 1
             self.armor += 2
             self.armorchance += 20
@@ -195,13 +189,13 @@ class DogLeader(AI_player):
             self.energy -= 1
 
         elif self.Inmelee:
-                minhp = 10
-                for player in utils.GetOtherTeam(self).actors:
-                    if player.hp < minhp:
-                        minhp = player.hp
+                self.target = utils.get_other_team(self).actors[
+                random.randint(0, len(utils.get_other_team(self).actors) - 1)]
+                for player in utils.get_other_team(self).actors:
+                    if 0 < player.hp < self.target.hp:
                         self.target = player
                 if random.randint(1,3) == 1 and self.energy > 1:
-                    self.target = utils.GetOtherTeam(self).actors[random.randint(0,len(utils.GetOtherTeam(self).actors) - 1)]
+                    self.target = utils.get_other_team(self).actors[random.randint(0,len(utils.get_other_team(self).actors) - 1)]
                     self.turn = 'attack' + str(Fight.round)
                 elif self.target.hp == 1 and self.energy > 0:
                     self.tempaccuracy += 3
@@ -236,7 +230,7 @@ class DogLeader(AI_player):
                     actor.bonusdamage += 1
                     actor.damagefix += 1
 
-leaderfangs = Weapon_list.Bleeding(3, 1, 2, 1, 1, True, True, True, 'Клыки', '1-5' + u'\U0001F4A5' + "|" + '2' + u'\U000026A1', 4, standart = False)
+leaderfangs = Weapon_list.Bleeding(3, 1, 2, 1, 1, True, True, True, 'Клыки', '1-5' + u'\U0001F4A5' + "|" + '2' + u'\U000026A1', 4, standart = False,natural=True)
 leaderfangs.desc1 = 'Игрок набрасывается на Противник.'
 leaderfangs.desc2 = 'Игрок набрасывается на Противник.'
 leaderfangs.desc3 = 'Игрок набрасывается на Противник.'
@@ -276,19 +270,19 @@ class Rhino(AI_player):
         if self.highest_damagedealer != None and self.highest_damagedealer.Alive:
             target = self.highest_damagedealer
         else:
-            target = utils.GetOtherTeam(self).actors[random.randint(0, len(utils.GetOtherTeam(self).actors) - 1)]
+            target = utils.get_other_team(self).actors[random.randint(0, len(utils.get_other_team(self).actors) - 1)]
         return target
 
-    def get_turn(self, Fight):
-        if float(self.hp)<=self.maxhp/2 and self.final is False:
-            self.Fight.string.add(u'\U00002757' + "| Кровь заливает глаза "+self.name + '! Он разъярен!')
+    def get_turn(self, fight):
+        if float(self.hp) <= self.maxhp/2 and self.final is False:
+            self.fight.string.add(u'\U00002757' + "| Кровь заливает глаза "+self.name + '! Он разъярен!')
             self.bonusdamage += self.teambonus - 1
             self.armorchance += 40
             self.accuracy += 2
             self.maxenergy += self.teambonus
             self.final = True
         meleecounter = 0
-        for x in utils.GetOtherTeam(self).actors:
+        for x in utils.get_other_team(self).actors:
             if x.weapon.Melee and x.Inmelee:
                 meleecounter += 1
         # Застанен
@@ -297,21 +291,21 @@ class Rhino(AI_player):
         # Влететь в мили
         elif not self.Inmelee:
             self.target = self.get_target()
-            self.turn = 'rhino_tramp' + str(Fight.round)
+            self.turn = 'rhino_tramp' + str(fight.round)
             self.Inmelee = True
         elif self.energy < 1:
-            self.turn = 'rhino_rest' + str(Fight.round)
+            self.turn = 'rhino_rest' + str(fight.round)
         # Раскидать милишников
-        elif float(meleecounter) >= len(utils.GetOtherTeam(self).actors)/2 and random.randint(1,2) == 1 and self.circlecd < 1:
-            self.turn = 'rhino_circle' + str(Fight.round)
+        elif float(meleecounter) >= len(utils.get_other_team(self).actors)/2 and random.randint(1,2) == 1 and self.circlecd < 1:
+            self.turn = 'rhino_circle' + str(fight.round)
         # Отомстить за удар
         else:
             self.target = self.get_target()
             if not self.target.weapon.Melee and self.trumpcd < 1 or not self.target.Inmelee and self.trumpcd < 1:
-                self.turn = 'rhino_tramp' + str(Fight.round)
+                self.turn = 'rhino_tramp' + str(fight.round)
             elif self.target.Disabled:
-                self.turn = 'rhino_stomp' + str(Fight.round)
-            else: self.turn = 'attack' + str(Fight.round)
+                self.turn = 'rhino_stomp' + str(fight.round)
+            else: self.turn = 'attack' + str(fight.round)
 
     # Навыки Носорога
 
@@ -348,7 +342,7 @@ class Rhino(AI_player):
         damage = self.bonusdamage*random.randint(1,2)
         self.energy -= 1
         self.circlecd = 3
-        for x in utils.GetOtherTeam(self).actors:
+        for x in utils.get_other_team(self).actors:
             if x.weapon.Melee and x.Inmelee:
                 x.damagetaken += damage
                 x.Inmelee = False
@@ -359,27 +353,27 @@ class Rhino(AI_player):
 
     # Определение хода Носорога
 
-    def aiaction1q(self, Fight):
-        if self.turn == 'rhino_rest' + str(Fight.round) or self.turn == 'rhino_poisoned' + str(Fight.round):
+    def aiaction1q(self, fight):
+        if self.turn == 'rhino_rest' + str(fight.round) or self.turn == 'rhino_poisoned' + str(fight.round):
             self.armor = 0
         else:
             self.armor = self.teambonus+1
 
-    def aiaction2q(self, Fight):
-        if self.turn == 'rhino_poisoned' + str(Fight.round):
-            Fight.string.add(self.poisoned())
-        elif self.turn == 'rhino_tramp' + str(Fight.round):
-            Fight.string.add(self.tramp())
-        elif self.turn == 'rhino_stomp' + str(Fight.round):
+    def aiaction2q(self, fight):
+        if self.turn == 'rhino_poisoned' + str(fight.round):
+            fight.string.add(self.poisoned())
+        elif self.turn == 'rhino_tramp' + str(fight.round):
+            fight.string.add(self.tramp())
+        elif self.turn == 'rhino_stomp' + str(fight.round):
             if self.target.Disabled:
-                Fight.string.add(self.stomp())
+                fight.string.add(self.stomp())
             else:
-                self.attack(self.target)
-        elif self.turn == 'rhino_circle' + str(Fight.round):
-            Fight.string.add(self.circle())
+                self.attack()
+        elif self.turn == 'rhino_circle' + str(fight.round):
+            fight.string.add(self.circle())
 
-        elif self.turn == 'rhino_rest' + str(Fight.round):
-            Fight.string.add(self.rest())
+        elif self.turn == 'rhino_rest' + str(fight.round):
+            fight.string.add(self.rest())
 
     def aiactionend(self, Fight):
         if self.circlecd > 0:
@@ -387,7 +381,7 @@ class Rhino(AI_player):
         if self.trumpcd > 0:
             self.trumpcd -= 1
 
-horn = Weapon_list.Weapon(2, 1, 1, 5, 1, True, True, True, 'Рог', '?' + u'\U0001F4A5' + "|" + '1' + u'\U000026A1', standart = False)
+horn = Weapon_list.Weapon(2, 1, 1, 5, 1, True, True, True, 'Рог', '?' + u'\U0001F4A5' + "|" + '1' + u'\U000026A1', standart = False,natural=True)
 horn.desc1 = 'Игрок бьет Противник Рогом.'
 horn.desc2 = 'Игрок бьет Противник Рогом.'
 horn.desc3 = 'Игрок бьет Противник Рогом.'

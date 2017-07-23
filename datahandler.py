@@ -1,19 +1,33 @@
 import sqlite3
 
-def get_player(chat_id,username):
-    db = sqlite3.connect('player_database')
-    cursor = db.cursor()
-    cursor.execute('SELECT name FROM players WHERE id = ?',(chat_id,))
-    data = cursor.fetchone()
-    if data is None:
-        cursor.execute('INSERT INTO players(id, games_played, games_won, name)VALUES (?,?,?,?)', (chat_id, 0, 0, username))
-    elif data[0][0] != '@':
 
-        cursor.execute('UPDATE players SET name = ? WHERE id = ?', ('@' + username,chat_id))
+def get_player(chat_id, username, first_name):
+    if username is not None:
+        db = sqlite3.connect('player_database')
+        cursor = db.cursor()
+        cursor.execute('SELECT name FROM players WHERE id = ?',(chat_id,))
+        data = cursor.fetchone()
+        if data is None:
+            cursor.execute('INSERT INTO players(id, games_played, games_won, name)VALUES (?,?,?,?)', (chat_id, 0, 0, username))
+        elif data[0][0] != '@':
+            cursor.execute('UPDATE players SET name = ? WHERE id = ?', ('@' + username,chat_id))
+        else:
+            print(data[0])
+        db.commit()
+        db.close()
     else:
-        print(data[0])
-    db.commit()
-    db.close()
+        db = sqlite3.connect('player_database')
+        cursor = db.cursor()
+        cursor.execute('SELECT name FROM players WHERE id = ?', (chat_id,))
+        data = cursor.fetchone()
+        if data is None:
+            cursor.execute('INSERT INTO players(id, games_played, games_won, name)VALUES (?,?,?,?)',
+                           (chat_id, 0, 0, first_name))
+        else:
+            print(data[0])
+        db.commit()
+        db.close()
+
 
 def get_games(chat_id):
     db = sqlite3.connect('player_database')
@@ -38,6 +52,7 @@ def add_played_games(chat_id, game=1):
     db.commit()
     db.close()
 
+
 def getallplayers():
     db = sqlite3.connect('player_database')
     db.row_factory = lambda cursor, row: row[0]
@@ -59,7 +74,7 @@ def add_won_games(chat_id, game=1):
     db.close()
 
 
-def createteam(cid1,cid2,name1,name2):
+def createteam(cid1, cid2, name1, name2):
     db = sqlite3.connect('player_database')
     cursor = db.cursor()
 
@@ -79,7 +94,7 @@ def checktournament(cid):
     data = cursor.fetchone()
     db.commit()
     db.close()
-    if data == None:
+    if data is None:
         return False
     else:
         return True
