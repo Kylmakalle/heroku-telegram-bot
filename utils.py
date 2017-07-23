@@ -18,6 +18,7 @@ def prepare_fight(game):
     # Организация словаря
     game.player_dict = {p.chat_id: p for p in game.players}
     game.gamestate = 'weapon'
+    bot.send_message(game.cid, 'Бой начинается!')
 
     # Список активных игроков и раздача итемов
     for p in game.players:
@@ -61,8 +62,8 @@ def prepare_fight(game):
         game.biggerTeam = game.team1
         game.lesserTeam = game.team2
         if len(game.team1.players) < len(game.team2.players):
-            game.biggerTeam = game.Team2
-            game.lesserTeam = game.Team1
+            game.biggerTeam = game.team2
+            game.lesserTeam = game.team1
         for p in game.lesserTeam.players:
             y = len(game.biggerTeam.players) - len(game.lesserTeam.players)
             p.maxabilities = y + 1
