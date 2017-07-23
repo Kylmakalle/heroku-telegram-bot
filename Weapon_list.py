@@ -76,9 +76,9 @@ class Weapon(object):
     def getDesc(self, damagetaken,user):
         if damagetaken != 0:
             if not self.Melee:
-                d =  str(u'\U0001F4A5' + "|" + getattr(self,str('desc' + str(random.randint(1, 3)))) + " Нанесено " + str(damagetaken) + ' урона.')
+                d = str(u'\U0001F4A5' + "|" + getattr(self,str('desc' + str(random.randint(1, 3)))) + " Нанесено " + str(damagetaken) + ' урона.')
             else:
-                d =  str(u'\U0001F44A' + "|" + getattr(self,str('desc' + str(random.randint(1, 3)))) + " Нанесено " + str(damagetaken) + ' урона.')
+                d = str(u'\U0001F44A' + "|" + getattr(self,str('desc' + str(random.randint(1, 3)))) + " Нанесено " + str(damagetaken) + ' урона.')
                 for a in user.abilities:
                     d = a.onhitdesc(a,d,user)
         else:
@@ -413,8 +413,6 @@ class Bleeding(Weapon):
         user.energy -= self.energy
         if n!=0:
             n += user.bonusdamage + self.damage - 1
-            for a in user.abilities:
-                n = a.onhit(a, n, user)
 
         for a in user.abilities:
             n = a.onhit(a, n, user)
@@ -483,8 +481,6 @@ class Burning(Weapon):
         user.energy -= self.energy
         if n!=0:
             n += user.bonusdamage + self.damage - 1
-            for a in user.abilities:
-                n = a.onhit(a, n, user)
 
         for a in user.abilities:
             n = a.onhit(a, n, user)
@@ -553,9 +549,6 @@ class Stunning(Weapon):
             n += user.bonusdamage + self.damage - 1
             for a in user.abilities:
                 n = a.onhit(a,n, user)
-
-        for a in user.abilities:
-            n = a.onhit(a,n, user)
         else:
             pass
         n += user.truedamage
@@ -622,8 +615,6 @@ class Crippling(Weapon):
         user.energy -= self.energy
         if n!=0:
             n += user.bonusdamage + self.damage - 1
-            for a in user.abilities:
-                n = a.onhit(a,n, user)
 
         for a in user.abilities:
             n = a.onhit(a,n, user)
@@ -712,8 +703,6 @@ class Dropping(Weapon):
         user.energy -= self.energy
         if n!=0:
             n += user.bonusdamage + self.damage - 1
-            for a in user.abilities:
-                n = a.onhit(a,n, user)
 
         for a in user.abilities:
             n = a.onhit(a,n, user)
@@ -1022,7 +1011,7 @@ fangs.desc3 = 'Игрок набрасывается на Противник.'
 fangs.desc4 = 'Игрок пытается укусить Противник, но не попадает.'
 fangs.desc5 = 'Игрок пытается укусить Противник, но не попадает.'
 fangs.desc6 = 'Игрок пытается укусить Противник, но не попадает.'
-fists = Weapon(1, 1, 1, 4, 1, True, True, True, 'Кулаки', '1-2' + u'\U0001F4A5' + "|" + '1' + u'\U000026A1', standart=False, natural=True)
+fists = Weapon(1, 1, 1, 4, 1, True, True, True, 'Кулаки', '1' + u'\U0001F4A5' + "|" + '1' + u'\U000026A1', standart=False, natural=True)
 fists.desc1 = 'Игрок бьет Противник Кулаком.'
 fists.desc2 = 'Игрок бьет Противник Кулаком.'
 fists.desc3 = 'Игрок бьет Противник Кулаком.'

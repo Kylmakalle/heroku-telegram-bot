@@ -437,7 +437,7 @@ class Zombie(Ability):
             user.fight.activeplayers.remove(user)
             user.fight.actors.remove(user)
             user.fight.string.add(u'\U00002620' + '| Зомби ' + user.name + ' не может больше двигаться.')
-        user.accuracy = 6 - user.hungercounter
+        user.accuracy = 6 - user.hungercounter*2
 
 
 abilities.append(Piromant)

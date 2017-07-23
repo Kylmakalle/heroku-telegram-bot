@@ -396,7 +396,7 @@ class Zombie(Item):
             user.itemtarget.fight.activeplayers.append(user.itemtarget)
             user.itemtarget.fight.actors.append(user.itemtarget)
             user.itemtarget.hungercounter = 3
-            user.itemtarget.accuracy = 7 - user.itemtarget.hungercounter
+            user.itemtarget.accuracy = 7 - user.itemtarget.hungercounter*2
             user.itemtarget.turn = 'raise'
             user.itemlist.remove(self)
 
