@@ -415,6 +415,9 @@ class Necromancer(Ability):
 
     def aquare(self, user):
         user.itemlist.append(Item_list.zombie)
+    def special_end(self, user):
+        if Item_list.zombie not in user.itemlist:
+            user.itemlist.append(Item_list.zombie)
 
 
 class Zombie(Ability):
