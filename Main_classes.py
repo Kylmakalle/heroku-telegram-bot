@@ -125,6 +125,7 @@ class Player(object):
         self.healtarget = None
         self.team = None
         self.Alive = True
+        self.hypnosysresist = 0
 
     # Атака игрока
     def attack(self):
