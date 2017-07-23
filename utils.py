@@ -70,7 +70,7 @@ def prepare_fight(game):
                 x = random.randint(0, (len(Item_list.itemlist) - 1))
                 p.itemlist.append(Item_list.itemlist[x])
                 y -= 1
-        for p in game.BiggerTeam.players:
+        for p in game.biggerTeam.players:
             p.maxabilities = 1
         for x in range(0, (len(game.biggerTeam.players) - len(game.lesserTeam.players)) * 2):
             game.lesserTeam.actors.append(ai.Dog(u'\U0001F436' + '| Собака ' + str(x + 1), game, game.lesserTeam))
