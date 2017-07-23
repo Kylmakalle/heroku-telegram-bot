@@ -8,6 +8,7 @@ import special_abilities
 class AI_player(object):
     def __init__(self, name, game, team):
         # Переменные для бота
+        self.bot = True
         self.lostweapon = None
         self.toughness = 6
         self.weapon = None

@@ -363,8 +363,9 @@ class Zombie(Item):
         keyboard = types.InlineKeyboardMarkup()
         zombies = list(user.team.deadplayers)
         for p in zombies:
-            callback_button = types.InlineKeyboardButton(text=p.name, callback_data='spitem' + str(p.chat_id))
-            keyboard.add(callback_button)
+            if not p.bot:
+                callback_button = types.InlineKeyboardButton(text=p.name, callback_data='spitem' + str(p.chat_id))
+                keyboard.add(callback_button)
         keyboard.add(types.InlineKeyboardButton(text='Отмена', callback_data=str('spitemcancel')))
         bot.send_message(user.chat_id, 'Выберите зомби.', reply_markup=keyboard)
 
