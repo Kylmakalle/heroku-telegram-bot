@@ -57,7 +57,7 @@ def prepare_fight(game):
     game.abilitycounter = len(game.players)
     if len(game.team1.players) == len(game.team2.players) or not game.team2.players:
         for p in game.players:
-            p.maxabilities = 2
+            p.maxabilities = 5
     else:
         game.biggerTeam = game.team1
         game.lesserTeam = game.team2
@@ -66,13 +66,13 @@ def prepare_fight(game):
             game.lesserTeam = game.team1
         for p in game.lesserTeam.players:
             y = len(game.biggerTeam.players) - len(game.lesserTeam.players)
-            p.maxabilities = y + 1
+            p.maxabilities = y + 4
             while y > 0:
                 x = random.randint(0, (len(Item_list.itemlist) - 1))
                 p.itemlist.append(Item_list.itemlist[x])
                 y -= 1
         for p in game.biggerTeam.players:
-            p.maxabilities = 1
+            p.maxabilities = 4
         for x in range(0, (len(game.biggerTeam.players) - len(game.lesserTeam.players)) * 2):
             game.lesserTeam.actors.append(ai.Dog(u'\U0001F436' + '| Собака ' + str(x + 1), game, game.lesserTeam))
             game.aiplayers.append(game.lesserTeam.actors[-1])
