@@ -488,8 +488,8 @@ def end(fight, game):
 
 
 def fight_loop(game, fight):
-    print('Команда 1 - ' + ', '.join([p.name for p in game.team1.players]))
-    print('Команда 2 - ' + ', '.join([p.name for p in game.team2.players]))
+    fight.string.add('Команда 1 - ' + ', '.join([p.name for p in game.team1.players]))
+    fight.string.add('Команда 2 - ' + ', '.join([p.name for p in game.team2.players]))
     fight.team1 = game.team1
     fight.team2 = game.team2
     fight.team1.leader = game.team1.actors[0]

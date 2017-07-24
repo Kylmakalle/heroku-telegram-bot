@@ -170,7 +170,7 @@ class ThrowingKnife(Item):
             user.fight.string.add(u'\U0001F52A' + " |" + user.name + ' кидает Метательный Нож в '
                                   + user.itemtarget.name + '. Нанесено 1 урона ' +
                                   u'\U00002763' + "|" + user.itemtarget.name + ' истекает кровью!')
-            user.itemtarget.damagetaken += 2
+            user.itemtarget.damagetaken += 1
             user.itemtarget.bleedcounter += 1
             user.itemtarget.bloodloss = False
 
