@@ -766,6 +766,55 @@ class Dropping(Weapon):
 
 
 class Katana(Weapon):
+    def __init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring, chance,
+                 standart=True, natural=False):
+        Weapon.__init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring,
+                        standart=standart, natural=natural)
+        self.chance = chance
+        if self.standart == True:
+            weaponlist.append(self)
+    def hit(self,user):
+        n = 0
+        d = 0
+        dmax = self.dice
+        print(user.name + " стреляет из " + str(self.name) + '. Его энергия - ' + str(
+            user.energy) + '. Его точность и бонусная точность оружия - ' + ' '
+              + str(user.accuracy) + ' ' + str(self.bonus) +
+              '. Шанс попасть - ' + str(11 - user.energy - self.bonus - user.accuracy - user.tempaccuracy) + "+!")
+        while d != dmax:
+            x = random.randint(1, 10)
+            print(user.name + ' Выпало ' + str(x))
+            if x > 10 - user.energy - self.bonus - user.accuracy - user.tempaccuracy:
+                n += 1
+            d += 1
+        if n != 0 and random.randint(1,10)< self.chance:
+            user.target.bleedcounter += 1
+            user.target.bloodloss = False
+            user.Hitability = True
+
+            # бонусный урон персонажа
+        # уходит энергия
+        user.energy -= self.energy
+        if n!=0:
+            n += user.bonusdamage + self.damage - 1
+
+        for a in user.abilities:
+            n = a.onhit(a, n, user)
+        else:
+            pass
+        n += user.truedamage
+        user.target.damagetaken += n
+        # применяется урон
+
+        # применяется потеря жизней
+        if user.target.hploss < self.mult and n!= 0:
+            user.target.hploss = self.mult
+        # энергия загоняется в 0
+
+        if user.energy < 0: user.energy = 0
+
+        print('bleed')
+        return n
     def get_action(self, p, call):
         keyboard1 = types.InlineKeyboardMarkup()
         enemyteam = p.targets
@@ -798,6 +847,26 @@ class Katana(Weapon):
                     d = a.onhitdesc(a, d, user)
                 user.fight.string.add(d)
                 self.energy -= 3
+
+    def getDesc(self, damagetaken, user):
+        if damagetaken != 0:
+            if not self.Melee:
+                d = str(
+                    u'\U0001F4A5' + "|" + getattr(self, str('desc' + str(random.randint(1, 3)))) + " Нанесено " + str(
+                        damagetaken) + ' урона.')
+            else:
+                d = str(
+                    u'\U0001F44A' + "|" + getattr(self, str('desc' + str(random.randint(1, 3)))) + " Нанесено " + str(
+                        damagetaken) + ' урона.')
+            if user.target.bleedcounter == 1 and user.Hitability:
+                d += u'\U00002763' + "|" + user.target.name + ' истекает кровью!'
+            elif user.target.bleedcounter > 1 and user.Hitability:
+                d += u'\U00002763' + "|" 'Кровотечение усиливается!'
+            for a in user.abilities:
+                d = a.onhitdesc(a, d, user)
+            return d
+        else:
+            return str(u'\U0001F4A8' + "|" + getattr(self, str('desc' + str(random.randint(4, 6)))))
 
 
 class ULTRA(Weapon):
@@ -916,7 +985,7 @@ class BowBleeding(Weapon):
 
         user.bonusaccuracy = 0
         user.Armed = False
-katana=Katana(3, 1, 2, 2, 1, True, False, False, 'Катана','1-3' + u'\U0001F525' + "|" + '2' + u'\U000026A1', standart=False)
+katana=Katana(3, 1, 2, 2, 1, True, False, False, 'Катана','1-3' + u'\U0001F525' + "|" + '2' + u'\U000026A1', 3, standart=False)
 katana.desc1 = 'Игрок бьет Противник Катаной!'
 katana.desc2 = 'Игрок бьет Противник Катаной!'
 katana.desc3 = 'Игрок бьет Противник Катаной!'
