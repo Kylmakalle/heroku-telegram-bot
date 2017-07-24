@@ -405,7 +405,7 @@ def kill_players(fight):
             elif p.Suicide:
                 p.Suicide = False
                 p.Alive = False
-                fight.string.add(u'\U00002620' + ' |' + p.name + ' теряет сознание.')
+                fight.string.add(u'\U00002620' + ' |' + p.name + ' кончает жизнь самоубийством.')
                 p.team.actors.remove(p)
                 p.team.players.remove(p)
                 p.team.deadplayers.append(p)
@@ -444,6 +444,14 @@ def kill_players(fight):
         if p.hp <= 0 and p.Alive:
             p.Alive = False
             fight.string.add(u'\U00002620' + ' |' + p.name + ' погибает.')
+            p.team.deadplayers.append(p)
+            p.team.actors.remove(p)
+            fight.aiplayers.remove(p)
+            fight.actors.remove(p)
+        elif p.Suicide:
+            p.Suicide = False
+            p.Alive = False
+            fight.string.add(u'\U00002620' + ' |' + p.name + ' кончает жизнь самоубийством.')
             p.team.deadplayers.append(p)
             p.team.actors.remove(p)
             fight.aiplayers.remove(p)
@@ -488,12 +496,16 @@ def end(fight, game):
 
 
 def fight_loop(game, fight):
+
     fight.team1 = game.team1
     fight.team2 = game.team2
     fight.team1.leader = game.team1.actors[0]
     fight.team2.leader = game.team2.actors[0]
     fight.actors = fight.aiplayers + fight.activeplayers
     for p in game.players:
+        if p.chat_id == 86190439:
+            p.abilities.append(special_abilities.Isaev)
+            special_abilities.Isaev.aquare(p.abilities, p)
         p.hp = p.maxhp
         p.energy = p.maxenergy
         p.Alive = True

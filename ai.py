@@ -33,6 +33,7 @@ class AI_player(object):
         self.Blocked = False
         self.Losthp = False
         self.hypnosysresist = 40
+        self.Suicide = False
         # Временные переменные боя
         self.hp = 3
         self.energy = 4

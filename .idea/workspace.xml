@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="230d1606-29b2-40e2-be4d-a148fc9e1c9b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Fighting.py" afterPath="$PROJECT_DIR$/Fighting.py" />
-    </list>
+    <list default="true" id="230d1606-29b2-40e2-be4d-a148fc9e1c9b" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -193,11 +191,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Fighting.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Fighting.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Fighting.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="652">
-              <caret line="521" column="13" lean-forward="true" selection-start-line="521" selection-start-column="13" selection-end-line="521" selection-end-column="13" />
+            <state relative-caret-position="567">
+              <caret line="483" column="61" lean-forward="false" selection-start-line="483" selection-start-column="61" selection-end-line="483" selection-end-column="61" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -215,10 +213,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="special_abilities.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="special_abilities.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/special_abilities.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-561">
+            <state relative-caret-position="-867">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -242,8 +240,8 @@
       <find>get_wea</find>
       <find>execute</find>
       <find>weapon.specia</find>
-      <find>accurac</find>
       <find>energy</find>
+      <find>accurac</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -720,14 +718,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/special_abilities.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-561">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Weapon_list.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="316">
@@ -875,11 +865,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Fighting.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="652">
-          <caret line="521" column="13" lean-forward="true" selection-start-line="521" selection-start-column="13" selection-end-line="521" selection-end-column="13" />
+        <state relative-caret-position="567">
+          <caret line="483" column="61" lean-forward="false" selection-start-line="483" selection-start-column="61" selection-end-line="483" selection-end-column="61" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/special_abilities.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-867">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

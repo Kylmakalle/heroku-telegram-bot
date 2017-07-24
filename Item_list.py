@@ -131,7 +131,6 @@ class GasGrenade(Item):
             user.itemtarget.energy -= 6
 
 
-
 class Shield(Item):
     def useact(self, user):
         keyboard = types.InlineKeyboardMarkup()
@@ -181,7 +180,6 @@ class ThrowingKnife(Item):
         del user.itemtarget
 
 
-
 class Drug(Item):
 
     def useact(self, user):
@@ -222,7 +220,6 @@ class Heal(Item):
                                      + ' хп.')
         user.enditems.remove(self)
         del user.itemtarget
-
 
 
 
@@ -284,6 +281,31 @@ class Hypnosys(Item):
                     + ' сопротивляется Гипнозу!')
             user.itemtarget.tempaccuracy -= 10
         user.hypnosysrefresh = user.fight.round + 5
+        user.itemlist.remove(self)
+        del user.itemtarget
+
+
+class Isaev(Item):
+
+    def useact(self, user):
+        keyboard = types.InlineKeyboardMarkup()
+        for p in utils.get_other_team(user).actors:
+            callback_button = types.InlineKeyboardButton(text=p.name, callback_data='spitem' + str(p.chat_id))
+            keyboard.add(callback_button)
+        keyboard.add(types.InlineKeyboardButton(text='Отмена', callback_data=str('spitemcancel')))
+        bot.send_message(user.chat_id, 'Выберите цель для оскорбления.', reply_markup=keyboard)
+
+    def usefirst(self, user):
+        if random.randint(1, 100) <= 8:
+            user.fight.string.add(
+                u'\U0001F595' + u'\U0001F494' + "|" + 'Исаев ' + user.name + " посылает " + user.itemtarget.name
+                + ' нахуй. ' + user.itemtarget.name + ' теряет веру в себя!')
+            user.itemtarget.Suicide = True
+        else:
+            user.fight.string.add(
+                u'\U0001F595' + "|" + 'Исаев ' + user.name + " посылает " + user.itemtarget.name
+                + ' нахуй.')
+        user.isaevrefresh = user.fight.round + 2
         user.itemlist.remove(self)
         del user.itemtarget
 
@@ -404,6 +426,7 @@ class Zombie(Item):
 zombie = Zombie('Поднять мертвеца', 'itemat6',standart=False)
 shieldg = Shieldg('Щит|Генератор', 'itemat1',standart=False)
 hypnosys = Hypnosys('Гипноз', 'itemat2',standart=False)
+isaev = Isaev('Оскорбления', 'itemat7',standart=False)
 mental = Mental('Визор', 'mitem01',standart=False)
 engineer = Engineer('Оружейник', 'itemat3',standart=False)
 ritual = Ritual('Ритуал', 'itemat4',standart=False)
@@ -411,6 +434,7 @@ curse = Curse('Проклятие', 'itemat5',standart=False)
 id_items.append(shieldg)
 id_items.append(hypnosys)
 id_items.append(mental)
+id_items.append(isaev)
 id_items.append(engineer)
 id_items.append(ritual)
 id_items.append(curse)

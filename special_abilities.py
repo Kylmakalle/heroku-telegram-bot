@@ -154,7 +154,7 @@ class Shields(Ability):
                                                    + str(user.shieldrefresh - user.fight.round) + " ход(ов).")
 
 
-class Berserk(Ability):
+class Revenge(Ability):
     name = 'Месть'
     info = 'Если умирает ваш союзник - ваши статы увеличиваются.'
     MeleeOnly = False
@@ -316,6 +316,39 @@ class Piromant(Ability):
             pass
 
 
+class Berserk(Ability):
+    name = 'Берсерк'
+    info = 'Ваш максимум энергии уменьшается на 2. Он увеличивается за каждую недостающую жизнь. Вы наносите бонусный урон' \
+           'пока у вас ровно 1 хп.'
+    MeleeOnly = True
+    RangeOnly = False
+    TeamOnly = False
+
+    def aquare(self, user):
+        user.energy -= 2
+        user.maxenergy -= 2
+        user.berserkenergy = user.maxenergy
+        user.Rage = False
+
+    def special_end(self, user):
+        berserkenergy = user.berserkenergy + user.maxhp - user.hp
+        if user.hp < 1:
+            user.energy = user.berserkenergy
+        elif berserkenergy < user.maxenergy:
+            user.maxenergy = berserkenergy
+        elif berserkenergy > user.maxenergy:
+            newenergy = berserkenergy - user.maxenergy
+            user.maxenergy = berserkenergy
+            user.energy += newenergy
+            user.fight.string.add(u'\U0001F621' + "| Берсерк " + user.name + ' получает ' + str(newenergy) + ' энергию')
+        if user.hp == 1 and user.Rage == False:
+            user.Rage = True
+            user.bonusdamage += 2
+            user.fight.string.add(u'\U0001F621' + "| Берсерк " + user.name + ' входит в боевой транс!')
+        elif user.hp != 1 and user.Rage == True:
+            user.Rage = False
+
+
 class Healer(Ability):
     name = 'Медик'
     info = 'Вы получаете дополнительный стимулятор.'
@@ -443,9 +476,29 @@ class Zombie(Ability):
         user.accuracy = 6 - user.hungercounter*2
 
 
+class Isaev(Ability):
+    name = 'Исаев'
+    info = 'Вы можете изменить цель противника на его случайного союзника! Если он стреляет в этот ход, естественно.'
+    MeleeOnly = False
+    RangeOnly = False
+    TeamOnly = False
+
+    def aquare(self, user):
+        user.isaevrefresh = 0
+        user.itemlist.append(Item_list.isaev)
+
+    def special_end(self, user):
+        if user.Alive:
+            if user.isaevrefresh == user.fight.round:
+                user.itemlist.append(Item_list.isaev)
+                bot.send_message(user.chat_id, 'Способность "Исаев" обновлена!')
+            elif user.isaevrefresh - user.fight.round > 0:
+                bot.send_message(user.chat_id, 'Способность "Исаев" обновится через '
+                                 + str(user.isaevrefresh - user.fight.round) + " ход(ов).")
+
 abilities.append(Piromant)
 abilities.append(Armorer)
-abilities.append(Berserk)
+abilities.append(Revenge)
 abilities.append(Hypnosyser)
 abilities.append(Sadist)
 abilities.append(Mentalist)
@@ -460,4 +513,5 @@ abilities.append(West)
 abilities.append(Healer)
 abilities.append(Ritual)
 abilities.append(Blocker)
+abilities.append(Berserk)
 abilities.append(Necromancer)

@@ -720,7 +720,8 @@ class Dropping(Weapon):
         return n
 
     def effect(self, user):
-        if user.target.turn == 'attack' + str(user.fight.round) and random.randint(1, 10) <= self.chance:
+        if user.target.turn == 'attack' + str(user.fight.round) and random.randint(1, 10) or \
+                user.target.turn == 'weaponspecial' + str(user.fight.round) and random.randint(1, 10) <= self.chance:
             if not user.target.weapon.natural:
                 user.target.lostweapon = user.target.weapon
                 user.fight.string.add(u'\U0001F450' + '|' + user.target.name + ' теряет свое оружие!')
@@ -755,8 +756,8 @@ class Dropping(Weapon):
             if damagetaken != 0:
                 user.weaponeffect.append(self)
                 d = str(
-                    u'\U000026D3' + "|" + user.name + ' пытается выбить оружие из рук ' + user.target.name + "! Нанесено " + str(
-                        damagetaken) + ' урона.')
+                    u'\U000026D3' + "|" + user.name + ' пытается выбить оружие из рук '
+                    + user.target.name + "! Нанесено " + str(damagetaken) + ' урона.')
             else:
                 d = str(
                     u'\U0001F4A8' + "|" + user.name + ' пытается выбить оружие из рук ' + user.target.name + "!")
@@ -813,6 +814,7 @@ class Katana(Weapon):
 
         print('bleed')
         return n
+
     def get_action(self, p, call):
         keyboard1 = types.InlineKeyboardMarkup()
         enemyteam = p.targets
@@ -822,13 +824,16 @@ class Katana(Weapon):
                 keyboard1.add(types.InlineKeyboardButton(text=c.name, callback_data=str('op' + str(c.chat_id))))
             else:
                 keyboard1.add(types.InlineKeyboardButton(text=c.name, callback_data=str('op' + str(c.chat_id))),
-                              types.InlineKeyboardButton(text="Казнь", callback_data=str('execute' + str(c.chat_id))))
+                              types.InlineKeyboardButton(text="Казнь", callback_data=str('weaponspecial' + str(c.chat_id))))
 
         keyboard1.add(types.InlineKeyboardButton(text='Отмена', callback_data=str('opcancel')))
         bot.send_message(p.chat_id, 'Выберите противника.', reply_markup=keyboard1)
 
+    def special(self, user, call):
+        user.target = utils.actor_from_id(call.data[13:], user.game)
+
     def special_second(self, user):
-        if user.turn == 'execute':
+        if user.turn == 'weaponspecial':
             if user.target.hp == 1:
                 user.tempaccuracy += 3
                 damagetaken = self.hit(user)
