@@ -511,8 +511,8 @@ def fight_loop(game, fight):
         p.Alive = True
         p.team.participators.append(p)
     while fight.team1.actors != [] and fight.team2.actors != [] and fight.round != 50:
-        fight.string.add('Команда 1 - ' + ', '.join([p.name for p in game.team1.players]))
-        fight.string.add('Команда 2 - ' + ', '.join([p.name for p in game.team2.players]))
+        fight.string.add('Команда 1 - ' + ', '.join([p.name for p in game.team1.actors]))
+        fight.string.add('Команда 2 - ' + ', '.join([p.name for p in game.team2.actors]))
         get_playerpool(fight)
         send_actions(fight)
         wait_response(fight)
