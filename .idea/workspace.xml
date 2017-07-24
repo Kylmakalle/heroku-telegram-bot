@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="230d1606-29b2-40e2-be4d-a148fc9e1c9b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Weapon_list.py" afterPath="$PROJECT_DIR$/Weapon_list.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Fighting.py" afterPath="$PROJECT_DIR$/Fighting.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -47,7 +46,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Weapon_list.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Weapon_list.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Weapon_list.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="316">
@@ -194,11 +193,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Fighting.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Fighting.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Fighting.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="337" column="21" lean-forward="false" selection-start-line="337" selection-start-column="14" selection-end-line="337" selection-end-column="21" />
+            <state relative-caret-position="652">
+              <caret line="521" column="13" lean-forward="true" selection-start-line="521" selection-start-column="13" selection-end-line="521" selection-end-column="13" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -243,8 +242,8 @@
       <find>get_wea</find>
       <find>execute</find>
       <find>weapon.specia</find>
-      <find>energy</find>
       <find>accurac</find>
+      <find>energy</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -254,12 +253,12 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/bot.py" />
-        <option value="$PROJECT_DIR$/Fighting.py" />
         <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/Item_list.py" />
         <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/Main_classes.py" />
         <option value="$PROJECT_DIR$/Weapon_list.py" />
+        <option value="$PROJECT_DIR$/Fighting.py" />
       </list>
     </option>
   </component>
@@ -729,16 +728,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Fighting.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="337" column="21" lean-forward="false" selection-start-line="337" selection-start-column="14" selection-end-line="337" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Weapon_list.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="316">
@@ -880,6 +869,16 @@
             <element signature="e#39973#40448#0" expanded="false" />
             <element signature="e#40032#40350#0" expanded="false" />
             <element signature="e#40179#40350#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Fighting.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="652">
+          <caret line="521" column="13" lean-forward="true" selection-start-line="521" selection-start-column="13" selection-end-line="521" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
           </folding>
         </state>
       </provider>
