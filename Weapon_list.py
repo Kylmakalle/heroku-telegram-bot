@@ -830,7 +830,7 @@ class Katana(Weapon):
     def special_second(self, user):
         if user.turn == 'execute':
             if user.target.hp == 1:
-
+                user.tempaccuracy += 3
                 damagetaken = self.hit(user)
                 if damagetaken != 0:
                     user.target.hp = 0
