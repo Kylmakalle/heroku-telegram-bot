@@ -805,8 +805,6 @@ class Katana(Weapon):
         n += user.truedamage
         user.target.damagetaken += n
         # применяется урон
-
-        # применяется потеря жизней
         if user.target.hploss < self.mult and n!= 0:
             user.target.hploss = self.mult
         # энергия загоняется в 0
@@ -832,9 +830,10 @@ class Katana(Weapon):
     def special_second(self, user):
         if user.turn == 'execute':
             if user.target.hp == 1:
-                user.target.hp = 0
+
                 damagetaken = self.hit(user)
                 if damagetaken != 0:
+                    user.target.hp = 0
                     d = str(
                         u'\U00003299' + u'\U0001F494' + "|" + user.name + ' наносит стремительный удар по ' + user.target.name
                         + " оставляя страшную рану! Нанесено " + str(damagetaken) + ' урона. ' + user.target.name +
@@ -846,7 +845,7 @@ class Katana(Weapon):
                 for a in user.abilities:
                     d = a.onhitdesc(a, d, user)
                 user.fight.string.add(d)
-                self.energy -= 3
+                user.energy -= 3
 
     def getDesc(self, damagetaken, user):
         if damagetaken != 0:
