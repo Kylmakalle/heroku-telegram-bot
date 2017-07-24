@@ -820,7 +820,7 @@ class Katana(Weapon):
         enemyteam = p.targets
         p.turn = call.data
         for c in enemyteam:
-            if c.hp > 1 or p.energy < 4:
+            if c.hp > 1 or p.energy < 3:
                 keyboard1.add(types.InlineKeyboardButton(text=c.name, callback_data=str('op' + str(c.chat_id))))
             else:
                 keyboard1.add(types.InlineKeyboardButton(text=c.name, callback_data=str('op' + str(c.chat_id))),
