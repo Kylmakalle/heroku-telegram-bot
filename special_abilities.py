@@ -218,9 +218,6 @@ class Mentalist(Ability):
         user.mentalrefresh = 0
         user.itemlist.append(Item_list.mental)
 
-    def stop(self, user):
-        user.mentalrefresh = 0
-
     def special_end(self, user):
         print('Визор ' + user.name)
         if user.Alive:
@@ -496,6 +493,30 @@ class Isaev(Ability):
                 bot.send_message(user.chat_id, 'Способность "Исаев" обновится через '
                                  + str(user.isaevrefresh - user.fight.round) + " ход(ов).")
 
+
+class Thieve(Ability):
+
+    name = 'Вор'
+    info = 'Вы можете украсть используемый предмет.'
+    MeleeOnly = False
+    RangeOnly = False
+    TeamOnly = False
+
+    def aquare(self, user):
+        user.accuracy += 1
+        user.stealrefresh = 0
+        user.itemlist.append(Item_list.steal)
+
+    def special_end(self, user):
+        if user.Alive:
+            if user.stealrefresh == user.fight.round:
+                user.itemlist.append(Item_list.steal)
+                bot.send_message(user.chat_id, 'Способность "Украсть" обновлена!')
+            elif user.stealrefresh - user.fight.round > 0:
+                bot.send_message(user.chat_id, 'Способность "Украсть" обновится через '
+                                               + str(user.stealrefresh - user.fight.round) + " ход(ов).")
+
+
 abilities.append(Piromant)
 abilities.append(Armorer)
 abilities.append(Revenge)
@@ -515,3 +536,4 @@ abilities.append(Ritual)
 abilities.append(Blocker)
 abilities.append(Berserk)
 abilities.append(Necromancer)
+abilities.append(Thieve)

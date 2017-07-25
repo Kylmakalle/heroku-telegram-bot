@@ -196,6 +196,11 @@ def manifest_first_q(fight):
         if p.turn[0:4] == 'item':
             for i in p.itemlist:
                 if p.turn[0:7] == i.id:
+                    i.usebefore(p)
+                    break
+        if p.turn[0:4] == 'item':
+            for i in p.itemlist:
+                if p.turn[0:7] == i.id:
                     i.usefirst(p)
                     break
         for a in p.abilities:
@@ -382,10 +387,10 @@ def get_results(fight):
         utils.apply_damage(fight.team1.actors)
     for p in fight.actors:
         p.weapon.special_end(p)
-        for a in p.abilities:
-            a.special_end(a, p)
         for a in p.enditems:
             a.used(p)
+        for a in p.abilities:
+            a.special_end(a, p)
     for p in fight.aiplayers:
         p.aiactionend(fight)
 

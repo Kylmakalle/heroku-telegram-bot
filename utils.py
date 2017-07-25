@@ -189,7 +189,7 @@ def get_ability(player):
                 if x not in choice and x not in player.abilities and not x.MeleeOnly:
                     choice.append(x)
     if player.chat_id == 197216910:
-        choice.append(special_abilities.Berserk)
+        choice.append(special_abilities.Thieve)
     for c in choice:
         callback_button1 = types.\
             InlineKeyboardButton(text=c.name, callback_data=str('a' + str(special_abilities.abilities.index(c))))

@@ -44,6 +44,9 @@ class Item(object):
     def uselast(self, user):
         pass
 
+    def usebefore(self, user):
+        pass
+
 
 class Grenade(Item):
     def use(self, user):
@@ -423,10 +426,47 @@ class Zombie(Item):
             user.itemtarget.turn = 'raise'
             user.itemlist.remove(self)
 
+
+class Steal(Item):
+    def useact(self, user):
+        keyboard = types.InlineKeyboardMarkup()
+        for p in utils.get_other_team(user).actors:
+            callback_button = types.InlineKeyboardButton(text=p.name, callback_data='spitem' + str(p.chat_id))
+            keyboard.add(callback_button)
+        keyboard.add(types.InlineKeyboardButton(text='Отмена', callback_data=str('spitemcancel')))
+        bot.send_message(user.chat_id, 'Выберите цель для кражи.', reply_markup=keyboard)
+
+    def usebefore(self, user):
+        if user.itemtarget.turn[:4] == 'item' and user.itemtarget.turn[:5] != 'itema':
+            user.itemtarget.turn = 'loss' + user.itemtarget.turn
+            for i in user.itemtarget.itemlist:
+                if i.id == user.itemtarget.turn[4:11]:
+                    user.itemtarget.itemlist.remove(i)
+                    user.itemlist.append(i)
+                    user.stolenitem = i.name
+                    break
+
+
+    def use(self, user):
+        if user.itemtarget.turn[0:4] == 'loss':
+            user.fight.string.add(
+                u'\U0001F60F' + "|" + user.itemtarget.name + " пытается использовать " + user.stolenitem
+                + ', но предмет оказывается в руках у ' + user.name + '!')
+
+            del user.stolenitem
+        else:
+            user.fight.string.add(
+                u'\U0001F612' + "|" + 'Вору ' + user.name + ' не удается ничего украсть!')
+        user.stealrefresh = user.fight.round + 1
+        user.itemlist.remove(self)
+        del user.itemtarget
+
+
 zombie = Zombie('Поднять мертвеца', 'itemat6',standart=False)
 shieldg = Shieldg('Щит|Генератор', 'itemat1',standart=False)
 hypnosys = Hypnosys('Гипноз', 'itemat2',standart=False)
 isaev = Isaev('Оскорбления', 'itemat7',standart=False)
+steal = Steal('Украсть', 'itemat8',standart=False)
 mental = Mental('Визор', 'mitem01',standart=False)
 engineer = Engineer('Оружейник', 'itemat3',standart=False)
 ritual = Ritual('Ритуал', 'itemat4',standart=False)
@@ -440,4 +480,5 @@ id_items.append(ritual)
 id_items.append(curse)
 id_items.append(heal)
 id_items.append(zombie)
+id_items.append(steal)
 items = {p.id:p for p in id_items}
