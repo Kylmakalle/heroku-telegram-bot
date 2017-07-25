@@ -340,7 +340,11 @@ def get_game_from_player(cid):
 def send_inventory(player):
     keyboard = types.InlineKeyboardMarkup()
     for p in player.itemlist:
-        keyboard.add(types.InlineKeyboardButton(text=p.name, callback_data=str(p.id + str(player.fight.round))))
+        Aviable = True
+        if p.id[0:5] == 'iteme' and player.energy < 2:
+            Aviable = False
+        if Aviable:
+            keyboard.add(types.InlineKeyboardButton(text=p.name, callback_data=str(p.id + str(player.fight.round))))
     keyboard.add(types.InlineKeyboardButton(text='Отмена', callback_data=str('cancel')))
     bot.send_message(player.chat_id, 'Выберите предмет.', reply_markup=keyboard)
 
