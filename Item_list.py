@@ -448,16 +448,18 @@ class Steal(Item):
 
 
     def use(self, user):
+        if not user.itemtarget.itemlist:
+            bot.send_message(user.chat_id, 'У цели нет предметов!')
         if user.itemtarget.turn[0:4] == 'loss':
             user.fight.string.add(
                 u'\U0001F60F' + "|" + user.itemtarget.name + " пытается использовать " + user.stolenitem
                 + ', но предмет оказывается в руках у ' + user.name + '!')
-
+            user.itemtarget.turn = 'losе'
             del user.stolenitem
         else:
             user.fight.string.add(
                 u'\U0001F612' + "|" + 'Вору ' + user.name + ' не удается ничего украсть!')
-        user.stealrefresh = user.fight.round + 1
+        user.stealrefresh = user.fight.round + 2
         user.itemlist.remove(self)
         del user.itemtarget
 
