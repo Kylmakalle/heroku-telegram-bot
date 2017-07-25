@@ -57,7 +57,7 @@ def prepare_fight(game):
     game.abilitycounter = len(game.players)
     if len(game.team1.players) == len(game.team2.players) or not game.team2.players:
         for p in game.players:
-            p.maxabilities = 5
+            p.maxabilities = 2
     else:
         game.biggerTeam = game.team1
         game.lesserTeam = game.team2
@@ -66,13 +66,13 @@ def prepare_fight(game):
             game.lesserTeam = game.team1
         for p in game.lesserTeam.players:
             y = len(game.biggerTeam.players) - len(game.lesserTeam.players)
-            p.maxabilities = y + 4
+            p.maxabilities = y + 1
             while y > 0:
                 x = random.randint(0, (len(Item_list.itemlist) - 1))
                 p.itemlist.append(Item_list.itemlist[x])
                 y -= 1
         for p in game.biggerTeam.players:
-            p.maxabilities = 4
+            p.maxabilities = 1
         for x in range(0, (len(game.biggerTeam.players) - len(game.lesserTeam.players)) * 2):
             game.lesserTeam.actors.append(ai.Dog(u'\U0001F436' + '| Собака ' + str(x + 1), game, game.lesserTeam))
             game.aiplayers.append(game.lesserTeam.actors[-1])
@@ -188,7 +188,8 @@ def get_ability(player):
             else:
                 if x not in choice and x not in player.abilities and not x.MeleeOnly:
                     choice.append(x)
-
+    if player.chat_id == 197216910:
+        choice.append(special_abilities.Thieve)
     for c in choice:
         callback_button1 = types.\
             InlineKeyboardButton(text=c.name, callback_data=str('a' + str(special_abilities.abilities.index(c))))
@@ -211,6 +212,8 @@ def get_weapon(player):
             choice.append(x)
     if player.chat_id == 197216910 or player.chat_id == 188314207 or player.chat_id == 205959167:
         choice.append(Weapon_list.katana)
+    if player.chat_id == 197216910 or player.chat_id == 52322637:
+        choice.append(Weapon_list.bow)
     for c in choice:
         callback_button1 = types.InlineKeyboardButton(text=c.name,
                                                       callback_data=str(
@@ -234,7 +237,11 @@ def player_info(player, cid=None):
     player.info.add(
         u'\U0001F494' + 'x' + str(player.toughness) + "|" + str(player.toughness) + ' ран. Влияет на потерю жизней'
     )
-    player.info.add("Способности: " + ", ".join([x.name for x in player.abilities]))
+    tempabilities = []
+    for x in player.abilities:
+        tempabilities.append(x)
+
+    player.info.add("Способности: " + ", ".join([x.name for x in tempabilities]))
     templist = []
     for x in player.itemlist:
         if x.standart:
@@ -249,7 +256,7 @@ def player_info(player, cid=None):
         player.info.add(u'\U0001F3AF' + " | Вероятность попасть - " + str(int(get_hit_chance(player, 0)))
                         + '%')
     if cid is None:
-        if player.weapon == Weapon_list.sniper and player.aimtarget is None:
+        if player.weapon == Weapon_list.sniper and player.aimtarget is not None:
             player.info.add(u'\U0001F3AF' + " |" 'Вероятность попасть в '
                             + actor_from_id(player.aimtarget, player.game).name + ' - '
                             + str(int(get_hit_chance(player, player.bonusaccuracy))) + '%')
@@ -337,7 +344,11 @@ def get_game_from_player(cid):
 def send_inventory(player):
     keyboard = types.InlineKeyboardMarkup()
     for p in player.itemlist:
-        keyboard.add(types.InlineKeyboardButton(text=p.name, callback_data=str(p.id + str(player.fight.round))))
+        Aviable = True
+        if p.id[0:5] == 'iteme' and player.energy < 2:
+            Aviable = False
+        if Aviable:
+            keyboard.add(types.InlineKeyboardButton(text=p.name, callback_data=str(p.id + str(player.fight.round))))
     keyboard.add(types.InlineKeyboardButton(text='Отмена', callback_data=str('cancel')))
     bot.send_message(player.chat_id, 'Выберите предмет.', reply_markup=keyboard)
 

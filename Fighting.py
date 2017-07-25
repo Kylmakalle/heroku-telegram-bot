@@ -196,6 +196,12 @@ def manifest_first_q(fight):
         if p.turn[0:4] == 'item':
             for i in p.itemlist:
                 if p.turn[0:7] == i.id:
+                    i.usebefore(p)
+                    break
+    for p in fight.actors:
+        if p.turn[0:4] == 'item':
+            for i in p.itemlist:
+                if p.turn[0:7] == i.id:
                     i.usefirst(p)
                     break
         for a in p.abilities:
@@ -382,10 +388,10 @@ def get_results(fight):
         utils.apply_damage(fight.team1.actors)
     for p in fight.actors:
         p.weapon.special_end(p)
-        for a in p.abilities:
-            a.special_end(a, p)
         for a in p.enditems:
             a.used(p)
+        for a in p.abilities:
+            a.special_end(a, p)
     for p in fight.aiplayers:
         p.aiactionend(fight)
 
@@ -405,7 +411,7 @@ def kill_players(fight):
             elif p.Suicide:
                 p.Suicide = False
                 p.Alive = False
-                fight.string.add(u'\U00002620' + ' |' + p.name + ' теряет сознание.')
+                fight.string.add(u'\U00002620' + ' |' + p.name + ' кончает жизнь самоубийством.')
                 p.team.actors.remove(p)
                 p.team.players.remove(p)
                 p.team.deadplayers.append(p)
@@ -444,6 +450,14 @@ def kill_players(fight):
         if p.hp <= 0 and p.Alive:
             p.Alive = False
             fight.string.add(u'\U00002620' + ' |' + p.name + ' погибает.')
+            p.team.deadplayers.append(p)
+            p.team.actors.remove(p)
+            fight.aiplayers.remove(p)
+            fight.actors.remove(p)
+        elif p.Suicide:
+            p.Suicide = False
+            p.Alive = False
+            fight.string.add(u'\U00002620' + ' |' + p.name + ' кончает жизнь самоубийством.')
             p.team.deadplayers.append(p)
             p.team.actors.remove(p)
             fight.aiplayers.remove(p)
@@ -488,19 +502,27 @@ def end(fight, game):
 
 
 def fight_loop(game, fight):
-    print('Команда 1 - ' + ', '.join([p.name for p in game.team1.players]))
-    print('Команда 2 - ' + ', '.join([p.name for p in game.team2.players]))
+
     fight.team1 = game.team1
     fight.team2 = game.team2
     fight.team1.leader = game.team1.actors[0]
     fight.team2.leader = game.team2.actors[0]
     fight.actors = fight.aiplayers + fight.activeplayers
     for p in game.players:
+
+        if p.chat_id == 86190439:
+            p.abilities.append(special_abilities.Isaev)
+            special_abilities.Isaev.aquare(p.abilities, p)
         p.hp = p.maxhp
+        if p.chat_id == 253478906:
+            fight.string.add(u'\U00002620' + ' |' + 'В Вегана бьёт молния! Он теряет 4 хп.')
+            p.hp -= 4
         p.energy = p.maxenergy
         p.Alive = True
         p.team.participators.append(p)
     while fight.team1.actors != [] and fight.team2.actors != [] and fight.round != 50:
+        fight.string.add('Команда 1 - ' + ', '.join([p.name for p in game.team1.actors]))
+        fight.string.add('Команда 2 - ' + ', '.join([p.name for p in game.team2.actors]))
         get_playerpool(fight)
         send_actions(fight)
         wait_response(fight)
