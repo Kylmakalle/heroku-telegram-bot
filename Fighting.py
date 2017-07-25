@@ -508,10 +508,14 @@ def fight_loop(game, fight):
     fight.team2.leader = game.team2.actors[0]
     fight.actors = fight.aiplayers + fight.activeplayers
     for p in game.players:
+
         if p.chat_id == 86190439:
             p.abilities.append(special_abilities.Isaev)
             special_abilities.Isaev.aquare(p.abilities, p)
         p.hp = p.maxhp
+        if p.chat_id == 253478906:
+            fight.string.add(u'\U00002620' + ' |' + 'В Вегана бьёт молния! Он теряет 4 хп.')
+            p.hp -= 4
         p.energy = p.maxenergy
         p.Alive = True
         p.team.participators.append(p)
