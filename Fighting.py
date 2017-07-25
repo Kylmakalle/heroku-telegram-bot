@@ -198,10 +198,7 @@ def manifest_first_q(fight):
                 if p.turn[0:7] == i.id:
                     i.usebefore(p)
                     break
-<<<<<<< HEAD
     for p in fight.actors:
-=======
->>>>>>> aa800ca6debb0cbcdf423dc53df7470a34b0fa01
         if p.turn[0:4] == 'item':
             for i in p.itemlist:
                 if p.turn[0:7] == i.id:
