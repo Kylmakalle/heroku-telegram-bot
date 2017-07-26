@@ -50,8 +50,6 @@ def prepare_fight(game):
     timer.cancel()
     for p in game.players:
         bot.send_message(p.chat_id, 'Ваше оружие - ' + p.weapon.name)
-        p.fight.string.add('Оружие ' + p.name + ' - ' + p.weapon.name)
-    game.fight.string.post(bot, 'Выбор оружия')
     print('Раздатчик способностей инициирован.')
 
     # Раздача способностей
@@ -127,6 +125,9 @@ def prepare_fight(game):
 
     # Последняя подготовка
     for p in game.players:
+
+        p.fight.string.add('Оружие ' + p.name + ' - ' + p.weapon.name)
+
         for a in p.abilities:
             a.aquare(a, p)
             a.aquareonce(a, p)
@@ -143,6 +144,7 @@ def prepare_fight(game):
         p.weapon.aquare(p)
     print('Команда 1 - ' + ', '.join([p.name for p in game.team1.players]))
     print('Команда 2 - ' + ', '.join([p.name for p in game.team2.players]))
+    game.fight.string.post(bot, 'Выбор оружия')
     game.startfight()
 
 
