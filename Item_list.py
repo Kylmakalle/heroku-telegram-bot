@@ -191,9 +191,8 @@ class Jet(Item):
 
     def used(self, user):
         user.fight.string.add(u'\U0001F489' + " |" + user.name + ' использует Джет.')
-        user.jetturn = user.fight.round + 2
+        user.jetturn = user.fight.round + 3
         user.abilities.append(special_abilities.Jet)
-        user.useditems.remove(self)
 
 class Chitin(Item):
     def useact(self, user):
@@ -207,7 +206,6 @@ class Chitin(Item):
         user.armor += 2
         user.armorchance += 100
         user.abilities.append(special_abilities.Chitin)
-        user.useditems.remove(self)
 
 
 class Drug(Item):
@@ -219,8 +217,6 @@ class Drug(Item):
     def used(self, user):
         user.energy += 3
         user.fight.string.add(u'\U0001F489' + " |" + user.name + ' использует Адреналин, увеличивая энергию на 3.')
-        user.useditems.remove(self)
-
 
 class Heal(Item):
 
