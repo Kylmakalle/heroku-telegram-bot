@@ -31,7 +31,7 @@ class Warlock(special_abilities.Ability):
         user.deadplayers = []
 
     def special_first(self, user):
-        if user.deadteammates != user.team.deadplayers:
+        if len(user.deadplayers) < len(user.team.deadplayers) + len(utils.get_other_team(user).deadplayers):
             print('Обнаружены трупы! ')
             deadbodies = len(user.team.deadplayers) + len(utils.get_other_team(user).deadplayers) - len(user.deadplayers)
             user.deadplayers = list(user.team.deadplayers) + list(utils.get_other_team(user).deadplayers)
