@@ -20,9 +20,6 @@ class Ability(object):
     name = None
     info = None
 
-    def __init__(self):
-        abilities.append(self)
-
     def aquareonce(self, user):
         pass
 

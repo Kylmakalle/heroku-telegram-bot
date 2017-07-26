@@ -432,7 +432,6 @@ def kill_players(fight):
             elif p.hp <= 0 and p.Alive:
                 p.Alive = False
                 if 'Zombie' in p.passive:
-                    p.bonusdamage += 2
                     p.zombiecounter = 2
                     fight.string.add(u'\U0001F62C' + ' |' + p.name + ' продолжает сражаться, истекая кровью!')
                 else:

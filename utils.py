@@ -8,7 +8,7 @@ import Item_list
 import time
 import threading
 import ai
-
+import secret_abilities
 
 types = telebot.types
 bot = telebot.TeleBot(config.token)
@@ -131,6 +131,7 @@ def prepare_fight(game):
         if p.weapon.Melee:
             p.Inmelee = False
         p.weapon.aquare(p)
+        check_secrets_abilities(p)
     for p in game.fight.aiplayers:
         for a in p.abilities:
             a.aquare(a, p)
@@ -370,3 +371,6 @@ def delete_game(game):
                 pass
     del Main_classes.existing_games[game.cid]
     del game
+
+def check_secrets_abilities(p):
+    secret_abilities.check_ability(p)
