@@ -677,7 +677,8 @@ class Dropping(Weapon):
                 keyboard1.add(types.InlineKeyboardButton(text=c.name, callback_data=str('op' + str(c.chat_id))))
             else:
                 keyboard1.add(types.InlineKeyboardButton(text=c.name, callback_data=str('op' + str(c.chat_id))),
-                              types.InlineKeyboardButton(text="Выбить оружие", callback_data=str('aim' + str(c.chat_id))))
+                              types.InlineKeyboardButton(text="Выбить оружие", callback_data=str('weaponspecial'
+                                                                                                 + str(c.chat_id))))
 
         keyboard1.add(types.InlineKeyboardButton(text='Отмена', callback_data=str('opcancel')))
         bot.send_message(p.chat_id, 'Выберите противника.', reply_markup=keyboard1)
@@ -744,13 +745,13 @@ class Dropping(Weapon):
             return str(u'\U0001F4A8' + "|" + getattr(self,str('desc' + str(random.randint(4, 6)))))
 
     def special(self, user, call):
-        user.target = utils.actor_from_id(call.data[3:], user.game)
+        user.target = utils.actor_from_id(call.data[13:], user.game)
         user.dropcd = 4
 
     def special_second(self, user):
         if user.dropcd > 0:
             user.dropcd -= 1
-        if user.turn == 'aim':
+        if user.turn == 'weaponspecial':
             damagetaken = self.hit(user)
             user.energy -= 1
             if damagetaken != 0:
