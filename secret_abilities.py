@@ -51,7 +51,7 @@ class Regeneration(special_abilities.Ability):
     TeamOnly = True
 
     def special_end(self, user):
-        if user.Losthp and random.randint(1,3) == 3:
+        if user.Losthp and random.randint(1,4) == 1:
             user.hp += 1
             user.fight.string.add(u'\U00002757' + "|" + user.name + ' восстанавливает 1 жизнь.')
 
