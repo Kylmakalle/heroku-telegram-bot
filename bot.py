@@ -106,9 +106,10 @@ def start_game(message):
             else:
                 if len(game.players) < 1:
                     bot.send_message(message.chat.id, "Недостаточно игроков для начала игры.")
-                else:
+                elif game.gametype == 'rhino' and len(game.players) == 1 or game.gametype == 'wolfs':
                     game.players = tuple(game.players)
                     bot_handlers.start_fight(message.chat.id)
+
 
 
 @bot.message_handler(commands=["cancel"])

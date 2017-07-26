@@ -237,7 +237,11 @@ def player_info(player, cid=None):
     player.info.add(
         u'\U0001F494' + 'x' + str(player.toughness) + "|" + str(player.toughness) + ' ран. Влияет на потерю жизней'
     )
-    player.info.add("Способности: " + ", ".join([x.name for x in player.abilities]))
+    tempabilities = []
+    for x in player.abilities:
+        tempabilities.append(x)
+
+    player.info.add("Способности: " + ", ".join([x.name for x in tempabilities]))
     templist = []
     for x in player.itemlist:
         if x.standart:
@@ -252,7 +256,7 @@ def player_info(player, cid=None):
         player.info.add(u'\U0001F3AF' + " | Вероятность попасть - " + str(int(get_hit_chance(player, 0)))
                         + '%')
     if cid is None:
-        if player.weapon == Weapon_list.sniper and player.aimtarget is None:
+        if player.weapon == Weapon_list.sniper and player.aimtarget is not None:
             player.info.add(u'\U0001F3AF' + " |" 'Вероятность попасть в '
                             + actor_from_id(player.aimtarget, player.game).name + ' - '
                             + str(int(get_hit_chance(player, player.bonusaccuracy))) + '%')

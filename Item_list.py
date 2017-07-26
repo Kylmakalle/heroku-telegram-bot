@@ -183,15 +183,41 @@ class ThrowingKnife(Item):
         del user.itemtarget
 
 
-class Drug(Item):
-
+class Jet(Item):
     def useact(self, user):
-        user.energy += 3
-        bot.send_message(user.chat_id, 'Энергия увеличена на 3!')
+        bot.send_message(user.chat_id, 'Через 3 хода ваша энергия полностью восстановится!')
         user.useditems.append(self)
         user.itemlist.remove(self)
 
     def used(self, user):
+        user.fight.string.add(u'\U0001F489' + " |" + user.name + ' использует Джет.')
+        user.jetturn = user.fight.round + 2
+        user.abilities.append(special_abilities.Jet)
+        user.useditems.remove(self)
+
+class Chitin(Item):
+    def useact(self, user):
+        bot.send_message(user.chat_id, 'Вы получаете 2 брони на 3 хода! В конце третьего вы будете оглушены.')
+        user.useditems.append(self)
+        user.itemlist.remove(self)
+
+    def used(self, user):
+        user.fight.string.add(u'\U0001F489' + " |" + user.name + ' использует Хитин.')
+        user.chitinoff = user.fight.round + 2
+        user.armor += 2
+        user.armorchance += 100
+        user.abilities.append(special_abilities.Chitin)
+        user.useditems.remove(self)
+
+
+class Drug(Item):
+    def useact(self, user):
+        bot.send_message(user.chat_id, 'В начале раунда ваша энергия увеличится на 3!')
+        user.useditems.append(self)
+        user.itemlist.remove(self)
+
+    def used(self, user):
+        user.energy += 3
         user.fight.string.add(u'\U0001F489' + " |" + user.name + ' использует Адреналин, увеличивая энергию на 3.')
         user.useditems.remove(self)
 
@@ -232,6 +258,8 @@ gasgrenade = GasGrenade('Световая Граната', 'itemt04')
 grenade = Grenade('Граната', 'iteme01')
 firegrenade = Firegrenade('Коктейль', 'iteme02')
 throwingknife = ThrowingKnife('Метательный Нож', 'itemt03')
+jet = Jet('Джет', 'itemh02')
+chitin = Chitin('Хитин', 'itemh03')
 heal = Heal('Стимулятор', 'itemt01', standart=False)
 id_items = list(itemlist)
 
@@ -428,6 +456,7 @@ class Zombie(Item):
 
 
 class Steal(Item):
+
     def useact(self, user):
         keyboard = types.InlineKeyboardMarkup()
         for p in utils.get_other_team(user).actors:
@@ -445,6 +474,12 @@ class Steal(Item):
                     user.itemlist.append(i)
                     user.stolenitem = i.name
                     break
+        elif user.itemtarget.useditems:
+            x = user.itemtarget.useditems[-1]
+            user.itemtarget.useditems.remove(x)
+            user.itemlist.append(x)
+            user.stolenitem = x.name
+
 
 
     def use(self, user):
@@ -455,6 +490,11 @@ class Steal(Item):
                 u'\U0001F60F' + "|" + user.itemtarget.name + " пытается использовать " + user.stolenitem
                 + ', но предмет оказывается в руках у ' + user.name + '!')
             user.itemtarget.turn = 'losе'
+            del user.stolenitem
+        elif hasattr(user, 'stolenitem'):
+            user.fight.string.add(
+                u'\U0001F60F' + "|" + user.itemtarget.name + " пытается использовать " + user.stolenitem
+                + ', но предмет оказывается в руках у ' + user.name + '!')
             del user.stolenitem
         else:
             user.fight.string.add(

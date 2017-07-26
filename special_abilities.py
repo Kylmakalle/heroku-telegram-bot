@@ -517,6 +517,37 @@ class Thieve(Ability):
                                                + str(user.stealrefresh - user.fight.round) + " ход(ов).")
 
 
+class Jet(Ability):
+
+    name = 'Джет'
+    info = 'Вы можете украсть используемый предмет.'
+    MeleeOnly = False
+    RangeOnly = False
+    TeamOnly = False
+
+    def special_end(self, user):
+        if user.jetturn == user.fight.round:
+            user.energy = user.maxenergy
+            user.abilities.remove(self)
+            user.fight.string.add(u'\U0001F489' + " |" + 'Энергия ' + user.name
+                                  + ' восстановлена до максимальной! (' + str(user.energy) + ')')
+
+class Chitin(Ability):
+
+    name = 'Хитин'
+    info = 'Вы можете украсть используемый предмет.'
+    MeleeOnly = False
+    RangeOnly = False
+    TeamOnly = False
+
+    def special_end(self, user):
+        if user.chitinoff == user.fight.round:
+            user.armor -= 2
+            user.armorchance -= 100
+            user.stuncounter += 1
+            user.fight.string.add(u'\U0001F300' + " |" + user.name + ' теряет эффект хитина. Игрок оглушен!')
+            user.abilities.remove(self)
+
 abilities.append(Piromant)
 abilities.append(Armorer)
 abilities.append(Revenge)

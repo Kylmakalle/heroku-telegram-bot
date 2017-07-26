@@ -184,6 +184,12 @@ def manifest_actions(fight):
 # Действия до хода
 def manifest_used_q(fight):
     for p in fight.actors:
+        if p.turn[0:4] == 'item':
+            for i in p.itemlist:
+                if p.turn[0:7] == i.id:
+                    i.usebefore(p)
+                    break
+    for p in fight.actors:
         for i in p.useditems:
                 i.used(p)
         for a in p.abilities:
@@ -193,11 +199,6 @@ def manifest_used_q(fight):
 # Действия первой очереди
 def manifest_first_q(fight):
     for p in fight.actors:
-        if p.turn[0:4] == 'item':
-            for i in p.itemlist:
-                if p.turn[0:7] == i.id:
-                    i.usebefore(p)
-                    break
         if p.turn[0:4] == 'item':
             for i in p.itemlist:
                 if p.turn[0:7] == i.id:
