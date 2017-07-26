@@ -409,6 +409,9 @@ def kill_players(fight):
         if p.hp < 0:
             p.hp = 0
         p.Losthp = False
+        for a in p.tempabilities:
+            p.abilities.remove(a)
+        p.tempabilities = []
     for p in fight.game.players:
             if special_abilities.Zombie in p.abilities:
                 pass

@@ -222,7 +222,6 @@ class Drug(Item):
         user.fight.string.add(u'\U0001F489' + " |" + user.name + ' использует Адреналин, увеличивая энергию на 3.')
 
 class Heal(Item):
-
     def useact(self, user):
         keyboard = types.InlineKeyboardMarkup()
         for p in user.team.actors:
@@ -409,6 +408,26 @@ class Curse(Item):
                          " теряет " + str(2) + " жизнь(ей). Остается " + str(user.itemtarget.hp) + " хп.")
         user.itemlist.remove(self)
 
+class Explode_corpse(Item):
+    def use(self, user):
+        damage = random.randint(2, 3)
+        enemycount = len(utils.get_other_team(user).actors)
+        if enemycount > 2:
+            target1 = utils.get_other_team(user).actors[random.randint(0, enemycount - 1)]
+            newtargets = list(utils.get_other_team(user).actors)
+            newtargets.remove(target1)
+            target2 = newtargets[random.randint(0, enemycount - 2)]
+            target1.damagetaken += damage
+            target2.damagetaken += damage
+            user.fight.string.add(u'\U0001F47F' + " |" + user.name + ' взрывает труп! Нанесено ' + str(damage)
+                                  + ' урона по ' + target2.name + ' и ' + target1.name + '.')
+        else:
+            for c in utils.get_other_team(user).actors:
+                c.damagetaken += damage
+            user.fight.string.add(u'\U0001F47F' + " |" + user.name + ' взрывает труп! Нанесено ' + str(
+                damage) + ' урона.')
+        user.corpsecounter -= 1
+        user.itemlist.remove(self)
 
 class Zombie(Item):
 
@@ -481,7 +500,6 @@ class Steal(Item):
             user.stolenitem = x.name
 
 
-
     def use(self, user):
         if not user.itemtarget.itemlist:
             bot.send_message(user.chat_id, 'У цели нет предметов!')
@@ -513,6 +531,7 @@ mental = Mental('Визор', 'mitem01',standart=False)
 engineer = Engineer('Оружейник', 'itemat3',standart=False)
 ritual = Ritual('Ритуал', 'itemat4',standart=False)
 curse = Curse('Проклятие', 'itemat5',standart=False)
+explode_corpse = Explode_corpse('Взорвать труп', 'itema01',standart=False)
 id_items.append(shieldg)
 id_items.append(hypnosys)
 id_items.append(mental)
@@ -523,4 +542,5 @@ id_items.append(curse)
 id_items.append(heal)
 id_items.append(zombie)
 id_items.append(steal)
+id_items.append(explode_corpse)
 items = {p.id:p for p in id_items}

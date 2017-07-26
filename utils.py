@@ -127,7 +127,6 @@ def prepare_fight(game):
     for p in game.players:
 
         p.fight.string.add('Оружие ' + p.name + ' - ' + p.weapon.name)
-
         for a in p.abilities:
             a.aquare(a, p)
             a.aquareonce(a, p)
@@ -145,6 +144,7 @@ def prepare_fight(game):
     print('Команда 1 - ' + ', '.join([p.name for p in game.team1.players]))
     print('Команда 2 - ' + ', '.join([p.name for p in game.team2.players]))
     game.fight.string.post(bot, 'Выбор оружия')
+
     game.startfight()
 
 

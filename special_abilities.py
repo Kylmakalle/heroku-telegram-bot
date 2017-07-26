@@ -525,9 +525,10 @@ class Jet(Ability):
     def special_end(self, user):
         if user.jetturn == user.fight.round:
             user.energy = user.maxenergy
-            user.abilities.remove(self)
             user.fight.string.add(u'\U0001F489' + " |" + 'Энергия ' + user.name
                                   + ' восстановлена до максимальной! (' + str(user.energy) + ')')
+
+            user.tempabilities.append(self)
 
 class Chitin(Ability):
 
@@ -543,7 +544,7 @@ class Chitin(Ability):
             user.armorchance -= 100
             user.stuncounter += 1
             user.fight.string.add(u'\U0001F300' + " |" + user.name + ' теряет эффект Хитина. Игрок оглушен!')
-            user.abilities.remove(self)
+            user.tempabilities.append(self)
 
 
 class Junkie(Ability):

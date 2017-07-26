@@ -100,6 +100,7 @@ class Player(object):
         self.hp = 4
         self.energy = 5
         self.tempaccuracy = 0
+        self.tempabilities = []
         self.firecounter = 0
         self.bleedcounter = 0
         self.stuncounter = 0

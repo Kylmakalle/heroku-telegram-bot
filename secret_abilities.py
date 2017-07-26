@@ -29,6 +29,7 @@ class Warlock(special_abilities.Ability):
 
     def aquare(self, user):
         user.deadplayers = []
+        user.corpsecounter = 0
 
     def special_first(self, user):
         if len(user.deadplayers) < len(user.team.deadplayers) + len(utils.get_other_team(user).deadplayers):
@@ -37,9 +38,10 @@ class Warlock(special_abilities.Ability):
             user.deadplayers = list(user.team.deadplayers) + list(utils.get_other_team(user).deadplayers)
 
             while deadbodies != 0:
-                user.fight.string.add(u'\U0001F47F' + "|" + 'Чернокнижник ' + user.name + ' получает 1 жизнь.')
                 deadbodies -= 1
-                user.hp += 1
+                user.corpsecounter += 1
+        if user.corpsecounter > 0 and Item_list.explode_corpse not in user.itemlist:
+            user.itemlist.append(Item_list.explode_corpse)
 
 class Regeneration(special_abilities.Ability):
     condition_1 = special_abilities.Sturdy.Sturdy
