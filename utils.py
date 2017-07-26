@@ -293,7 +293,7 @@ def player_turn_info(player):
 
 
 def get_hit_chance(player, bonus):
-    hitdice = 10 - player.energy - player.weapon.bonus - player.accuracy - bonus
+    hitdice = 10 - player.energy - player.weapon.bonus - player.accuracy - bonus - player.tempaccuracy
     onechance = 100 - (10*hitdice)
     if hitdice >= 10 or player.energy == 0:
         if special_abilities.Zombie not in player.abilities:

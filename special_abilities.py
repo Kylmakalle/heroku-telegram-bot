@@ -545,6 +545,36 @@ class Chitin(Ability):
             user.fight.string.add(u'\U0001F300' + " |" + user.name + ' теряет эффект Хитина. Игрок оглушен!')
             user.abilities.remove(self)
 
+
+class Junkie(Ability):
+
+    name = 'Наркоман'
+    info = 'Вы теряет 1 точность. Каждый раз, когда вы используете Адреналин, Хитин, Стимулятор или Джет - ' \
+           'вы получаете 2 точности и 1 урон. Вы получаете одно из этих веществ.'
+
+    MeleeOnly = False
+    RangeOnly = False
+    TeamOnly = False
+
+    def aquare(self, user):
+        x = random.randint(1, 4)
+        if x == 1:
+            user.itemlist.append(Item_list.drug)
+        elif x == 2:
+            user.itemlist.append(Item_list.chitin)
+        elif x == 3:
+            user.itemlist.append(Item_list.heal)
+        elif x == 4:
+            user.itemlist.append(Item_list.jet)
+        user.accuracy -= 1
+
+    def special_used(self, user):
+        if user.Drugged:
+            user.tempaccuracy += 2
+            user.bonusdamage += 1
+            user.damagefix += 1
+            user.fight.string.add(u'\U0001F643' + " |" + user.name + ' получает бонусную точность и урон!')
+
 abilities.append(Piromant)
 abilities.append(Armorer)
 abilities.append(Revenge)
@@ -565,3 +595,4 @@ abilities.append(Blocker)
 abilities.append(Berserk)
 abilities.append(Necromancer)
 abilities.append(Thieve)
+abilities.append(Junkie)

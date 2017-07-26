@@ -47,6 +47,7 @@ class AI_player(object):
         self.damagefix = 0
         self.Inmelee = False
         self.Disabled = False
+        self.Drugged = False
         # особые эффекты, которые срабатывают после удара
         self.weaponeffect = []
         self.damagetaken = 0

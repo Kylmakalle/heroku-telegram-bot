@@ -162,6 +162,7 @@ def timerd(fight):
 
 # Осуществление действий
 def manifest_actions(fight):
+
     fight.fightstate = 'action'
     for p in fight.aiplayers:
         p.get_turn(fight)
@@ -404,6 +405,7 @@ def kill_players(fight):
     for p in fight.game.players:
         p.damagetaken = 0
         p.hploss = 1
+        p.Drugged = False
         if p.hp < 0:
             p.hp = 0
         p.Losthp = False
@@ -510,7 +512,6 @@ def fight_loop(game, fight):
     fight.team2.leader = game.team2.actors[0]
     fight.actors = fight.aiplayers + fight.activeplayers
     for p in game.players:
-
         if p.chat_id == 86190439:
             p.abilities.append(special_abilities.Isaev)
             special_abilities.Isaev.aquare(p.abilities, p)

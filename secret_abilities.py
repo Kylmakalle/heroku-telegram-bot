@@ -37,7 +37,7 @@ class Warlock(special_abilities.Ability):
             user.deadplayers = list(user.team.deadplayers) + list(utils.get_other_team(user).deadplayers)
 
             while deadbodies != 0:
-                user.fight.string.add(u'\U0001F621' + "|" + 'Чернокнижник ' + user.name + ' получает 1 жизнь.')
+                user.fight.string.add(u'\U0001F47F' + "|" + 'Чернокнижник ' + user.name + ' получает 1 жизнь.')
                 deadbodies -= 1
                 user.hp += 1
 
@@ -53,7 +53,23 @@ class Regeneration(special_abilities.Ability):
     def special_end(self, user):
         if user.Losthp and random.randint(1,3) == 3:
             user.hp += 1
-            user.fight.string.add(u'\U0001F621' + "|" + user.name + ' восстанавливает 1 жизнь.')
+            user.fight.string.add(u'\U00002757' + "|" + user.name + ' восстанавливает 1 жизнь.')
+
+
+class Bloodlust(special_abilities.Ability):
+    condition_1 = special_abilities.Berserk
+    condition_2 = special_abilities.Sadist
+    name = 'Кровожадность.'
+    info = 'Вы чаще попадаете по противникам, у которых меньше половины жизней.'
+    MeleeOnly = False
+    RangeOnly = False
+    TeamOnly = False
+
+    def special_first(self, user):
+        if user.target is not None:
+            if user.target.maxhp//user.hp >= 2:
+                user.tempaccuracy += 1
 
 secret_abilities.append(Warlock)
 secret_abilities.append(Regeneration)
+secret_abilities.append(Bloodlust)

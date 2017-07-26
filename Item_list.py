@@ -192,6 +192,7 @@ class Jet(Item):
     def used(self, user):
         user.fight.string.add(u'\U0001F489' + " |" + user.name + ' использует Джет.')
         user.jetturn = user.fight.round + 3
+        user.Drugged = True
         user.abilities.append(special_abilities.Jet)
 
 class Chitin(Item):
@@ -205,6 +206,7 @@ class Chitin(Item):
         user.chitinoff = user.fight.round + 2
         user.armor += 2
         user.armorchance += 100
+        user.Drugged = True
         user.abilities.append(special_abilities.Chitin)
 
 
@@ -216,6 +218,7 @@ class Drug(Item):
 
     def used(self, user):
         user.energy += 3
+        user.Drugged = True
         user.fight.string.add(u'\U0001F489' + " |" + user.name + ' использует Адреналин, увеличивая энергию на 3.')
 
 class Heal(Item):
@@ -240,6 +243,7 @@ class Heal(Item):
 
     def used(self, user):
         user.itemtarget.hp += 2
+        user.Drugged = True
         if user.itemtarget.hp > user.itemtarget.maxhp: user.itemtarget.hp = user.itemtarget.maxhp
         user.fight.string.add(u'\U00002665'*user.itemtarget.hp + u'\U0001F489' + " |" + user.itemtarget.name + ' получает 2 хп. Остается ' + str(user.itemtarget.hp)
                                      + ' хп.')
