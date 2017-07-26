@@ -190,8 +190,10 @@ def manifest_used_q(fight):
                     i.usebefore(p)
                     break
     for p in fight.actors:
+        print(', '.join([x.name for x in p.useditems]))
         for i in p.useditems:
                 i.used(p)
+        p.useditems = []
         for a in p.abilities:
             a.special_used(a, p)
 
