@@ -50,6 +50,8 @@ def prepare_fight(game):
     timer.cancel()
     for p in game.players:
         bot.send_message(p.chat_id, 'Ваше оружие - ' + p.weapon.name)
+        p.fight.string.add('Оружие ' + p.name + ' - ' + p.weapon.name)
+    game.fight.string.post(bot, 'Выбор оружия')
     print('Раздатчик способностей инициирован.')
 
     # Раздача способностей
