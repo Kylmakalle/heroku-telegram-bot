@@ -545,7 +545,7 @@ class Chitin(Ability):
             user.armor -= 2
             user.armorchance -= 100
             user.stuncounter += 1
-            user.fight.string.add(u'\U0001F300' + " |" + user.name + ' теряет эффект хитина. Игрок оглушен!')
+            user.fight.string.add(u'\U0001F300' + " |" + user.name + ' теряет эффект Хитина. Игрок оглушен!')
             user.abilities.remove(self)
 
 abilities.append(Piromant)
