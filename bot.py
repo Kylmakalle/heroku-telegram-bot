@@ -65,7 +65,7 @@ def start_game(message):
         pass
     else:
         bot_handlers.start_game(0, message.chat.id)
-        bot.send_document(message.chat.id, 'CgADAgADQAAD8NPRS6Ph02toZ694Ag',
+        bot.send_document(message.chat.id, 'CgADAgADQAADHk3RS9Zq0Uj1emDEAg',
                           caption="Используйте команду /join, чтобы вступить в игру. 5 минут до отмены игры.")
 
 
