@@ -272,23 +272,28 @@ def actor_from_id(cid, game):
 
 def player_info(player, cid=None):
     player.info.add(player.name)
-    player.info.add(u'\U00002665'*player.hp + "|" + str(player.hp) + ' жизней. Максимум: ' + str(player.maxhp))
-    player.info.add(
-        u'\U000026A1'*player.energy + "|" + str(player.energy) + ' энергии. Максимум: ' + str(player.maxenergy)
-        )
-    player.info.add(
-        u'\U0001F494' + 'x' + str(player.toughness) + "|" + str(player.toughness) + ' ран. Влияет на потерю жизней'
-    )
+    if special_abilities.Zombie not in player.abilities:
+        player.info.add(u'\U00002665'*player.hp + "|" + str(player.hp) + ' жизней. Максимум: ' + str(player.maxhp))
+        player.info.add(
+            u'\U000026A1'*player.energy + "|" + str(player.energy) + ' энергии. Максимум: ' + str(player.maxenergy)
+            )
+        player.info.add(
+            u'\U0001F494' + 'x' + str(player.toughness) + "|" + str(player.toughness) + ' ран. Влияет на потерю жизней'
+            )
+    else:
+        player.info.add(u'\U0001F356' * player.hungercounter + "|" + str(player.hungercounter)
+                        + ' голода. Максимум: ' + str(player.maxhp))
     tempabilities = []
     for x in player.abilities:
         tempabilities.append(x)
-
-    player.info.add("Способности: " + ", ".join([x.name for x in tempabilities]))
+    if tempabilities:
+        player.info.add("Способности: " + ", ".join([x.name for x in tempabilities]))
     templist = []
     for x in player.itemlist:
         if x.standart:
             templist.append(x)
-    player.info.add("Предметы: " + ", ".join([x.name for x in templist]))
+    if templist:
+        player.info.add("Предметы: " + ", ".join([x.name for x in templist]))
     player.info.add("Оружие: " + player.weapon.name + ' - ' + player.weapon.damagestring)
     if player.weapon == Weapon_list.bow:
         player.info.add(

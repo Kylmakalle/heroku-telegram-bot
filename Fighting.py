@@ -406,6 +406,7 @@ def kill_players(fight):
         p.damagetaken = 0
         p.hploss = 1
         p.Drugged = False
+        p.attackers = []
         if p.hp < 0:
             p.hp = 0
         p.Losthp = False

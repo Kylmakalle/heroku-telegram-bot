@@ -452,7 +452,7 @@ class Necromancer(Ability):
 
 
 class Zombie(Ability):
-
+    name = 'Мертвец'
     def aquare(self, user):
         user.energy = 0
         user.hp = 0
@@ -534,6 +534,7 @@ class Jet(Ability):
 
             user.tempabilities.append(self)
 
+
 class Chitin(Ability):
 
     name = 'Хитин'
@@ -581,6 +582,7 @@ class Junkie(Ability):
             user.fight.string.add(u'\U0001F643' + " |" + user.name + ' получает бонусную точность и урон!')
 
 class IronFist(Ability):
+
     name = 'Железный кулак'
     info = 'Вы теряете свое оружие. Деритесь голыми руками. В отчете оружия не отображается.'
 
