@@ -273,7 +273,7 @@ class Spear(Weapon):
         for c in targets:
             keyboard1.add(types.InlineKeyboardButton(text=c.name, callback_data=str('op' + str(c.chat_id))))
         if user.countercd == 0 and user.energy > 1:
-            keyboard1.add(types.InlineKeyboardButton(text="Контратака", callback_data=str('weaponspecial')))
+            keyboard1.add(types.InlineKeyboardButton(text="Контратака", callback_data=str('aim')))
         keyboard1.add(types.InlineKeyboardButton(text='Отмена', callback_data=str('opcancel')))
         bot.send_message(user.chat_id, 'Выберите противника.', reply_markup=keyboard1)
 
@@ -289,7 +289,7 @@ class Spear(Weapon):
             user.damagefix += 1
             user.tempaccuracy += 1
             for player in user.targets:
-                if player.turn == 'attack' + str(user.fight.round) and user.counterhit > 0:
+                if player.turn == 'attack' + str(user.fight.round) and user.counterhit > 0 or player.turn == 'weaponspecial' and user.counterhit > 0:
                     user.target = player
                     user.action = str(user.attack())
                     if user.target == user:
@@ -716,7 +716,7 @@ class Dropping(Weapon):
 
     def effect(self, user):
         if user.target.turn == 'attack' + str(user.fight.round) and random.randint(1, 10) or \
-                user.target.turn == 'weaponspecial' + str(user.fight.round) and random.randint(1, 10) <= self.chance:
+                user.target.turn == 'weaponspecial' and random.randint(1, 10) <= self.chance:
             if not user.target.weapon.natural:
                 user.target.lostweapon = user.target.weapon
                 user.fight.string.add(u'\U0001F450' + '|' + user.target.name + ' теряет свое оружие!')
@@ -822,7 +822,7 @@ class MasterFist(Weapon):
         if user.turn == 'weaponspecial':
             damagetaken = 0
             combo = 0
-            while user.energy > 0:
+            while user.energy > 0 and combo < 2:
                 damagetaken += self.hit(user)
                 combo += 1
             if damagetaken != 0:
