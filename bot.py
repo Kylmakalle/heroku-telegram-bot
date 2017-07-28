@@ -117,7 +117,6 @@ def cancel_game(message):
     if game is not None:
         if game.gamestate == game.gamestates[0]:
             game.waitingtimer.cancel()
-            bot.send_message(message.chat.id, "Игра отменена.")
             bot_handlers.cancel_game(game)
 
 

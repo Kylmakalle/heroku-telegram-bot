@@ -1,7 +1,12 @@
 import Main_classes
 import threading
 import utils
+import telebot
+import config
 
+
+types = telebot.types
+bot = telebot.TeleBot(config.token)
 
 # Инициировать игру в чате
 def start_game(gametype, cid):
@@ -17,6 +22,7 @@ def start_game(gametype, cid):
 # Удалить игру в чате
 def cancel_game(game):
     utils.delete_game(game)
+    bot.send_message(game.cid, "Игра отменена.")
 
 
 # Закончить набор игроков и начать сражение
