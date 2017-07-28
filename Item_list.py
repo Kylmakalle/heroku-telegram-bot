@@ -57,13 +57,13 @@ class Grenade(Item):
             newtargets = list(utils.get_other_team(user).actors)
             newtargets.remove(target1)
             target2 = newtargets[random.randint(0, enemycount-2)]
-            target1.damagetaken += damage
-            target2.damagetaken += damage
+            utils.damage(user, target1, damage, 'explosion')
+            utils.damage(user, target2, damage, 'explosion')
             user.fight.string.add(u'\U0001F4A3' + " |" + user.name + ' кидает Гранату! Нанесено ' + str(damage)
                                   + ' урона по ' + target2.name + ' и ' + target1.name + '.')
         else:
             for c in utils.get_other_team(user).actors:
-                c.damagetaken += damage
+                utils.damage(user, c, damage, 'melee')
             user.fight.string.add(u'\U0001F4A3' + " |" + user.name + ' кидает Гранату! Нанесено ' + str(
                                   damage) + ' урона.')
         user.energy -= 2
@@ -156,6 +156,7 @@ class Shield(Item):
 
 
 class ThrowingKnife(Item):
+
     def useact(self, user):
         keyboard = types.InlineKeyboardMarkup()
         for p in utils.get_other_team(user).actors:
@@ -172,7 +173,7 @@ class ThrowingKnife(Item):
             user.fight.string.add(u'\U0001F52A' + " |" + user.name + ' кидает Метательный Нож в '
                                   + user.itemtarget.name + '. Нанесено 1 урона ' +
                                   u'\U00002763' + "|" + user.itemtarget.name + ' истекает кровью!')
-            user.itemtarget.damagetaken += 1
+            utils.damage(user, user.itemtarget, 1, 'melee')
             user.itemtarget.bleedcounter += 1
             user.itemtarget.bloodloss = False
 
@@ -191,9 +192,10 @@ class Jet(Item):
 
     def used(self, user):
         user.fight.string.add(u'\U0001F489' + " |" + user.name + ' использует Джет.')
-        user.jetturn = user.fight.round + 3
+        user.jetturn = user.fight.round + 2
         user.Drugged = True
         user.abilities.append(special_abilities.Jet)
+
 
 class Chitin(Item):
     def useact(self, user):
@@ -220,6 +222,7 @@ class Drug(Item):
         user.energy += 3
         user.Drugged = True
         user.fight.string.add(u'\U0001F489' + " |" + user.name + ' использует Адреналин, увеличивая энергию на 3.')
+
 
 class Heal(Item):
     def useact(self, user):
@@ -417,13 +420,13 @@ class Explode_corpse(Item):
             newtargets = list(utils.get_other_team(user).actors)
             newtargets.remove(target1)
             target2 = newtargets[random.randint(0, enemycount - 2)]
-            target1.damagetaken += damage
-            target2.damagetaken += damage
+            utils.damage(user, target1, damage, 'melee')
+            utils.damage(user, target2, damage, 'melee')
             user.fight.string.add(u'\U0001F47F' + " |" + user.name + ' взрывает труп! Нанесено ' + str(damage)
                                   + ' урона по ' + target2.name + ' и ' + target1.name + '.')
         else:
             for c in utils.get_other_team(user).actors:
-                c.damagetaken += damage
+                utils.damage(user, c, damage, 'melee')
             user.fight.string.add(u'\U0001F47F' + " |" + user.name + ' взрывает труп! Нанесено ' + str(
                 damage) + ' урона.')
         user.corpsecounter -= 1

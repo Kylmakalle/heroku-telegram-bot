@@ -129,6 +129,7 @@ class Player(object):
         self.Alive = True
         self.hypnosysresist = 0
         self.bot = False
+        self.attackers = []
 
     # Атака игрока
     def attack(self):

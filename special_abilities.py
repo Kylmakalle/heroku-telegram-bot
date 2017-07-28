@@ -4,6 +4,7 @@ import telebot
 import Item_list
 import random
 import sys
+import Weapon_list
 
 
 bot = telebot.TeleBot(config.token)
@@ -13,7 +14,7 @@ abilities = []
 vintabilities = []
 rangeabilities = []
 meleeabilities = []
-
+unique_abilities =[]
 
 class Ability(object):
     effect = None
@@ -52,6 +53,9 @@ class Ability(object):
 
     def onhitdesc(self, d, user):
         return d
+
+    def ondamage(self, source, target, damage, type):
+        pass
 
 sys.path.insert(0, '/abilities')
 from abilities import Sturdy
@@ -576,6 +580,17 @@ class Junkie(Ability):
             user.damagefix += 1
             user.fight.string.add(u'\U0001F643' + " |" + user.name + ' получает бонусную точность и урон!')
 
+class IronFist(Ability):
+    name = 'Железный кулак'
+    info = 'Вы теряете свое оружие. Деритесь голыми руками. В отчете оружия не отображается.'
+
+    MeleeOnly = False
+    RangeOnly = False
+    TeamOnly = False
+
+    def aquare(self, user):
+        user.weapon = Weapon_list.master_fist
+
 abilities.append(Piromant)
 abilities.append(Armorer)
 abilities.append(Revenge)
@@ -597,3 +612,4 @@ abilities.append(Berserk)
 abilities.append(Necromancer)
 abilities.append(Thieve)
 abilities.append(Junkie)
+unique_abilities.append(IronFist)

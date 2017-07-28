@@ -59,13 +59,10 @@ class Weapon(object):
         # уходит энергия
 
         user.energy -= self.energy
-        # применяется урон
-        user.target.damagetaken += n + user.truedamage
-        # применяется потеря жизней
-        if user.target.hploss < user.mult and n + user.truedamage != 0:
-            user.target.hploss = user.mult
         # энергия загоняется в 0
         if user.energy < 0: user.energy = 0
+
+        utils.damage(user, user.target, n, 'hit')
         return n
 
     # При экипировке
@@ -179,13 +176,12 @@ class Sniper(Weapon):
             user.energy -= random.randint(1, 2)
         else:
             user.energy -= self.energy
-        # применяется урон
-        user.target.damagetaken += n + user.truedamage
         # применяется потеря жизней
         if user.target.hploss < self.mult and n + user.truedamage != 0:
             user.target.hploss = self.mult
         # энергия загоняется в 0
         if user.energy < 0: user.energy = 0
+        utils.damage(user, user.target, n, 'firearm')
         return n
 
     def aquare(self,user):
@@ -253,12 +249,11 @@ class Spear(Weapon):
             n += user.bonusdamage + self.damage - 1
         # уходит энергия
         user.energy -= self.energy
-        # применяется урон
-        user.target.damagetaken += n + user.truedamage
         # применяется потеря жизней
         if user.target.hploss < self.mult and n + user.truedamage != 0:
             user.target.hploss = self.mult
         # энергия загоняется в 0
+        utils.damage(user, user.target, n, 'melee')
         return n
 
     def aquare(self,user):
@@ -345,7 +340,6 @@ class Flamethrower(Weapon):
         else:
             pass
         n += user.truedamage
-        user.target.damagetaken += n
         # применяется урон
 
         # применяется потеря жизней
@@ -359,6 +353,7 @@ class Flamethrower(Weapon):
         if user.energy < 0: user.energy = 0
 
         print('fire')
+        utils.damage(user, user.target, n, 'fire')
         return n
 
     def getDesc(self, damagetaken,user):
@@ -419,7 +414,6 @@ class Bleeding(Weapon):
         else:
             pass
         n += user.truedamage
-        user.target.damagetaken += n
         # применяется урон
 
         # применяется потеря жизней
@@ -428,7 +422,7 @@ class Bleeding(Weapon):
         # энергия загоняется в 0
 
         if user.energy < 0: user.energy = 0
-
+        utils.damage(user, user.target, n, 'melee')
         print('bleed')
         return n
 
@@ -487,7 +481,6 @@ class Burning(Weapon):
         else:
             pass
         n += user.truedamage
-        user.target.damagetaken += n
         # применяется урон
 
         # применяется потеря жизней
@@ -496,7 +489,7 @@ class Burning(Weapon):
         # энергия загоняется в 0
 
         if user.energy < 0: user.energy = 0
-
+        utils.damage(user, user.target, n, 'melee')
         print('bleed')
         return n
 
@@ -552,7 +545,6 @@ class Stunning(Weapon):
         else:
             pass
         n += user.truedamage
-        user.target.damagetaken += n
         # применяется урон
 
         # применяется потеря жизней
@@ -562,6 +554,7 @@ class Stunning(Weapon):
 
         if user.energy < 0: user.energy = 0
 
+        utils.damage(user, user.target, n, 'melee')
         return n
 
     def effect(self, user):
@@ -621,7 +614,6 @@ class Crippling(Weapon):
         else:
             pass
         n += user.truedamage
-        user.target.damagetaken += n
         # применяется урон
 
         # применяется потеря жизней
@@ -629,6 +621,8 @@ class Crippling(Weapon):
             user.target.hploss = self.mult
         # энергия загоняется в 0
         if user.energy < 0: user.energy = 0
+
+        utils.damage(user, user.target, n, 'melee')
         return n
 
     def effect(self, user):
@@ -710,7 +704,6 @@ class Dropping(Weapon):
         else:
             pass
         n += user.truedamage
-        user.target.damagetaken += n
         # применяется урон
 
         # применяется потеря жизней
@@ -718,6 +711,7 @@ class Dropping(Weapon):
             user.target.hploss = self.mult
         # энергия загоняется в 0
         if user.energy < 0: user.energy = 0
+        utils.damage(user, user.target, n, 'melee')
         return n
 
     def effect(self, user):
@@ -767,6 +761,81 @@ class Dropping(Weapon):
             user.fight.string.add(d)
 
 
+class MasterFist(Weapon):
+
+    def get_action(self, p, call):
+        keyboard1 = types.InlineKeyboardMarkup()
+        enemyteam = p.targets
+        p.turn = call.data
+        for c in enemyteam:
+            if p.energy < 3:
+                keyboard1.add(types.InlineKeyboardButton(text=c.name, callback_data=str('op' + str(c.chat_id))))
+            else:
+                keyboard1.add(types.InlineKeyboardButton(text=c.name, callback_data=str('op' + str(c.chat_id))),
+                              types.InlineKeyboardButton(text="Серия ударов", callback_data=str('weaponspecial'
+                                                                                                 + str(c.chat_id))))
+
+        keyboard1.add(types.InlineKeyboardButton(text='Отмена', callback_data=str('opcancel')))
+        bot.send_message(p.chat_id, 'Выберите противника.', reply_markup=keyboard1)
+
+    def hit(self,user):
+        n = 0
+        d = 0
+        dmax = self.dice
+        print(user.name + " стреляет из " + str(self.name) + '. Его энергия - ' + str(
+            user.energy) + '. Его точность и бонусная точность оружия - ' + ' '
+              + str(user.accuracy) + ' ' + str(self.bonus) +
+              '. Шанс попасть - ' + str(11 - user.energy - self.bonus - user.accuracy - user.tempaccuracy) + "+!")
+        while d != dmax:
+            x = random.randint(1, 10)
+            print(user.name + ' Выпало ' + str(x))
+            if x > 10 - user.energy - self.bonus - user.accuracy - user.tempaccuracy:
+                n += 1
+            d += 1
+
+
+            # бонусный урон персонажа
+        # уходит энергия
+        user.energy -= self.energy
+        if n!=0:
+            n += user.bonusdamage + self.damage - 1
+
+        for a in user.abilities:
+            n = a.onhit(a,n, user)
+        else:
+            pass
+        n += user.truedamage
+        # применяется урон
+
+        # применяется потеря жизней
+        if user.target.hploss < self.mult and n!= 0:
+            user.target.hploss = self.mult
+        # энергия загоняется в 0
+        if user.energy < 0: user.energy = 0
+        utils.damage(user, user.target, n, 'melee')
+        return n
+
+    def special(self, user, call):
+        user.target = utils.actor_from_id(call.data[13:], user.game)
+
+    def special_second(self, user):
+        if user.turn == 'weaponspecial':
+            damagetaken = 0
+            combo = 0
+            while user.energy > 0:
+                damagetaken += self.hit(user)
+                combo += 1
+            if damagetaken != 0:
+                d = str(
+                    u'\U0001F91C' + "|" + user.name + ' проводит серию из ' + str(combo) + ' ударов на '
+                    + user.target.name + "! Нанесено " + str(damagetaken) + ' урона.')
+            else:
+                d = str(
+                    u'\U0001F4A8' + "|" + user.name + ' не удается нанести ни одного удара ' + user.target.name + "!")
+            for a in user.abilities:
+                d = a.onhitdesc(a, d, user)
+            user.fight.string.add(d)
+
 class Katana(Weapon):
     def __init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring, chance,
                  standart=True, natural=False):
@@ -775,6 +844,7 @@ class Katana(Weapon):
         self.chance = chance
         if self.standart == True:
             weaponlist.append(self)
+
     def hit(self,user):
         n = 0
         d = 0
@@ -805,7 +875,6 @@ class Katana(Weapon):
         else:
             pass
         n += user.truedamage
-        user.target.damagetaken += n
         # применяется урон
         if user.target.hploss < self.mult and n!= 0:
             user.target.hploss = self.mult
@@ -814,6 +883,7 @@ class Katana(Weapon):
         if user.energy < 0: user.energy = 0
 
         print('bleed')
+        utils.damage(user, user.target, n, 'melee')
         return n
 
     def get_action(self, p, call):
@@ -1085,10 +1155,17 @@ fangs.desc3 = 'Игрок набрасывается на Противник.'
 fangs.desc4 = 'Игрок пытается укусить Противник, но не попадает.'
 fangs.desc5 = 'Игрок пытается укусить Противник, но не попадает.'
 fangs.desc6 = 'Игрок пытается укусить Противник, но не попадает.'
-fists = Weapon(1, 1, 2, 4, 1, True, True, True, 'Кулаки', '1' + u'\U0001F4A5' + "|" + '1' + u'\U000026A1', standart=False, natural=True)
+fists = Weapon(1, 1, 2, 4, 1, True, True, True, 'Кулаки', '1' + u'\U0001F4A5' + "|" + '2' + u'\U000026A1', standart=False, natural=True)
 fists.desc1 = 'Игрок бьет Противник Кулаком.'
 fists.desc2 = 'Игрок бьет Противник Кулаком.'
 fists.desc3 = 'Игрок бьет Противник Кулаком.'
 fists.desc4 = 'Игрок бьет Противник Кулаком, но не попадает.'
 fists.desc5 = 'Игрок бьет Противник Кулаком, но не попадает.'
 fists.desc6 = 'Игрок бьет Противник Кулаком, но не попадает.'
+master_fist = MasterFist(3, 1, 2, 2, 1, True, True, True, 'Кулаки','1-3' + u'\U0001F525' + "|" + '2' + u'\U000026A1', standart=False, natural=True)
+master_fist.desc1 = 'Игрок бьет Противник Кулаком.'
+master_fist.desc2 = 'Игрок бьет Противник Кулаком.'
+master_fist.desc3 = 'Игрок бьет Противник Кулаком.'
+master_fist.desc4 = 'Игрок бьет Противник Кулаком, но не попадает.'
+master_fist.desc5 = 'Игрок бьет Противник Кулаком, но не попадает.'
+master_fist.desc6 = 'Игрок бьет Противник Кулаком, но не попадает.'

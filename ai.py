@@ -61,6 +61,7 @@ class AI_player(object):
         self.Alive = True
         self.useditems = []
         self.enditems = []
+        self.attackers = []
 
     def attack(self):
             n = self.weapon.hit(self)

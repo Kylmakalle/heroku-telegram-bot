@@ -304,7 +304,7 @@ def apply_effects(fight):
                 fight.string.add(u'\U0001F525' + "| Огонь на " + p.name + ' потух!')
                 p.firecounter = 0
             else:
-                p.damagetaken += p.firecounter
+                utils.damage(None, p, p.firecounter, 'fire')
                 p.energy -= p.firecounter - 1
                 if p.firecounter - 1 == 0:
                     fight.string.add(u'\U0001F525' + "|" + p.name

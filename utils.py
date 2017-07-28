@@ -81,7 +81,7 @@ def prepare_fight(game):
     game.abilitycounter = len(game.players)
     game.waitings = True
     for p in game.players:
-        get_ability(p)
+        get_first_ability(p)
     timer = threading.Timer(90.0, game.change)
     timer.start()
     while game.abilitycounter > 0 and game.waitings is True:
@@ -172,6 +172,45 @@ def remove_player(playerchat_id, game):
     del Main_classes.dict_players[playerchat_id]
 
 
+def get_first_ability(player):
+    keyboard = types.InlineKeyboardMarkup()
+    maxchoiceint = 5
+    choice = []
+    while len(choice) < maxchoiceint:
+        x = special_abilities.abilities[random.randint(0, len(special_abilities.abilities)-1)]
+        if player.weapon.Melee:
+            if len(player.team.players) == 1:
+                if x not in choice and x not in player.abilities and not x.RangeOnly and not x.TeamOnly:
+                    choice.append(x)
+            else:
+                if x not in choice and x not in player.abilities and not x.RangeOnly:
+                    choice.append(x)
+
+        else:
+            if len(player.team.players) == 1:
+                if x not in choice and x not in player.abilities and not x.MeleeOnly and not x.TeamOnly:
+                    choice.append(x)
+            else:
+                if x not in choice and x not in player.abilities and not x.MeleeOnly:
+                    choice.append(x)
+    for c in choice:
+        callback_button1 = types.\
+            InlineKeyboardButton(text=c.name, callback_data=str('a' + str(special_abilities.abilities.index(c))))
+        callback_button2 = types.\
+            InlineKeyboardButton(text='Инфо', callback_data=str('i' + str(special_abilities.abilities.index(c))))
+        keyboard.add(callback_button1, callback_button2)
+    if player.chat_id == 83697884 or player.name == 'Пасюк' or player.chat_id == 197216910:
+        callback_button1 = types. \
+            InlineKeyboardButton(text=special_abilities.IronFist.name, callback_data=str('unique_a' + str(special_abilities.unique_abilities.index(special_abilities.IronFist))))
+        callback_button2 = types. \
+            InlineKeyboardButton(text='Инфо', callback_data=str(str('unique_i' + str(special_abilities.unique_abilities.index(special_abilities.IronFist)))))
+        keyboard.add(callback_button1, callback_button2)
+    bot.send_message(
+        player.chat_id, 'Выберите способность. Ваш максимум способностей - ' + str(player.maxabilities),
+        reply_markup=keyboard
+        )
+
+
 def get_ability(player):
     keyboard = types.InlineKeyboardMarkup()
     maxchoiceint = 5
@@ -193,8 +232,6 @@ def get_ability(player):
             else:
                 if x not in choice and x not in player.abilities and not x.MeleeOnly:
                     choice.append(x)
-    if player.chat_id == 197216910:
-        choice.append(special_abilities.Thieve)
     for c in choice:
         callback_button1 = types.\
             InlineKeyboardButton(text=c.name, callback_data=str('a' + str(special_abilities.abilities.index(c))))
@@ -376,5 +413,14 @@ def delete_game(game):
     del Main_classes.existing_games[game.cid]
     del game
 
+
 def check_secrets_abilities(p):
     secret_abilities.check_ability(p)
+
+
+def damage(source, target, damage, type):
+    target.attackers.append(source)
+    for a in target.abilities:
+        a.ondamage(a, source, target, damage, type)
+    target.damagetaken += damage
+
