@@ -342,7 +342,7 @@ def action(call):
                     elif call.data[0:3] == 'aim':
                         print(actor.name + ' целится.')
                         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                                              text="Цель принята: " + utils.actor_from_id(call.data[3:], game).name)
+                                              text="Особое действие.")
                         actor.weapon.special(actor, call)
                         actor.turn = 'aim'
                         actor.fight.playerpool.remove(actor)

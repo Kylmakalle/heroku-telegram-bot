@@ -822,7 +822,7 @@ class MasterFist(Weapon):
         if user.turn == 'weaponspecial':
             damagetaken = 0
             combo = 0
-            while user.energy > 0 and combo < 2:
+            while user.energy > 0 and combo < 3:
                 damagetaken += self.hit(user)
                 combo += 1
             if damagetaken != 0:
