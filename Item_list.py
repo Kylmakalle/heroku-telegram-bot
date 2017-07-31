@@ -524,6 +524,57 @@ class Steal(Item):
         user.itemlist.remove(self)
         del user.itemtarget
 
+class ThrowingSpear(Item):
+    def useact(self, user):
+        keyboard = types.InlineKeyboardMarkup()
+        for p in utils.get_other_team(user).actors:
+            callback_button = types.InlineKeyboardButton(text=p.name,callback_data='spitem' + str(p.chat_id))
+            keyboard.add(callback_button)
+        keyboard.add(types.InlineKeyboardButton(text='Отмена', callback_data=str('spitemcancel')))
+        chance = (user.energy + 4 + user.accuracy)*10
+        if chance > 100:
+            chance = 100
+        bot.send_message(user.chat_id, 'Выберите цель для копья. Шанс попасть - ' + str(chance) + '%',reply_markup=keyboard)
+
+    def use(self, user):
+        n = 0
+        d = 0
+        stun = False
+        dmax = 5
+        while d != dmax:
+            x = random.randint(1, 10)
+            print(user.name + ' Выпало ' + str(x))
+            if x > 10 - user.energy - user.accuracy - user.tempaccuracy - 1:
+                n += 1
+            d += 1
+        for a in user.abilities:
+            n = a.onhit(a, n, user)
+
+        # бонусный урон персонажа
+        if n != 0:
+            n += user.bonusdamage
+            if random.randint(1,10) > 3:
+                user.itemtarget.stuncounter += 2
+                stun = True
+        # уходит энергия
+        user.energy -= 3
+        utils.damage(user, user.itemtarget, n, 'melee')
+        if n != 0 and stun:
+            user.fight.string.add(u'\U0001F300' + " |" + user.name + ' кидает Копье Нарсил в '
+                                  + user.itemtarget.name + '. Нанесено ' + str(n) + ' урона! Цель оглушена.')
+
+        elif n != 0:
+            user.fight.string.add(u'\U0001F4A5' + " |" + user.name + ' кидает Копье Нарсил в '
+                                  + user.itemtarget.name + '. Нанесено ' + str(n) + ' урона!')
+
+        else:
+            user.fight.string.add(u'\U0001F4A8' + " |" + user.name + ' кидает Копье Нарсил, но не попадает.')
+        user.itemlist.remove(self)
+        user.energy -= 3
+        user.throwcd += 3
+        user.lostweapon = Weapon_list.speareternal
+        del user.itemtarget
+
 
 zombie = Zombie('Поднять мертвеца', 'itemat6',standart=False)
 shieldg = Shieldg('Щит|Генератор', 'itemat1',standart=False)
@@ -535,6 +586,7 @@ engineer = Engineer('Оружейник', 'itemat3',standart=False)
 ritual = Ritual('Ритуал', 'itemat4',standart=False)
 curse = Curse('Проклятие', 'itemat5',standart=False)
 explode_corpse = Explode_corpse('Взорвать труп', 'itema01',standart=False)
+throwspear = ThrowingSpear('Метнуть', 'itemat9',standart=False)
 id_items.append(shieldg)
 id_items.append(hypnosys)
 id_items.append(mental)
@@ -546,4 +598,5 @@ id_items.append(heal)
 id_items.append(zombie)
 id_items.append(steal)
 id_items.append(explode_corpse)
+id_items.append(throwspear)
 items = {p.id:p for p in id_items}
