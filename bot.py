@@ -49,7 +49,7 @@ def test_chosen(chosen_inline_result):
 @bot.message_handler(commands=["start"])
 def start(message):
     user = message.from_user
-    datahandler.get_player(user.chat_id, user.username, user.first_name)
+    datahandler.get_player(user.id, user.username, user.first_name)
 
 
 @bot.message_handler(commands=["bugreport"])
