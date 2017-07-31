@@ -349,8 +349,7 @@ class SpearEternal(Weapon):
     def aquare(self,user):
         user.countercd = 0
         user.counterhit = 2
-        user.throwcd = 0
-        user.itemlist.append(Item_list.throwspear)
+        user.throwcd = 3
 
     def lose(self, user):
         del user.countercd
@@ -401,12 +400,12 @@ class SpearEternal(Weapon):
             user.throwcd -= 1
         elif user.throwcd == 0 and Item_list.throwspear not in user.itemlist:
             user.itemlist.append(Item_list.throwspear)
-    desc1 = 'Игрок бьет Противник Копьем.'
-    desc2 = 'Игрок бьет Противник Копьем.'
-    desc3 = 'Игрок бьет Противник Копьем.'
-    desc4 = 'Игрок бьет Противник Копьем, но не попадает.'
-    desc5 = 'Игрок бьет Противник Копьем, но не попадает.'
-    desc6 = 'Игрок бьет Противник Копьем, но не попадает.'
+    desc1 = 'Игрок бьет Противник Копьем Нарсил.'
+    desc2 = 'Игрок бьет Противник Копьем Нарсил.'
+    desc3 = 'Игрок бьет Противник Копьем Нарсил.'
+    desc4 = 'Игрок бьет Противник Копьем Нарсил, но не попадает.'
+    desc5 = 'Игрок бьет Противник Копьем Нарсил, но не попадает.'
+    desc6 = 'Игрок бьет Противник Копьем Нарсил, но не попадает.'
 
 
 class Flamethrower(Weapon):
@@ -926,6 +925,7 @@ class MasterFist(Weapon):
             for a in user.abilities:
                 d = a.onhitdesc(a, d, user)
             user.fight.string.add(d)
+
 
 class Katana(Weapon):
     def __init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring, chance,

@@ -10,7 +10,6 @@ import Weapon_list
 import time
 import os
 import bot_handlers
-import datahandler
 
 types = telebot.types
 bot = telebot.TeleBot(config.token)
@@ -93,18 +92,33 @@ def start_game(message):
     if game is not None:
         if game.gamestate == game.gamestates[0]:
             if game.gametype == 'game':
-                if len(game.players) < 2:
+                if not game.pending_team1 or not game.pending_team2:
                     bot.send_message(message.chat.id, "Недостаточно игроков для начала игры.")
-                elif len(game.players) > len(game.team1.players) + len(game.team2.players):
+                elif len(game.pending_players) > len(game.pending_team1) + len(game.pending_team1):
                     bot.send_message(message.chat.id, "Не все игроки выбрали команду.")
-                elif len(game.players) == len(game.team1.players) + len(game.team2.players):
-                    game.players = tuple(game.players)
+                elif len(game.pending_players) == len(game.pending_team1) + len(game.pending_team1):
+                    game.gamestate = game.gamestates[1]
+                    for actor in game.pending_team1:
+                        Main_classes.dict_players[actor.chat_id] = game
+                        game.players.append(actor)
+                        game.team1.players.append(actor)
+                        actor.team = game.team1
+                    for actor in game.pending_team2:
+                        Main_classes.dict_players[actor.chat_id] = game
+                        game.players.append(actor)
+                        game.team2.players.append(actor)
+                        actor.team = game.team2
                     bot_handlers.start_fight(message.chat.id)
             else:
-                if len(game.players) < 1:
+                if len(game.pending_players) < 1:
                     bot.send_message(message.chat.id, "Недостаточно игроков для начала игры.")
                 elif game.gametype == 'rhino' and len(game.players) == 1 or game.gametype == 'wolfs':
-                    game.players = tuple(game.players)
+                    game.gamestate = game.gamestates[1]
+                    for actor in game.pending_team1:
+                        Main_classes.dict_players[actor.chat_id] = game
+                        game.players.append(actor)
+                        game.team1.players.append(actor)
+                        actor.team = game.team1
                     bot_handlers.start_fight(message.chat.id)
 
 
@@ -153,24 +167,19 @@ def add_player(message):
     if message.from_user.id in Main_classes.dict_players:
         pass
     elif game is not None:
-            if game.gametype == game.gametypes[0] and message.from_user.id not in game.player_ids\
+            if game.gametype == game.gametypes[0] and message.from_user.id not in game.marked_id\
              and message.chat.id == game.cid and game.gamestate == game.gamestates[0]:
-                bot.send_message(message.from_user.id, '*Вы успешно присоединились.*', parse_mode='markdown')
-                try:
-                    game.players.append(Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12], None, game))
-                except AttributeError:
-                    bot.send_message(message.chat.id,'Слишком поздно!')
-                    return
-                utils.add_player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12], game)
+                player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12], None, game)
+                game.pending_players.append(player)
+                game.marked_id.append(player.chat_id)
                 bot.send_message(game.cid, message.from_user.first_name + ' успешно присоединился.')
-                if len(game.players) == 1:
-                    game.team1.players.append(game.players[0])
-                    game.players[0].team = game.team1
-                if len(game.players) == 2:
-                    game.team2.players.append(game.players[1])
-                    game.players[1].team = game.team2
+                if not game.pending_team1:
+                    game.pending_team1.append(player)
+                    bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 1.*', parse_mode='markdown')
+                elif not game.pending_team2:
+                    game.pending_team2.append(player)
+                    bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 2.*', parse_mode='markdown')
                 elif len(game.players) >= 3:
-                    print (message.from_user.first_name + ' выбирает сторону.')
                     keyboard = types.InlineKeyboardMarkup()
                     callback_button1 = types.InlineKeyboardButton(text=str(len(game.team1.players))[:5] + ' - ' + game.players[0].name, callback_data='team1')
                     callback_button2 = types.InlineKeyboardButton(text=str(len(game.team2.players))[:5] + ' - ' + game.players[1].name, callback_data='team2')
@@ -178,27 +187,19 @@ def add_player(message):
                     bot.send_message(message.from_user.id, message.from_user.first_name + ' Выберите, кому вы поможете в этом '
                                                                               'бою.', reply_markup=keyboard)
 
-            elif message.from_user.id not in game.player_ids and message.chat.id == game.cid and \
+            elif message.from_user.id not in game.marked_id and message.chat.id == game.cid and \
              game.gamestate == game.gamestates[0]:
-                bot.send_message(message.from_user.id, '*Вы успешно присоединились.*', parse_mode='markdown')
-                try:
-                    game.players.append(
-                        Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12], None,
-                                            game))
-                    game.team1.players.append(game.players[-1])
-                    game.players[-1].team = game.team1
-                except AttributeError:
-                    return bot.send_message(message.chat.id, 'Слишком поздно!')
-                utils.add_player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12], game)
-                bot.send_message(game.cid, message.from_user.first_name + ' успешно присоединился.')
-                if len(game.players) >= 2 and game.gametype == game.gametypes[1]:
-                        game.players = tuple(game.players)
-                        bot_handlers.start_fight(game.cid)
+                if game.gametype == game.gametypes[1] and len(game.pending_players)>2:
+                    pass
+                else:
+                    bot.send_message(game.cid, message.from_user.first_name + ' успешно присоединился.')
+                    player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12],
+                                                None, game)
+                    game.pending_players.append(player)
+                    game.pending_team1.append(player)
+                    game.marked_id.append(player.chat_id)
             elif game.gamestate != game.gamestates[0]:
                 bot.send_message(message.chat.id, 'Нет запущенной игры или игра уже началась.')
-            elif message.chat.id != game.cid:
-                bot.send_message(message.chat.id,
-                             message.from_user.first_name + ', игра идет в другом чате.')
 
 
     time.sleep(3)
@@ -246,21 +247,19 @@ def action(call):
             found = False
         if game.gamestate == game.gamestates[0] :
             print('Подбор команды.')
-            for p in game.players:
+            for p in game.pending_players:
                 if call.from_user.id == p.chat_id:
                     print('Игрок найден')
                     if call.data == 'team1':
                         print('Команда 1')
-                        game.team1.players.append(p)
-                        p.team = game.team1
+                        game.pending_team1.append(p)
                         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                               text="Вы присоединились к команде " + game.players[0].name)
                         bot.send_message(game.cid, p.name + ' вступает в бой на стороне ' + game.players[0].name)
 
                     if call.data == 'team2':
                         print('Команда 2')
-                        p.team = game.team2
-                        game.team2.players.append(p)
+                        game.pending_team2.append(p)
                         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                               text="Вы присоединились к команде " + game.players[1].name)
                         bot.send_message(game.cid,

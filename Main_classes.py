@@ -33,6 +33,12 @@ class Game(object):
         self.player_dict = {}
         self.players = []
         self.aiplayers = []
+
+        self.pending_players = []
+        self.pending_team1 = []
+        self.pending_team2 = []
+        self.marked_id = []
+
         self.team1 = Team()
         self.team2 = Team()
         self.cid = cid

@@ -1,22 +1,24 @@
-import sqlite3
+import psycopg2
+import os
+from urllib.parse import urlparse
+
+url = urlparse(os.environ['DATABASE_URL'])
 
 
 def get_player(chat_id, username, first_name):
     if username is not None:
-        db = sqlite3.connect('player_database')
+        db = psycopg2.connect("dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
         cursor = db.cursor()
         cursor.execute('SELECT name FROM players WHERE id = ?',(chat_id,))
         data = cursor.fetchone()
         if data is None:
-            cursor.execute('INSERT INTO players(id, games_played, games_won, name)VALUES (?,?,?,?)', (chat_id, 0, 0, username))
-        elif data[0][0] != '@':
-            cursor.execute('UPDATE players SET name = ? WHERE id = ?', ('@' + username,chat_id))
+            cursor.execute('INSERT INTO players(id, games_played, games_won, name, username)VALUES (?,?,?,?)', (chat_id, 0, 0, first_name, '@' + username))
         else:
             print(data[0])
         db.commit()
         db.close()
     else:
-        db = sqlite3.connect('player_database')
+        db = psycopg2.connect("dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
         cursor = db.cursor()
         cursor.execute('SELECT name FROM players WHERE id = ?', (chat_id,))
         data = cursor.fetchone()
@@ -30,7 +32,7 @@ def get_player(chat_id, username, first_name):
 
 
 def get_games(chat_id):
-    db = sqlite3.connect('player_database')
+    db = psycopg2.connect("dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('SELECT games_played, games_won FROM players WHERE id = ?', (chat_id,))
     data = cursor.fetchone()
@@ -42,7 +44,7 @@ def get_games(chat_id):
 
 
 def add_played_games(chat_id, game=1):
-    db = sqlite3.connect('player_database')
+    db = psycopg2.connect("dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('SELECT games_played FROM players WHERE id = ?', (chat_id,))
     data = cursor.fetchone()
@@ -54,7 +56,7 @@ def add_played_games(chat_id, game=1):
 
 
 def getallplayers():
-    db = sqlite3.connect('player_database')
+    db = psycopg2.connect("dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     db.row_factory = lambda cursor, row: row[0]
     cursor = db.cursor()
     ids = cursor.execute('SELECT id FROM players').fetchall()
@@ -63,7 +65,7 @@ def getallplayers():
 
 
 def add_won_games(chat_id, game=1):
-    db = sqlite3.connect('player_database')
+    db = psycopg2.connect("dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('SELECT games_won FROM players WHERE id = ?', (chat_id,))
     data = cursor.fetchone()
@@ -75,7 +77,7 @@ def add_won_games(chat_id, game=1):
 
 
 def createteam(cid1, cid2, name1, name2):
-    db = sqlite3.connect('player_database')
+    db = psycopg2.connect("dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
 
     cursor.execute('INSERT INTO tournament_players(player_id, name) VALUES (?,?)',(cid1,name1))
@@ -87,7 +89,7 @@ def createteam(cid1, cid2, name1, name2):
 
 def checktournament(cid):
 
-    db = sqlite3.connect('player_database')
+    db = psycopg2.connect("dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('CREATE TABLE IF NOT EXISTS tournament_players(player_id INTEGER, name TEXT)')
     cursor.execute('SELECT player_id FROM tournament_players WHERE player_id = ?',(cid,))
@@ -101,7 +103,7 @@ def checktournament(cid):
 
 
 def get_dataname(chat_id):
-    db = sqlite3.connect('player_database')
+    db = psycopg2.connect("dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('SELECT name FROM players WHERE id = ?', (chat_id,))
     data = cursor.fetchone()

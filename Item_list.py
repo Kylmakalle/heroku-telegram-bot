@@ -411,6 +411,7 @@ class Curse(Item):
                          " теряет " + str(2) + " жизнь(ей). Остается " + str(user.itemtarget.hp) + " хп.")
         user.itemlist.remove(self)
 
+
 class Explode_corpse(Item):
     def use(self, user):
         damage = random.randint(2, 3)
@@ -431,6 +432,7 @@ class Explode_corpse(Item):
                 damage) + ' урона.')
         user.corpsecounter -= 1
         user.itemlist.remove(self)
+
 
 class Zombie(Item):
 
@@ -524,6 +526,7 @@ class Steal(Item):
         user.itemlist.remove(self)
         del user.itemtarget
 
+
 class ThrowingSpear(Item):
     def useact(self, user):
         keyboard = types.InlineKeyboardMarkup()
@@ -531,9 +534,7 @@ class ThrowingSpear(Item):
             callback_button = types.InlineKeyboardButton(text=p.name,callback_data='spitem' + str(p.chat_id))
             keyboard.add(callback_button)
         keyboard.add(types.InlineKeyboardButton(text='Отмена', callback_data=str('spitemcancel')))
-        chance = (user.energy + 4 + user.accuracy)*10
-        if chance > 100:
-            chance = 100
+        chance = utils.get_hit_chance(user, 0)
         bot.send_message(user.chat_id, 'Выберите цель для копья. Шанс попасть - ' + str(chance) + '%',reply_markup=keyboard)
 
     def use(self, user):
@@ -553,7 +554,7 @@ class ThrowingSpear(Item):
         # бонусный урон персонажа
         if n != 0:
             n += user.bonusdamage
-            if random.randint(1,10) > 3:
+            if random.randint(1,12) > 2*user.energy:
                 user.itemtarget.stuncounter += 2
                 stun = True
         # уходит энергия
@@ -570,7 +571,6 @@ class ThrowingSpear(Item):
         else:
             user.fight.string.add(u'\U0001F4A8' + " |" + user.name + ' кидает Копье Нарсил, но не попадает.')
         user.itemlist.remove(self)
-        user.energy -= 3
         user.throwcd += 3
         user.lostweapon = Weapon_list.speareternal
         del user.itemtarget

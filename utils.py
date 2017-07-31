@@ -155,9 +155,6 @@ def get_other_team(player):
         return player.game.team1
 
 
-def add_player(playerchat_id, player_name, game):
-    Main_classes.dict_players[playerchat_id] = game
-
 
 def remove_player(playerchat_id, game):
     removing = None
@@ -256,7 +253,7 @@ def get_weapon(player):
         choice.append(Weapon_list.katana)
     if player.chat_id == 197216910 or player.chat_id == 52322637:
         choice.append(Weapon_list.bow)
-    if player.chat_id == 197216910:
+    if player.chat_id == 197216910 or player.chat_id == 324316537:
         choice.append(Weapon_list.speareternal)
     for c in choice:
         callback_button1 = types.InlineKeyboardButton(text=c.name,
