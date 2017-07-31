@@ -48,8 +48,7 @@ def test_chosen(chosen_inline_result):
 
 @bot.message_handler(commands=["start"])
 def start(message):
-    user = message.from_user
-    datahandler.get_player(user.id, user.username, user.first_name)
+    pass
 
 
 @bot.message_handler(commands=["bugreport"])
@@ -123,6 +122,21 @@ def start_game(message):
                         actor.team = game.team1
                     bot_handlers.start_fight(message.chat.id)
 
+                    
+@bot.message_handler(commands=["flee"])
+def flee(message):
+    game = utils.get_game_from_chat(message.chat.id)
+    if game is not None:
+        if message.from_user.id in game.marked_id:
+            for x in game.pending_players:
+                if x.chat_id == message.from_user.id:
+                    game.pending_players.remove(x)
+            for x in game.pending_team1:
+                if x.chat_id == message.from_user.id:
+                    game.pending_team1.remove(x)
+            for x in game.pending_team2:
+                if x.chat_id == message.from_user.id:
+                    game.pending_team2.remove(x)
 
 @bot.message_handler(commands=["cancel"])
 def cancel_game(message):
