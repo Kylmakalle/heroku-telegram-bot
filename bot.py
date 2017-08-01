@@ -133,14 +133,17 @@ def flee(message):
                     game.pending_players.remove(x)
             for x in game.marked_id:
                 if x == message.from_user.id:
-                    game.pending_players.remove(x)
+                    game.marked_id.remove(x)
             for x in game.pending_team1:
                 if x.chat_id == message.from_user.id:
                     game.pending_team1.remove(x)
             for x in game.pending_team2:
                 if x.chat_id == message.from_user.id:
                     game.pending_team2.remove(x)
+            del Main_classes.dict_players[message.from_user.id]
             bot.send_message(game.cid, message.from_user.first_name + ' сбежал!')
+
+
 
 @bot.message_handler(commands=["cancel"])
 def cancel_game(message):
@@ -187,41 +190,49 @@ def add_player(message):
     if message.from_user.id in Main_classes.dict_players:
         pass
     elif game is not None:
-            if game.gametype == game.gametypes[0] and message.from_user.id not in game.marked_id\
-             and message.chat.id == game.cid and game.gamestate == game.gamestates[0]:
-                player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12], None, game)
-                game.pending_players.append(player)
-                game.marked_id.append(player.chat_id)
+        if game.gametype == game.gametypes[0] and message.from_user.id not in game.marked_id \
+                and message.chat.id == game.cid and game.gamestate == game.gamestates[0]:
+            player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12], None,
+                                         game)
+            game.pending_players.append(player)
+            game.marked_id.append(player.chat_id)
+            bot.send_message(game.cid, message.from_user.first_name + ' успешно присоединился.')
+            if not game.pending_team1:
+                game.pending_team1.append(player)
+
+                Main_classes.dict_players[player.chat_id] = game
+                bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 1.*', parse_mode='markdown')
+            elif not game.pending_team2:
+                game.pending_team2.append(player)
+
+                Main_classes.dict_players[player.chat_id] = game
+                bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 2.*', parse_mode='markdown')
+            elif len(game.pending_players) >= 3:
+                keyboard = types.InlineKeyboardMarkup()
+                callback_button1 = types.InlineKeyboardButton(
+                    text=str(len(game.pending_team1)) + ' - ' + game.pending_team1[0].name, callback_data='team1')
+                callback_button2 = types.InlineKeyboardButton(
+                    text=str(len(game.pending_team2)) + ' - ' + game.pending_team2[0].name, callback_data='team2')
+                keyboard.add(callback_button1, callback_button2)
+                bot.send_message(message.from_user.id,
+                                 message.from_user.first_name + ' Выберите, кому вы поможете в этом '
+                                                                'бою.', reply_markup=keyboard)
+
+        elif message.from_user.id not in game.marked_id and message.chat.id == game.cid and \
+                        game.gamestate == game.gamestates[0]:
+            if game.gametype == game.gametypes[1] and len(game.pending_players) > 2:
+                pass
+            else:
                 bot.send_message(game.cid, message.from_user.first_name + ' успешно присоединился.')
-                if not game.pending_team1:
-                    game.pending_team1.append(player)
-                    bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 1.*', parse_mode='markdown')
-                elif not game.pending_team2:
-                    game.pending_team2.append(player)
-                    bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 2.*', parse_mode='markdown')
-                elif len(game.pending_players) >= 3:
-                    keyboard = types.InlineKeyboardMarkup()
-                    callback_button1 = types.InlineKeyboardButton(text=str(len(game.pending_team1)) + ' - ' + game.pending_team1[0].name, callback_data='team1')
-                    callback_button2 = types.InlineKeyboardButton(text=str(len(game.pending_team2)) + ' - ' + game.pending_team2[0].name, callback_data='team2')
-                    keyboard.add(callback_button1, callback_button2)
-                    bot.send_message(message.from_user.id, message.from_user.first_name + ' Выберите, кому вы поможете в этом '
-                                                                              'бою.', reply_markup=keyboard)
+                player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12],
+                                             None, game)
+                game.pending_players.append(player)
+                game.pending_team1.append(player)
 
-            elif message.from_user.id not in game.marked_id and message.chat.id == game.cid and \
-             game.gamestate == game.gamestates[0]:
-                if game.gametype == game.gametypes[1] and len(game.pending_players)>2:
-                    pass
-                else:
-                    bot.send_message(game.cid, message.from_user.first_name + ' успешно присоединился.')
-                    player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12],
-                                                None, game)
-                    game.pending_players.append(player)
-                    game.pending_team1.append(player)
-                    game.marked_id.append(player.chat_id)
-            elif game.gamestate != game.gamestates[0]:
-                bot.send_message(message.chat.id, 'Нет запущенной игры или игра уже началась.')
-
-
+                Main_classes.dict_players[player.chat_id] = game
+                game.marked_id.append(player.chat_id)
+        elif game.gamestate != game.gamestates[0]:
+            bot.send_message(message.chat.id, 'Нет запущенной игры или игра уже началась.')
     time.sleep(3)
 
 
@@ -253,11 +264,8 @@ def action(call):
     if call.message:
         print("Получено.")
         if call.data == '1':
-            bot.send_message(call.from_user.id, call.message.text)
-
-    game = utils.get_game_from_chat(call.chat.id)
-    if game is None:
-        game = utils.get_game_from_player(call.from_user.id)
+                bot.send_message(call.from_user.id, call.message.text)
+    game = utils.get_game_from_player(call.from_user.id)
 
     if game is not None:
         print("Игра найдена.")
