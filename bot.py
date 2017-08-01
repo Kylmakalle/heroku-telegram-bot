@@ -10,7 +10,6 @@ import Weapon_list
 import time
 import os
 import bot_handlers
-import datahandler
 
 types = telebot.types
 bot = telebot.TeleBot(config.token)
@@ -97,15 +96,13 @@ def start_game(message):
                     bot.send_message(message.chat.id, "Недостаточно игроков для начала игры.")
                 elif len(game.pending_players) > len(game.pending_team1) + len(game.pending_team1):
                     bot.send_message(message.chat.id, "Не все игроки выбрали команду.")
-                elif len(game.pending_players) == len(game.pending_team1) + len(game.pending_team1):
+                elif len(game.pending_players) == len(game.pending_team1) + len(game.pending_team2):
                     game.gamestate = game.gamestates[1]
                     for actor in game.pending_team1:
-                        Main_classes.dict_players[actor.chat_id] = game
                         game.players.append(actor)
                         game.team1.players.append(actor)
                         actor.team = game.team1
                     for actor in game.pending_team2:
-                        Main_classes.dict_players[actor.chat_id] = game
                         game.players.append(actor)
                         game.team2.players.append(actor)
                         actor.team = game.team2
@@ -116,13 +113,12 @@ def start_game(message):
                 elif game.gametype == 'rhino' and len(game.players) == 1 or game.gametype == 'wolfs':
                     game.gamestate = game.gamestates[1]
                     for actor in game.pending_team1:
-                        Main_classes.dict_players[actor.chat_id] = game
                         game.players.append(actor)
                         game.team1.players.append(actor)
                         actor.team = game.team1
                     bot_handlers.start_fight(message.chat.id)
 
-                    
+
 @bot.message_handler(commands=["flee"])
 def flee(message):
     game = utils.get_game_from_chat(message.chat.id)
@@ -144,18 +140,16 @@ def flee(message):
             bot.send_message(game.cid, message.from_user.first_name + ' сбежал!')
 
 
-
 @bot.message_handler(commands=["cancel"])
 def cancel_game(message):
     try:
-        game= Main_classes.existing_games[message.chat.id]
+        game = Main_classes.existing_games[message.chat.id]
     except:
         game = None
     if game is not None:
         if game.gamestate == game.gamestates[0]:
             game.waitingtimer.cancel()
             bot_handlers.cancel_game(game)
-
 
 
 @bot.message_handler(commands=["suicide"])
@@ -183,7 +177,6 @@ def suicide(message):
                 pass
 
 
-
 @bot.message_handler(commands=["join"])
 def add_player(message):
     game = utils.get_game_from_chat(message.chat.id)
@@ -196,16 +189,13 @@ def add_player(message):
                                          game)
             game.pending_players.append(player)
             game.marked_id.append(player.chat_id)
+            Main_classes.dict_players[player.chat_id] = game
             bot.send_message(game.cid, message.from_user.first_name + ' успешно присоединился.')
             if not game.pending_team1:
                 game.pending_team1.append(player)
-
-                Main_classes.dict_players[player.chat_id] = game
                 bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 1.*', parse_mode='markdown')
             elif not game.pending_team2:
                 game.pending_team2.append(player)
-
-                Main_classes.dict_players[player.chat_id] = game
                 bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 2.*', parse_mode='markdown')
             elif len(game.pending_players) >= 3:
                 keyboard = types.InlineKeyboardMarkup()
@@ -233,6 +223,7 @@ def add_player(message):
                 game.marked_id.append(player.chat_id)
         elif game.gamestate != game.gamestates[0]:
             bot.send_message(message.chat.id, 'Нет запущенной игры или игра уже началась.')
+
     time.sleep(3)
 
 
@@ -276,7 +267,7 @@ def action(call):
         except:
             print('ошибка')
             found = False
-        if game.gamestate == game.gamestates[0]:
+        if game.gamestate == game.gamestates[0] :
             print('Подбор команды.')
             for p in game.pending_players:
                 if call.from_user.id == p.chat_id:
@@ -304,7 +295,7 @@ def action(call):
                         actor.weapon = w
                         break
                 game.weaponcounter -= 1
-                print (actor.name + ' выбрал оружие.')
+                print(actor.name + ' выбрал оружие.')
         elif game.gamestate == 'ability' and found:
             if call.data[0] == 'i'and len(call.data) < 4:
                     bot.send_message(call.from_user.id,special_abilities.abilities[int(call.data[1:])].info)
