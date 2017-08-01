@@ -353,6 +353,7 @@ class SpearEternal(Weapon):
             user.throwcd = 3
         else:
             user.itemlist.append(Item_list.throwspear)
+            user.throwcd = 0
 
 
     def lose(self, user):
