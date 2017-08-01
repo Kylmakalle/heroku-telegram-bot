@@ -131,12 +131,16 @@ def flee(message):
             for x in game.pending_players:
                 if x.chat_id == message.from_user.id:
                     game.pending_players.remove(x)
+            for x in game.marked_id:
+                if x == message.from_user.id:
+                    game.pending_players.remove(x)
             for x in game.pending_team1:
                 if x.chat_id == message.from_user.id:
                     game.pending_team1.remove(x)
             for x in game.pending_team2:
                 if x.chat_id == message.from_user.id:
                     game.pending_team2.remove(x)
+            bot.send_message(game.cid, message.from_user.first_name + ' сбежал!')
 
 @bot.message_handler(commands=["cancel"])
 def cancel_game(message):
@@ -195,10 +199,10 @@ def add_player(message):
                 elif not game.pending_team2:
                     game.pending_team2.append(player)
                     bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 2.*', parse_mode='markdown')
-                elif len(game.players) >= 3:
+                elif len(game.pending_players) >= 3:
                     keyboard = types.InlineKeyboardMarkup()
-                    callback_button1 = types.InlineKeyboardButton(text=str(len(game.team1.players))[:5] + ' - ' + game.players[0].name, callback_data='team1')
-                    callback_button2 = types.InlineKeyboardButton(text=str(len(game.team2.players))[:5] + ' - ' + game.players[1].name, callback_data='team2')
+                    callback_button1 = types.InlineKeyboardButton(text=str(len(game.pending_team1)) + ' - ' + game.pending_team1[0].name, callback_data='team1')
+                    callback_button2 = types.InlineKeyboardButton(text=str(len(game.pending_team2)) + ' - ' + game.pending_team2[0].name, callback_data='team2')
                     keyboard.add(callback_button1, callback_button2)
                     bot.send_message(message.from_user.id, message.from_user.first_name + ' Выберите, кому вы поможете в этом '
                                                                               'бою.', reply_markup=keyboard)
@@ -270,16 +274,16 @@ def action(call):
                         print('Команда 1')
                         game.pending_team1.append(p)
                         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                                              text="Вы присоединились к команде " + game.players[0].name)
-                        bot.send_message(game.cid, p.name + ' вступает в бой на стороне ' + game.players[0].name)
+                                              text="Вы присоединились к команде " + game.pending_team1[0].name)
+                        bot.send_message(game.cid, p.name + ' вступает в бой на стороне ' + game.pending_team1[0].name)
 
                     if call.data == 'team2':
                         print('Команда 2')
                         game.pending_team2.append(p)
                         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                                              text="Вы присоединились к команде " + game.players[1].name)
+                                              text="Вы присоединились к команде " + game.pending_team2[0].name)
                         bot.send_message(game.cid,
-                                         p.name + ' вступает в бой на стороне ' + game.players[1].name)
+                                         p.name + ' вступает в бой на стороне ' + game.pending_team2[0].name)
         elif game.gamestate == 'weapon' and found:
             if call.data[0] == 'a' and call.data[0:1] != 'at':
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
