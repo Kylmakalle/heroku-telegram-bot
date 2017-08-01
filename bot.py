@@ -186,26 +186,26 @@ def add_player(message):
         try:
             if game.gametype == game.gametypes[0] and message.from_user.id not in game.marked_id \
                 and message.chat.id == game.cid and game.gamestate == game.gamestates[0]:
-            player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12], None,
+                player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12], None,
                                          game)
-            game.pending_players.append(player)
-            game.marked_id.append(player.chat_id)
-            Main_classes.dict_players[player.chat_id] = game
-            bot.send_message(game.cid, message.from_user.first_name + ' успешно присоединился.')
-            if not game.pending_team1:
-                game.pending_team1.append(player)
-                bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 1.*', parse_mode='markdown')
-            elif not game.pending_team2:
-                game.pending_team2.append(player)
-                bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 2.*', parse_mode='markdown')
-            elif len(game.pending_players) >= 3:
-                keyboard = types.InlineKeyboardMarkup()
-                callback_button1 = types.InlineKeyboardButton(
-                    text=str(len(game.pending_team1)) + ' - ' + game.pending_team1[0].name, callback_data='team1')
-                callback_button2 = types.InlineKeyboardButton(
-                    text=str(len(game.pending_team2)) + ' - ' + game.pending_team2[0].name, callback_data='team2')
-                keyboard.add(callback_button1, callback_button2)
-                bot.send_message(message.from_user.id,
+                game.pending_players.append(player)
+                game.marked_id.append(player.chat_id)
+                Main_classes.dict_players[player.chat_id] = game
+                bot.send_message(game.cid, message.from_user.first_name + ' успешно присоединился.')
+                if not game.pending_team1:
+                    game.pending_team1.append(player)
+                    bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 1.*', parse_mode='markdown')
+                elif not game.pending_team2:
+                    game.pending_team2.append(player)
+                    bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 2.*', parse_mode='markdown')
+                elif len(game.pending_players) >= 3:
+                    keyboard = types.InlineKeyboardMarkup()
+                    callback_button1 = types.InlineKeyboardButton(
+                        text=str(len(game.pending_team1)) + ' - ' + game.pending_team1[0].name, callback_data='team1')
+                    callback_button2 = types.InlineKeyboardButton(
+                        text=str(len(game.pending_team2)) + ' - ' + game.pending_team2[0].name, callback_data='team2')
+                    keyboard.add(callback_button1, callback_button2)
+                    bot.send_message(message.from_user.id,
                                  message.from_user.first_name + ' Выберите, кому вы поможете в этом '
                                                                 'бою.', reply_markup=keyboard)
 
