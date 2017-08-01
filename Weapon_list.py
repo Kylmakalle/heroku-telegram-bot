@@ -349,7 +349,11 @@ class SpearEternal(Weapon):
     def aquare(self,user):
         user.countercd = 0
         user.counterhit = 2
-        user.throwcd = 3
+        if user.fight.round == 1:
+            user.throwcd = 0
+        else:
+            user.throwcd = 3
+
 
     def lose(self, user):
         del user.countercd
