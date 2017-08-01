@@ -535,7 +535,7 @@ class ThrowingSpear(Item):
             keyboard.add(callback_button)
         keyboard.add(types.InlineKeyboardButton(text='Отмена', callback_data=str('spitemcancel')))
         chance = utils.get_hit_chance(user, 0)
-        bot.send_message(user.chat_id, 'Выберите цель для копья. Шанс попасть - ' + str(chance) + '%',reply_markup=keyboard)
+        bot.send_message(user.chat_id, 'Выберите цель для копья. Шанс попасть - ' + str(int(chance)) + '%',reply_markup=keyboard)
 
     def use(self, user):
         n = 0
