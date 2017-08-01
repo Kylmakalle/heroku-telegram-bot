@@ -553,8 +553,8 @@ class ThrowingSpear(Item):
 
         # бонусный урон персонажа
         if n != 0:
-            n += user.bonusdamage
-            if random.randint(1,12) > 2*user.energy:
+            n += user.bonusdamage + 1
+            if random.randint(1, 10) <= 2*user.energy:
                 user.itemtarget.stuncounter += 2
                 stun = True
         # уходит энергия
