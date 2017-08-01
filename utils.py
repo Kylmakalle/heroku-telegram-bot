@@ -409,7 +409,7 @@ def send_skills(player):
 
 
 def delete_game(game):
-    for p in game.players:
+    for p in game.pending_players:
         try:
             del Main_classes.dict_players[p.chat_id]
         except KeyError:
