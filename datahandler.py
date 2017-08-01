@@ -10,10 +10,10 @@ def get_player(chat_id, username, first_name):
         db = psycopg2.connect("dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
         cursor = db.cursor()
         cursor.execute('CREATE TABLE IF NOT EXISTS players ( id INTEGER ,games_played INTEGER, games_won INTEGER, name VARCHAR(40), username VARCHAR(40))')
-        cursor.execute('SELECT name FROM players WHERE id = ?',(chat_id,))
+        cursor.execute('SELECT name FROM players WHERE id = %s;', (chat_id,))
         data = cursor.fetchone()
         if data is None:
-            cursor.execute('INSERT INTO players(id, games_played, games_won, name, username)VALUES (?,?,N?,?)', (chat_id, 0, 0, first_name, '@' + username))
+            cursor.execute('INSERT INTO players(id, games_played, games_won, name, username)VALUES (%s,%s,N%s,%s)', (chat_id, 0, 0, first_name, '@' + username))
         else:
             print(data[0])
         db.commit()
@@ -21,7 +21,7 @@ def get_player(chat_id, username, first_name):
     else:
         db = psycopg2.connect("dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
         cursor = db.cursor()
-        cursor.execute('SELECT name FROM players WHERE id = ?', (chat_id,))
+        cursor.execute('SELECT name FROM players WHERE id = %s', (chat_id,))
         data = cursor.fetchone()
         if data is None:
             cursor.execute('INSERT INTO players(id, games_played, games_won, name)VALUES (?,?,?,?)',
