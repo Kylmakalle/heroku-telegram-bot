@@ -133,7 +133,7 @@ def flee(message):
                     game.pending_players.remove(x)
             for x in game.marked_id:
                 if x == message.from_user.id:
-                    game.marked_id.remove(x)
+                    game.pending_players.remove(x)
             for x in game.pending_team1:
                 if x.chat_id == message.from_user.id:
                     game.pending_team1.remove(x)
@@ -253,8 +253,11 @@ def action(call):
     if call.message:
         print("Получено.")
         if call.data == '1':
-                bot.send_message(call.from_user.id, call.message.text)
-    game = utils.get_game_from_player(call.from_user.id)
+            bot.send_message(call.from_user.id, call.message.text)
+
+    game = utils.get_game_from_chat(call.chat.id)
+    if game is None:
+        game = utils.get_game_from_player(call.from_user.id)
 
     if game is not None:
         print("Игра найдена.")
@@ -265,7 +268,7 @@ def action(call):
         except:
             print('ошибка')
             found = False
-        if game.gamestate == game.gamestates[0] :
+        if game.gamestate == game.gamestates[0]:
             print('Подбор команды.')
             for p in game.pending_players:
                 if call.from_user.id == p.chat_id:
