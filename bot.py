@@ -110,7 +110,7 @@ def start_game(message):
             else:
                 if len(game.pending_players) < 1:
                     bot.send_message(message.chat.id, "Недостаточно игроков для начала игры.")
-                elif game.gametype == 'rhino' and len(game.players) == 1 or game.gametype == 'wolfs':
+                else:
                     game.gamestate = game.gamestates[1]
                     for actor in game.pending_team1:
                         game.players.append(actor)
