@@ -13,7 +13,7 @@ def get_player(chat_id, username, first_name):
         cursor.execute('SELECT name FROM players WHERE id = %s;', (chat_id,))
         data = cursor.fetchone()
         if data is None:
-            cursor.execute('INSERT INTO players(id, games_played, games_won, name, username)VALUES (%s,%s,N%s,%s)', (chat_id, 0, 0, first_name, '@' + username))
+            cursor.execute('INSERT INTO players(id, games_played, games_won, name, username)VALUES (%s,%s,%s,N%s,%s)', (chat_id, 0, 0, first_name, '@' + username))
         else:
             print(data[0])
         db.commit()
