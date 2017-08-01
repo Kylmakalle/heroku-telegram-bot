@@ -133,7 +133,7 @@ def flee(message):
                     game.pending_players.remove(x)
             for x in game.marked_id:
                 if x == message.from_user.id:
-                    game.pending_players.remove(x)
+                    game.marked_id.remove(x)
             for x in game.pending_team1:
                 if x.chat_id == message.from_user.id:
                     game.pending_team1.remove(x)
