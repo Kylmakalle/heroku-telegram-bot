@@ -9,6 +9,7 @@ def get_player(chat_id, username, first_name):
     if username is not None:
         db = psycopg2.connect("dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
         cursor = db.cursor()
+        cursor.execute('CREATE TABLE IF NOT EXISTS players ( id INTEGER ,games_played INTEGER, games_won INTEGER, name NVARCHAR(40), username NVARCHAR(40)')
         cursor.execute('SELECT name FROM players WHERE id = ?',(chat_id,))
         data = cursor.fetchone()
         if data is None:

@@ -10,6 +10,7 @@ import Weapon_list
 import time
 import os
 import bot_handlers
+import datahandler
 
 types = telebot.types
 bot = telebot.TeleBot(config.token)
@@ -47,7 +48,7 @@ def test_chosen(chosen_inline_result):
 
 @bot.message_handler(commands=["start"])
 def start(message):
-    pass
+    datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
 
 
 @bot.message_handler(commands=["bugreport"])
