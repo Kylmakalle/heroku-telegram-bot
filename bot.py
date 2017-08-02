@@ -248,8 +248,8 @@ def start(message):
         bot.send_message(message.chat.id, message.from_user.first_name + "\n0 игр сыграно.")
     else:
         winrate = int(data[1]/data[0]*100)
-        bot.send_message(message.chat.id, message.from_user.first_name + "\n" + str(data[0])+ " игр сыграно."
-                         + "\n" + str(data[1]) + " игр выиграно." + "\n" + str(winrate) + " винрейт.")
+        bot.send_message(message.chat.id, message.from_user.first_name + "\n" + str(data[0]) + " игр сыграно."
+                         + "\n" + str(data[1]) + " игр выиграно." + "\n" + str(winrate) + "% винрейт.")
 
 
 @bot.message_handler(commands=['test'])
