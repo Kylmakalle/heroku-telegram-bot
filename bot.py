@@ -10,6 +10,7 @@ import Weapon_list
 import time
 import os
 import bot_handlers
+import datahandler
 
 types = telebot.types
 bot = telebot.TeleBot(config.token)
@@ -47,7 +48,7 @@ def test_chosen(chosen_inline_result):
 
 @bot.message_handler(commands=["start"])
 def start(message):
-    pass
+    datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
 
 
 @bot.message_handler(commands=["bugreport"])
@@ -186,7 +187,7 @@ def add_player(message):
         try:
             if game.gametype == game.gametypes[0] and message.from_user.id not in game.marked_id \
                 and message.chat.id == game.cid and game.gamestate == game.gamestates[0]:
-                player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12], None,
+                player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12], Weapon_list.fists,
                                          game)
                 game.pending_players.append(player)
                 game.marked_id.append(player.chat_id)
@@ -195,10 +196,13 @@ def add_player(message):
                 if not game.pending_team1:
                     game.pending_team1.append(player)
                     bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 1.*', parse_mode='markdown')
+                    datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
                 elif not game.pending_team2:
                     game.pending_team2.append(player)
                     bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 2.*', parse_mode='markdown')
+                    datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
                 elif len(game.pending_players) >= 3:
+
                     keyboard = types.InlineKeyboardMarkup()
                     callback_button1 = types.InlineKeyboardButton(
                         text=str(len(game.pending_team1)) + ' - ' + game.pending_team1[0].name, callback_data='team1')
@@ -208,15 +212,16 @@ def add_player(message):
                     bot.send_message(message.from_user.id,
                                  message.from_user.first_name + ' Выберите, кому вы поможете в этом '
                                                                 'бою.', reply_markup=keyboard)
-
+                    datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
             elif message.from_user.id not in game.marked_id and message.chat.id == game.cid and \
-                        game.gamestate == game.gamestates[0]:
+                            game.gamestate == game.gamestates[0]:
                 if game.gametype == game.gametypes[1] and len(game.pending_players) > 2:
                     pass
                 else:
                     bot.send_message(game.cid, message.from_user.first_name + ' успешно присоединился.')
+                    datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
                     player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12],
-                                             None, game)
+                                                 None, game)
                     game.pending_players.append(player)
                     game.pending_team1.append(player)
 
@@ -233,6 +238,18 @@ def add_player(message):
 @bot.message_handler(commands=["sendall"])
 def start(message):
     Main_classes.ruporready = True
+
+@bot.message_handler(commands=["stats"])
+def start(message):
+    data = datahandler.get_games(message.from_user.id)
+    if data == None:
+        bot.send_message(message.chat.id, "Извините, вас нет в списке.")
+    elif data[0] == 0:
+        bot.send_message(message.chat.id, message.from_user.first_name + "\n0 игр сыграно.")
+    else:
+        winrate = int(data[1]/data[0]*100)
+        bot.send_message(message.chat.id, message.from_user.first_name + "\n" + str(data[0])+ " игр сыграно."
+                         + "\n" + str(data[1]) + " игр выиграно." + "\n" + str(winrate) + " винрейт.")
 
 
 @bot.message_handler(commands=['test'])
