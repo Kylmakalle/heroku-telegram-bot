@@ -52,7 +52,7 @@ def add_played_games(chat_id, game=1):
     data = cursor.fetchone()
     games = int(data[0])
     games += game
-    cursor.execute('UPDATE players SET games_played = ? WHERE id = %s', (games,chat_id))
+    cursor.execute('UPDATE players SET games_played = %s WHERE id = %s', (games,chat_id))
     db.commit()
     db.close()
 
