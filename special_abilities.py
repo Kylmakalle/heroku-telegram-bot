@@ -211,12 +211,11 @@ class Mentalist(Ability):
     name = 'Визор'
     info = 'Вы способны видеть информацию о ваших противниках!'
     MeleeOnly = False
-    RangeOnly = False
+    RangeOnly = True
     TeamOnly = False
 
     def aquare(self, user):
-        if not user.weapon.Melee:
-            user.accuracy += 1
+        user.accuracy += 1
         user.mentalrefresh = 0
         user.itemlist.append(Item_list.mental)
 
@@ -253,7 +252,19 @@ class Hypnosyser(Ability):
                                                + str(user.hypnosysrefresh - user.fight.round) + " ход(ов).")
 
 
+class Dodger(Ability):
+    name = 'Изворотливый'
+    info = 'Если вы пропускаете ход, перезаряжаетесь или отдыхаете - шанс попасть по вам сильно уменьшается.'
+    MeleeOnly = False
+    RangeOnly = False
+    TeamOnly = False
 
+    def special_first(self, user):
+        if user.turn == 'reload' + str(user.fight.round) or user.turn == 'skip' + str(user.fight.round):
+            user.fight.string.add(u'\U0001F4A6' + "|" + user.name + ' уворачивается.')
+            for n in utils.get_other_team(user).actors:
+                if n.target == user:
+                    n.tempaccuracy -= 3
 
 
 class Armorer(Ability):
@@ -585,7 +596,6 @@ class IronFist(Ability):
 abilities.append(Piromant)
 abilities.append(Armorer)
 abilities.append(Revenge)
-abilities.append(Hypnosyser)
 abilities.append(Sadist)
 abilities.append(Mentalist)
 abilities.append(Gasmask)
