@@ -11,9 +11,7 @@ bot = telebot.TeleBot(config.token)
 types = telebot.types
 
 abilities = []
-vintabilities = []
-rangeabilities = []
-meleeabilities = []
+usual_abilities = []
 unique_abilities =[]
 
 class Ability(object):
@@ -211,11 +209,12 @@ class Mentalist(Ability):
     name = 'Визор'
     info = 'Вы способны видеть информацию о ваших противниках!'
     MeleeOnly = False
-    RangeOnly = True
+    RangeOnly = False
     TeamOnly = False
 
     def aquare(self, user):
-        user.accuracy += 1
+        if not user.weapon.Melee:
+            user.accuracy += 1
         user.mentalrefresh = 0
         user.itemlist.append(Item_list.mental)
 
@@ -251,20 +250,6 @@ class Hypnosyser(Ability):
                 bot.send_message(user.chat_id, 'Способность "Гипноз" обновится через '
                                                + str(user.hypnosysrefresh - user.fight.round) + " ход(ов).")
 
-
-class Dodger(Ability):
-    name = 'Изворотливый'
-    info = 'Если вы пропускаете ход, перезаряжаетесь или отдыхаете - шанс попасть по вам сильно уменьшается.'
-    MeleeOnly = False
-    RangeOnly = False
-    TeamOnly = False
-
-    def special_first(self, user):
-        if user.turn == 'reload' + str(user.fight.round) or user.turn == 'skip' + str(user.fight.round):
-            user.fight.string.add(u'\U0001F4A6' + "|" + user.name + ' уворачивается.')
-            for n in utils.get_other_team(user).actors:
-                if n.target == user:
-                    n.tempaccuracy -= 3
 
 
 class Armorer(Ability):
@@ -339,7 +324,7 @@ class Berserk(Ability):
             user.maxenergy = berserkenergy
             user.energy += newenergy
             user.fight.string.add(u'\U0001F621' + "| Берсерк " + user.name + ' получает ' + str(newenergy) + ' энергию')
-        if user.hp == 1 and user.Rage == False:
+        if user.hp == 1 and not user.Rage:
             user.Rage = True
             user.bonusdamage += 2
             user.fight.string.add(u'\U0001F621' + "| Берсерк " + user.name + ' входит в боевой транс!')
@@ -596,6 +581,7 @@ class IronFist(Ability):
 abilities.append(Piromant)
 abilities.append(Armorer)
 abilities.append(Revenge)
+abilities.append(Hypnosyser)
 abilities.append(Sadist)
 abilities.append(Mentalist)
 abilities.append(Gasmask)
@@ -606,11 +592,14 @@ abilities.append(Hoarder)
 abilities.append(Undead)
 abilities.append(Engineer)
 abilities.append(West)
+usual_abilities.append(West)
 abilities.append(Healer)
+usual_abilities.append(Healer)
 abilities.append(Ritual)
 abilities.append(Blocker)
+usual_abilities.append(Blocker)
 abilities.append(Berserk)
 abilities.append(Necromancer)
 abilities.append(Thieve)
 abilities.append(Junkie)
-unique_abilities.append(IronFist)
+abilities.append(IronFist)
