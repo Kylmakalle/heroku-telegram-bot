@@ -102,7 +102,7 @@ def items_menu(chat_id):
             if item.id in data:
                 matched_items += 1
                 callback_button = types.InlineKeyboardButton(
-                    text=item.name + "+++", callback_data='delete_item' + item.id)
+                    text=(item.name + u'\U00002714'), callback_data='delete_item' + item.id)
                 keyboard.add(callback_button)
             else:
                 callback_button = types.InlineKeyboardButton(
@@ -130,7 +130,7 @@ def skills_menu(chat_id):
             if skill.name in data:
                 matched_skills += 1
                 callback_button = types.InlineKeyboardButton(
-                    text=skill.name + "+++", callback_data='delete_skill' + skill.name)
+                    text=skill.name + u'\U00002714', callback_data='delete_skill' + skill.name)
                 keyboard.add(callback_button)
             else:
                 callback_button = types.InlineKeyboardButton(

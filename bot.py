@@ -268,7 +268,8 @@ def add_player(message):
                                  message.from_user.first_name + ' Выберите, кому вы поможете в этом '
                                                                 'бою.', reply_markup=keyboard)
                 else:
-                    bot.send_message(message.chat.id, 'Заполните лист')
+                    bot.send_message(message.chat.id, 'Заполните лист /player')
+
             elif message.from_user.id not in game.marked_id and message.chat.id == game.cid and \
                             game.gamestate == game.gamestates[0]:
                 if game.gametype == game.gametypes[1] and len(game.pending_players) > 2:
@@ -318,10 +319,6 @@ def find_file_ids(message):
             bot.send_message(message.chat.id, msg.document.file_id, reply_to_message_id=msg.message_id)
         time.sleep(3)
 
-
-@bot.message_handler(commands=['addnewcolumns'])
-def ids(message):
-    datahandler.add_column()
 
 @bot.message_handler(commands=['player'])
 def find_file_ids(message):
