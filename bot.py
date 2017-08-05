@@ -647,7 +647,8 @@ def start(message):
             if weapon.name == weapon_name:
                 found = True
                 break
-        if weapon_name in Weapon_list.weaponlist:
+        weapon_names = [x.name for x in Weapon_list.weaponlist]
+        if weapon_name in weapon_names:
             found = False
         if found:
             check_if_exist = datahandler.add_unique_weapon(username, weapon_name)
@@ -655,6 +656,26 @@ def start(message):
                 bot.send_message(message.from_user.id, 'Успешно')
             else:
                 bot.send_message(message.from_user.id, 'Уже есть')
+        else:
+            bot.send_message(message.from_user.id, 'Не успешно')
+    elif message.text[:14] == 'удалить оружие' and message.chat.id == 197216910:
+        data = message.text.split(' ')
+        if len(data) == 4:
+            weapon_name = data[2]
+            username = data[3]
+        else:
+            weapon_name = data[2] + ' ' + data[3]
+            username = data[4]
+        found = False
+        weapon_names = [x.name for x in Weapon_list.weaponlist]
+        if weapon_name in weapon_names:
+            found = False
+        if found:
+            check_if_exist = datahandler.delete_unique_weapon(username, weapon_name)
+            if check_if_exist:
+                bot.send_message(message.from_user.id, 'Успешно')
+            else:
+                bot.send_message(message.from_user.id, 'Нету')
         else:
             bot.send_message(message.from_user.id, 'Не успешно')
 bot.skip_pending = True
