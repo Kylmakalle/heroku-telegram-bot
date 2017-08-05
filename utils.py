@@ -506,8 +506,10 @@ def get_weapon_from(name):
         if weapon.name == name:
             return weapon
 
+
 def get_weaponlist():
     return Weapon_list.weaponlist
+
 
 def get_item_from(id):
     return Item_list.items[id]

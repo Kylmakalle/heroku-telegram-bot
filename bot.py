@@ -567,7 +567,7 @@ def action(call):
                                                     text="Ход " + str(actor.fight.round) + ': ' + 'Уворот')
     else:
         if call.data == 'change_weapon':
-            data = bot_handlers.weapon_menu()
+            data = bot_handlers.weapon_menu(call.from_user.id)
             bot.edit_message_text(data[0], chat_id=call.message.chat.id, message_id=call.message.message_id, reply_markup=data[1])
         elif call.data == 'change_items':
             data = bot_handlers.items_menu(call.from_user.id)
@@ -634,6 +634,20 @@ def start(message):
         list = datahandler.getallplayers()
         for x in list:
             bot.send_message(x,message.text)
+    elif message.text[:19] == 'добавить уникальный' and message.chat.id == 197216910 :
+        data = message.text.split(' ')
+        weapon_name = data[2]
+        username = data[3]
+        found = False
+        for weapon in Weapon_list.fullweaponlist:
+            if weapon.name == weapon_name:
+                found = True
+                break
+        if found:
+            datahandler.add_unique_weapon(username, weapon_name)
+            bot.send_message(message.from_user.id, 'Успешно')
+        else:
+            bot.send_message(message.from_user.id, 'Не успешно')
 bot.skip_pending = True
 if __name__ == '__main__':
      time.sleep(1)

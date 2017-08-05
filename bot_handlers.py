@@ -82,12 +82,18 @@ def player_menu(name, cid):
     keyboard.add(callback_button3)
     return (message, keyboard)
 
-def weapon_menu():
+def weapon_menu(chat_id):
     weapons = utils.get_weaponlist()
     keyboard = types.InlineKeyboardMarkup()
+    weapons = [x.name for x in weapons]
+    unique = datahandler.get_unique(chat_id)[0]
+    if unique is not None:
+        unique = unique.split(',')
+        for uniq in unique:
+            weapons.append(uniq)
     for weapon in weapons:
         callback_button = types.InlineKeyboardButton(
-            text=weapon.name, callback_data='new_weapon' + weapon.name)
+            text=weapon, callback_data='new_weapon' + weapon)
         keyboard.add(callback_button)
     return ('Выберите оружие', keyboard)
 

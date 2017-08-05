@@ -180,6 +180,31 @@ def add_skill(cid, skill_name):
     db.close()
     return True
 
+def add_unique_weapon(username, weapon_name):
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
+    cursor = db.cursor()
+    cursor.execute('SELECT unique_weapon FROM players WHERE username = ?', (username,))
+    data = list(cursor.fetchone())
+    if data[0] is None:
+        data[0] = weapon_name
+    else:
+        if data[0] == '':
+            data[0] = weapon_name
+        else:
+            data[0] = data[0] + ',' + weapon_name
+        while data[0] != '':
+            if data[0][-1] != ',':
+                break
+            data[0] = data[0][:-1]
+            if data[0] == '':
+                data[0] = None
+                break
+    cursor.execute('UPDATE players SET unique_weapon = ? WHERE username = ?', (data[0], username))
+    db.commit()
+    db.close()
+    return True
+
 def delete_skill(cid, skill_name):
     db = psycopg2.connect(
         "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
