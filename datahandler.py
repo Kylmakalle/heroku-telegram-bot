@@ -243,6 +243,16 @@ def get_unique(chat_id):
     db.close()
     return data
 
+
+def delete_inventory(username):
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
+    cursor = db.cursor()
+    cursor.execute('UPDATE players SET current_skills = %s,current_items = %s, current_weapon = %s  WHERE username = %s', (None, None, None, username))
+    db.commit()
+    db.close()
+
+
 def delete_skill(cid, skill_name):
     db = psycopg2.connect(
         "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))

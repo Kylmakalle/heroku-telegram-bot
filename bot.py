@@ -681,6 +681,10 @@ def start(message):
                 bot.send_message(message.from_user.id, 'Нету')
         else:
             bot.send_message(message.from_user.id, 'Не успешно')
+
+    elif message.text[:8] == 'очистить' and message.chat.id == 197216910:
+        data = message.text.split(' ')
+        datahandler.delete_inventory(data[1])
 bot.skip_pending = True
 if __name__ == '__main__':
      time.sleep(1)
