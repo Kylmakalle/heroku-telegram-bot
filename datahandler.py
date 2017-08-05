@@ -50,7 +50,7 @@ def getallplayers():
     cursor.execute('SELECT id FROM players')
     rows = cursor.fetchall()
     db.close()
-    print(' '.join.rows)
+    print(' '.join(rows))
     return rows
 
 
