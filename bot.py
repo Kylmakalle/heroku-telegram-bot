@@ -150,7 +150,7 @@ def start_game(message):
 def flee(message):
     game = utils.get_game_from_chat(message.chat.id)
     if game is not None:
-        if message.from_user.id in game.marked_id:
+        if message.from_user.id in game.marked_id and game.gamestate == game.gamestates[0]:
             for x in game.pending_players:
                 if x.chat_id == message.from_user.id:
                     game.pending_players.remove(x)
