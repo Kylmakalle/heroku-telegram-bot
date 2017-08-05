@@ -634,7 +634,7 @@ def start(message):
         list = datahandler.getallplayers()
         for x in list:
             bot.send_message(x,message.text)
-    elif message.text[:19] == 'добавить уникальный' and message.chat.id == 197216910 :
+    elif message.text[:19] == 'добавить оружие' and message.chat.id == 197216910 :
         data = message.text.split(' ')
         if len(data) == 4:
             weapon_name = data[2]
@@ -647,9 +647,14 @@ def start(message):
             if weapon.name == weapon_name:
                 found = True
                 break
+        if weapon_name in Weapon_list.weaponlist:
+            found = False
         if found:
-            datahandler.add_unique_weapon(username, weapon_name)
-            bot.send_message(message.from_user.id, 'Успешно')
+            check_if_exist = datahandler.add_unique_weapon(username, weapon_name)
+            if check_if_exist:
+                bot.send_message(message.from_user.id, 'Успешно')
+            else:
+                bot.send_message(message.from_user.id, 'Уже есть')
         else:
             bot.send_message(message.from_user.id, 'Не успешно')
 bot.skip_pending = True

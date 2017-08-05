@@ -192,7 +192,11 @@ def add_unique_weapon(username, weapon_name):
         if data[0] == '':
             data[0] = weapon_name
         else:
-            data[0] = data[0] + ',' + weapon_name
+            weapons = data[0].split(',')
+            if weapon_name not in weapons:
+                data[0] = data[0] + ',' + weapon_name
+            else:
+                return False
         while data[0] != '':
             if data[0][-1] != ',':
                 break
