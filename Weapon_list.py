@@ -1249,7 +1249,7 @@ fists.desc3 = 'Игрок бьет Противник Кулаком.'
 fists.desc4 = 'Игрок бьет Противник Кулаком, но не попадает.'
 fists.desc5 = 'Игрок бьет Противник Кулаком, но не попадает.'
 fists.desc6 = 'Игрок бьет Противник Кулаком, но не попадает.'
-master_fist = MasterFist(3, 1, 2, 2, 1, True, True, True, 'Кулаки','1-3' + u'\U0001F525' + "|" + '2' + u'\U000026A1', standart=False, natural=True)
+master_fist = MasterFist(3, 1, 2, 2, 1, True, True, True, 'Кулак','1-3' + u'\U0001F525' + "|" + '2' + u'\U000026A1', standart=False, natural=True)
 master_fist.desc1 = 'Игрок бьет Противник Кулаком.'
 master_fist.desc2 = 'Игрок бьет Противник Кулаком.'
 master_fist.desc3 = 'Игрок бьет Противник Кулаком.'
