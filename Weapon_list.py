@@ -466,8 +466,6 @@ class Bleeding(Weapon):
                  standart=True,natural=False):
         Weapon.__init__(self, dice, damage, energy, bonus, fixed, Melee, TwoHanded, Concealable, name, damagestring,standart=standart,natural=natural)
         self.chance = chance
-        if self.standart == True:
-            weaponlist.append(self)
 
     def hit(self,user):
         n = 0
@@ -528,8 +526,6 @@ class Burning(Weapon):
                  standart=True,natural=False):
         Weapon.__init__(self, dice, damage, energy, bonus, fixed, Melee, TwoHanded, Concealable, name, damagestring,standart=standart,natural=natural)
         self.chance = chance
-        if self.standart:
-            weaponlist.append(self)
 
     def hit(self,user):
         n = 0
@@ -591,8 +587,6 @@ class Stunning(Weapon):
         Weapon.__init__(self, dice, damage, energy, bonus, fixed, Melee, TwoHanded, Concealable, name, damagestring,
                         standart=standart,natural=natural)
         self.chance = chance
-        if self.standart == True:
-            weaponlist.append(self)
 
     def hit(self,user):
         n = 0
@@ -655,8 +649,6 @@ class Crippling(Weapon):
         Weapon.__init__(self, dice, damage, energy, bonus, fixed, Melee, TwoHanded, Concealable, name, damagestring,
                         standart=standart,natural=natural)
         self.chance = chance
-        if self.standart == True:
-            weaponlist.append(self)
 
     def hit(self,user):
         n = 0
@@ -720,8 +712,6 @@ class Dropping(Weapon):
         Weapon.__init__(self, dice, damage, energy, bonus, fixed, Melee, TwoHanded, Concealable, name, damagestring,
                         standart=standart,natural=natural)
         self.chance = chance
-        if self.standart:
-            weaponlist.append(self)
 
     def aquare(self, user):
         user.dropcd = 0
@@ -899,8 +889,6 @@ class Katana(Weapon):
         Weapon.__init__(self, dice, damage, energy, bonus, fixed, Melee, TwoHanded, Concealable, name, damagestring,
                         standart=standart, natural=natural)
         self.chance = chance
-        if self.standart == True:
-            weaponlist.append(self)
 
     def hit(self,user):
         n = 0
@@ -1003,8 +991,6 @@ class ULTRA(Weapon):
                  standart=True):
         Weapon.__init__(self, dice, damage, energy, bonus, fixed, Melee, TwoHanded, Concealable, name, damagestring,standart=standart)
         self.double=double
-        if self.standart == True:
-            weaponlist.append(self)
             
     def aquare(self,user):
         user.longreload = 0
@@ -1025,8 +1011,6 @@ class BowBleeding(Weapon):
                  standart=True,natural=False):
         Weapon.__init__(self, dice, damage, energy, bonus, fixed, Melee, TwoHanded, Concealable, name, damagestring,standart=standart,natural=natural)
         self.chance = chance
-        if self.standart == True:
-            weaponlist.append(self)
 
     def getDesc(self, damagetaken,user):
         user.weaponeffect.append(self)
@@ -1156,7 +1140,7 @@ chain.desc3 = 'Игрок бьет Противник Цепью!'
 chain.desc4 = 'Игрок бьет Противник Цепью, но не попадает.'
 chain.desc5 = 'Игрок бьет Противник Цепью, но не попадает.'
 chain.desc6 = 'Игрок бьет Противник Цепью, но не попадает.'
-bow = BowBleeding(3, 1, 2, -1, 0, False, False, False, 'Лук Асгард','2-3!' + u'\U0001F525' + "|" + '2!' + u'\U000026A1', 3, standart=False)
+bow = BowBleeding(3, 1, 2, -2, 0, False, False, False, 'Лук Асгард','1-3!' + u'\U0001F525' + "|" + '2!' + u'\U000026A1', 3, standart=False)
 bow.desc1 = 'Игрок стреляет в Противник из Лука Асгард.'
 bow.desc2 = 'Игрок стреляет в Противник из Лука Асгард.'
 bow.desc3 = 'Игрок стреляет в Противник из Лука Асгард.'
