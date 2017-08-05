@@ -155,6 +155,10 @@ def wait_response(fight):
         for p in fight.playerpool:
             print('Удаляем ход ' + p.name)
             p.turn = 'skip' + str(fight.round)
+            p.Skipped = True
+            p.skipcounter += 1
+            if p.skipcounter >= 3:
+                p.turn = 'suicide'
             bot.edit_message_text(chat_id=p.chat_id, message_id=p.choicemessage.message_id,
                                   text="Ход " + str(fight.round) + ': ''Время вышло!')
         fight.playerpool = []
@@ -356,6 +360,9 @@ def manifest_last_q(fight):
 # Сброс переменных
 def refresh_turn(fight):
     for p in fight.actors:
+        if not p.Skipped and p.skipcounter > 0:
+            p.skipcounter = 0
+        p.Skipped = False
         p.turn = None
         p.target = None
         p.tempaccuracy = 0

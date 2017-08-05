@@ -137,6 +137,8 @@ class Player(object):
         self.hypnosysresist = 0
         self.bot = False
         self.attackers = []
+        self.Skipped = False
+        self.skipcounter = 0
 
     # Атака игрока
     def attack(self):
