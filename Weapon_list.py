@@ -403,7 +403,7 @@ class SpearEternal(Weapon):
             user.countercd -= 1
         if user.throwcd > 0:
             user.throwcd -= 1
-        elif user.throwcd == 0 and Item_list.throwspear not in user.itemlist:
+        elif user.throwcd == 0 and Item_list.throwspear not in user.itemlist and user.lostweapon is None:
             user.itemlist.append(Item_list.throwspear)
     desc1 = 'Игрок бьет Противник Копьем Нарсил.'
     desc2 = 'Игрок бьет Противник Копьем Нарсил.'
