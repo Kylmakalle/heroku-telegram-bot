@@ -634,7 +634,7 @@ def start(message):
         list = datahandler.getallplayers()
         for x in list:
             bot.send_message(x,message.text)
-    elif message.text[:19] == 'добавить оружие' and message.chat.id == 197216910 :
+    elif message.text[:15] == 'добавить оружие' and message.chat.id == 197216910:
         data = message.text.split(' ')
         if len(data) == 4:
             weapon_name = data[2]
