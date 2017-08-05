@@ -4,9 +4,7 @@ from urllib.parse import urlparse
 
 url = urlparse(os.environ['DATABASE_URL'])
 
-
 def get_player(chat_id, username, first_name):
-
     if username is not None:
         db = psycopg2.connect("dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
         cursor = db.cursor()
@@ -49,9 +47,10 @@ def add_played_games(chat_id, game=1):
 def getallplayers():
     db = psycopg2.connect("dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
-    ids = cursor.execute('SELECT id FROM players').fetchall()
+    cursor.execute('SELECT id FROM players')
+    rows = cur.fetchall()
     db.close()
-    return ids
+    return rows
 
 
 def add_won_games(chat_id, game=1):
