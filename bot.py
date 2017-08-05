@@ -212,11 +212,7 @@ def add_player(message):
     elif game is not None:
         try:
             if game.gametype == game.gametypes[0] and message.from_user.id not in game.marked_id \
-<<<<<<< HEAD
                     and message.chat.id == game.cid and game.gamestate == game.gamestates[0]:
-=======
-                and message.chat.id == game.cid and game.gamestate == game.gamestates[0]:
->>>>>>> a51cb8a3033834a31f5ad71d912a76d802041de8
                 player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12], Weapon_list.fists,
                                          game)
                 game.pending_players.append(player)
@@ -232,10 +228,6 @@ def add_player(message):
                     bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 2.*', parse_mode='markdown')
                     datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
                 elif len(game.pending_players) >= 3:
-<<<<<<< HEAD
-=======
-
->>>>>>> a51cb8a3033834a31f5ad71d912a76d802041de8
                     keyboard = types.InlineKeyboardMarkup()
                     callback_button1 = types.InlineKeyboardButton(
                         text=str(len(game.pending_team1)) + ' - ' + game.pending_team1[0].name, callback_data='team1')
@@ -246,7 +238,6 @@ def add_player(message):
                                  message.from_user.first_name + ' Выберите, кому вы поможете в этом '
                                                                 'бою.', reply_markup=keyboard)
                     datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
-<<<<<<< HEAD
             elif game.gametype == game.gametypes[3] and message.from_user.id not in game.marked_id \
                     and message.chat.id == game.cid and game.gamestate == game.gamestates[0]:
                 datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
@@ -278,9 +269,6 @@ def add_player(message):
                                                                 'бою.', reply_markup=keyboard)
                 else:
                     bot.send_message(message.chat.id, 'Заполните лист')
-
-=======
->>>>>>> a51cb8a3033834a31f5ad71d912a76d802041de8
             elif message.from_user.id not in game.marked_id and message.chat.id == game.cid and \
                             game.gamestate == game.gamestates[0]:
                 if game.gametype == game.gametypes[1] and len(game.pending_players) > 2:

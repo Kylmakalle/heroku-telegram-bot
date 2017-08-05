@@ -25,11 +25,7 @@ def get_player(chat_id, username, first_name):
 def get_games(chat_id):
     db = psycopg2.connect("dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
-<<<<<<< HEAD
-    cursor.execute('SELECT games_played, games_won FROM players WHERE id = s%', (chat_id,))
-=======
     cursor.execute('SELECT games_played, games_won FROM players WHERE id = %s', (chat_id,))
->>>>>>> a51cb8a3033834a31f5ad71d912a76d802041de8
     data = cursor.fetchone()
     db.close()
     if data is None:
