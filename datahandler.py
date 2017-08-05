@@ -138,6 +138,7 @@ def delete_item(cid, item_id):
         if len(data[0]) > 0:
             if data[0][-1] == ',':
                 data[0] = data[0][:-1]
+        if len(data[0]) > 0:
             if data[0][0] == ',':
                 data[0] = data[0][1:]
         if data[0] == '':
@@ -223,6 +224,7 @@ def delete_unique_weapon(username, weapon_name):
             if len(data[0]) > 0:
                 if data[0][-1] == ',':
                     data[0] = data[0][:-1]
+            if len(data[0]) > 0:
                 if data[0][0] == ',':
                     data[0] = data[0][1:]
             if data[0] == '':
@@ -254,6 +256,7 @@ def delete_skill(cid, skill_name):
         if len(data[0]) > 0:
             if data[0][-1] == ',':
                 data[0] = data[0][:-1]
+        if len(data[0]) > 0:
             if data[0][0] == ',':
                 data[0] = data[0][1:]
         if data[0] == '':
