@@ -540,7 +540,6 @@ class ThrowingSpear(Item):
     def use(self, user):
         n = 0
         d = 0
-        stun = False
         dmax = 5
         while d != dmax:
             x = random.randint(1, 10)
@@ -550,21 +549,13 @@ class ThrowingSpear(Item):
             d += 1
         for a in user.abilities:
             n = a.onhit(a, n, user)
-
         # бонусный урон персонажа
         if n != 0:
             n += user.bonusdamage + 1
-            if random.randint(1, 10) <= 2*user.energy:
-                user.itemtarget.stuncounter += 2
-                stun = True
         # уходит энергия
         user.energy -= 3
         utils.damage(user, user.itemtarget, n, 'melee')
-        if n != 0 and stun:
-            user.fight.string.add(u'\U0001F300' + " |" + user.name + ' кидает Копье Нарсил в '
-                                  + user.itemtarget.name + '. Нанесено ' + str(n) + ' урона! Цель оглушена.')
-
-        elif n != 0:
+        if n != 0:
             user.fight.string.add(u'\U0001F4A5' + " |" + user.name + ' кидает Копье Нарсил в '
                                   + user.itemtarget.name + '. Нанесено ' + str(n) + ' урона!')
 
