@@ -205,6 +205,16 @@ def add_unique_weapon(username, weapon_name):
     db.close()
     return True
 
+
+def get_unique(chat_id):
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
+    cursor = db.cursor()
+    cursor.execute('SELECT unique_weapon, unique_items, unique_skills FROM players WHERE id = %s', (chat_id,))
+    data = cursor.fetchone()
+    db.close()
+    return data
+
 def delete_skill(cid, skill_name):
     db = psycopg2.connect(
         "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
