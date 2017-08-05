@@ -3,6 +3,7 @@ import utils
 import random
 import Main_classes
 import special_abilities
+import Item_list
 
 
 class AI_player(object):
@@ -25,6 +26,7 @@ class AI_player(object):
         self.accuracy = 0
         self.mult = 1
         self.armor = 0
+        self.evasion = 0
         self.armorchance = 0
         self.itemlist = []
         self.passive = []
@@ -57,6 +59,7 @@ class AI_player(object):
         self.turn = None
         self.target = None
         self.healtarget = None
+        self.itemtarget = None
         self.team = team
         self.Alive = True
         self.useditems = []
@@ -122,7 +125,6 @@ class Dog(AI_player):
                     self.turn = 'skip' + str(Fight.round)
                 else:
                     self.turn = 'dog_rest' + str(Fight.round)
-                    print('sobaka otdih')
 
         else:
             self.turn = 'move' + str(Fight.round)
@@ -133,14 +135,11 @@ class Dog(AI_player):
 
     def appear(self, Fight):
         for actor in self.team.actors:
-            print(actor.name + ' leader?')
             if isinstance(actor, DogLeader):
-                print(actor.name + ' yes')
                 self.servant = True
                 self.leader = actor
 
     def aiactionend(self, Fight):
-        print('run?')
         x = random.randint(1,5)
         print(str(x))
         if self.leader != None:
@@ -225,9 +224,7 @@ class DogLeader(AI_player):
     def aiactionend(self, Fight):
         if self.turn == 'howl' + str(Fight.round):
             for actor in self.team.actors:
-                print(actor.name + ' howl?')
                 if isinstance(actor, Dog):
-                    print(actor.name + ' yes?')
                     actor.energy += 2
                     actor.accuracy += 2
                     actor.accuracyfix += 2
@@ -385,7 +382,107 @@ class Rhino(AI_player):
         if self.trumpcd > 0:
             self.trumpcd -= 1
 
-horn = Weapon_list.Weapon(2, 1, 1, 5, 1, True, True, True, 'Рог', '?' + u'\U0001F4A5' + "|" + '1' + u'\U000026A1', standart = False,natural=True)
+
+class Rat(AI_player):
+
+    # Основные параметра Носорога
+
+    def __init__(self, name, Game, team):
+        AI_player.__init__(self, name, Game, team)
+        self.abilities = [special_abilities.Strength, special_abilities.Sturdy.Sturdy, special_abilities.Berserk]
+        self.itemlist = [Item_list.throwingknife]
+        self.maxhp = 4
+        self.hp = 4
+        self.maxenergy = 5
+        self.energy = 5
+        self.accuracy = 1
+        self.weapon = Weapon_list.chain
+        self.naturalweapon = Weapon_list.fangs
+        self.dodgecd = 0
+        self.ability_ready = True
+
+    # Определение хода Носорога
+
+    def get_target(self):
+        minhp = None
+        for target in self.targets:
+            if minhp is None:
+                minhp = target.hp
+                self.target = target
+            else:
+                if 0 < target.hp < minhp:
+                    minhp = target.hp
+                    self.target = target
+
+
+    def get_turn(self, fight):
+        self.get_target()
+        readycounter = 0
+
+        for x in utils.get_other_team(self).actors:
+            if x in self.targets and x.energy == x.maxenergy:
+                readycounter += 1
+        # Застанен
+        if self.Disabled:
+            self.target = None
+            self.turn = 'disabled'
+        elif self.firecounter > 1 or self.firecounter > 0 and not self.Inmelee or self.firecounter > 0 and self.energy < 2:
+            self.target = None
+            self.turn = 'skip' + str(fight.round)
+        # Подойти в мили
+        elif not self.Inmelee and not self.targets:
+            if random.randint(1,2) == 1 and Item_list.throwingknife in self.itemlist:
+                self.itemtarget = utils.get_other_team(self).actors[random.randint(0, len(utils.get_other_team(self).actors) - 1)]
+                self.turn = Item_list.throwingknife.id
+            else:
+                self.target = None
+                self.turn = 'move' + str(fight.round)
+        # Контратака
+        elif float(readycounter) >= len(self.targets)/2 and self.weapon == Weapon_list.spear and self.firecounter < 1 and self.energy > 3 and random.randint(1, 3) != 1 and self.ability_ready:
+            if self.countercd == 0:
+                self.target = None
+                self.turn = 'aim'
+                self.weapon.special(self, None)
+            else:
+                self.ability_ready = False
+                self.get_turn(self.fight)
+        elif self.target.energy < 2 and self.weapon == Weapon_list.chain and random.randint(1, 3) != 1 and self.energy > 3 and self.ability_ready:
+            print('drop')
+            if self.dropcd == 0:
+                self.turn = 'weaponspecial'
+                self.weapon.special(self, self.target.chat_id)
+            else:
+                self.ability_ready = False
+                self.get_turn(self.fight)
+
+        # Уворот
+        elif float(readycounter) >= len(self.targets)/2 and random.randint(1, 3) != 1 \
+                and self.dodgecd == 0 and self.energy != self.maxenergy:
+            self.turn = 'dodge' + str(fight.round)
+        # Метательный нож
+        elif self.energy > 3 and Item_list.throwingknife in self.itemlist and self.target.energy < 2:
+            self.itemtarget = self.target
+            self.target = None
+            self.turn = Item_list.throwingknife.id
+        # Удар (Если больше 2 энергии или 50% если больше 1 энергии или есть энергия, 1 хп и тебя готовы ударить)
+        elif self.energy > 2 or random.randint(1, 2) == 1 and self.energy > 1 or readycounter and self.hp==1 and self.energy > 0:
+            self.turn = 'attack' + str(fight.round)
+        # Отдых
+        else:
+            self.target = None
+            self.turn = 'reload' + str(fight.round)
+
+    def aiaction1q(self, fight):
+        if self.turn == 'dodge' + str(fight.round):
+            self.evasion += 5
+            self.dodgecd += 2
+            fight.string.add( u'\U0001F4A8' + '|' + self.name + ' пытается увернуться от атак!')
+    def aiactionend(self, Fight):
+        if self.dodgecd > 0:
+            self.dodgecd -= 1
+        self.ability_ready = True
+
+horn = Weapon_list.Weapon(2, 1, 1, 5, 0, True, True, True, 'Рог', '?' + u'\U0001F4A5' + "|" + '1' + u'\U000026A1', standart = False,natural=True)
 horn.desc1 = 'Игрок бьет Противник Рогом.'
 horn.desc2 = 'Игрок бьет Противник Рогом.'
 horn.desc3 = 'Игрок бьет Противник Рогом.'
