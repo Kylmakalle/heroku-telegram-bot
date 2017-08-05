@@ -636,7 +636,10 @@ def start(message):
         Main_classes.ruporready = False
         list = datahandler.getallplayers()
         for x in list:
-            bot.send_message(x, message.text)
+            try:
+                bot.send_message(x, message.text)
+            except:
+                pass
     elif message.text[:15] == 'добавить оружие' and message.chat.id == 197216910:
         data = message.text.split(' ')
         if len(data) == 4:
