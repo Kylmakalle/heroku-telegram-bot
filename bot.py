@@ -326,12 +326,14 @@ def find_file_ids(message):
         data = bot_handlers.player_menu(message.from_user.first_name, message.from_user.id)
         bot.send_message(message.from_user.id, data[0], reply_markup=data[1])
 
+
 @bot.message_handler(commands=['try'])
 def find_file_ids(message):
     try:
         bot.send_message(message.chat.id, '@' + message.from_user.username)
     except:
         pass
+
 
 @bot.callback_query_handler(func=lambda call: True)
 def action(call):
@@ -612,7 +614,7 @@ def action(call):
                 bot.edit_message_text(data[0], chat_id=call.message.chat.id, message_id=call.message.message_id,
                                       reply_markup=data[1])
             else:
-                bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Сначала уберите текущие вещи.")
+                bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="Сначала уберите текущие навыки.")
 
         elif call.data[:12] == 'delete_skill':
             print('1')
@@ -627,13 +629,14 @@ def action(call):
             bot.edit_message_text(data[0], chat_id=call.message.chat.id, message_id=call.message.message_id,
                                   reply_markup=data[1])
 
+
 @bot.message_handler(content_types=["text"])
 def start(message):
     if message.chat.id == 197216910 and Main_classes.ruporready:
         Main_classes.ruporready = False
         list = datahandler.getallplayers()
         for x in list:
-            bot.send_message(x,message.text)
+            bot.send_message(x, message.text)
     elif message.text[:15] == 'добавить оружие' and message.chat.id == 197216910:
         data = message.text.split(' ')
         if len(data) == 4:
