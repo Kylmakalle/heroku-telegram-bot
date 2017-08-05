@@ -51,7 +51,6 @@ def getallplayers():
     rows = cursor.fetchall()
     rows = [x[0] for x in rows]
     db.close()
-    print(' '.join(rows))
     return rows
 
 
