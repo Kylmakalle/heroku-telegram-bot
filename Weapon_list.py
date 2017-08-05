@@ -790,7 +790,7 @@ class Dropping(Weapon):
             return str(u'\U0001F4A8' + "|" + getattr(self,str('desc' + str(random.randint(4, 6)))))
 
     def special(self, user, call):
-        user.target = utils.actor_from_id(call, user.game)
+        user.target = utils.actor_from_id(call.data[13:], user.game)
         user.dropcd = 4
 
     def special_second(self, user):
@@ -943,7 +943,7 @@ class Katana(Weapon):
         bot.send_message(p.chat_id, 'Выберите противника.', reply_markup=keyboard1)
 
     def special(self, user, call):
-        user.target = utils.actor_from_id(call, user.game)
+        user.target = utils.actor_from_id(call.data[13:], user.game)
 
     def special_second(self, user):
         if user.turn == 'weaponspecial':
