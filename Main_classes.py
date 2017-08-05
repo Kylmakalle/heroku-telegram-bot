@@ -119,6 +119,7 @@ class Player(object):
         self.Blocked = False
         self.Losthp = False
         self.Drugged = False
+        self.dodgecd = 0
         # использованные эффекты
         self.useditems = []
         self.enditems = []

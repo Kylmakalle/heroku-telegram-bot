@@ -555,13 +555,16 @@ def action(call):
                         if call.data[:4] == 'skip':
                             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                                   text="Ход " + str(actor.fight.round) + ": Пропуск хода.")
-                        if call.data == 'reload' + str(actor.fight.round):
+                        elif call.data == 'reload' + str(actor.fight.round):
                             if actor.weapon.Melee:
                                 bot.edit_message_text(chat_id=actor.chat_id, message_id=actor.choicemessage.message_id,
                                                       text="Ход " + str(actor.fight.round) + ': ' + 'Отдых')
                             else:
                                 bot.edit_message_text(chat_id=actor.chat_id, message_id=actor.choicemessage.message_id,
                                                       text="Ход " + str(actor.fight.round) + ': ' + 'Перезарядка')
+                        elif call.data == 'evade' + str(actor.fight.round):
+                            bot.edit_message_text(chat_id=actor.chat_id, message_id=actor.choicemessage.message_id,
+                                                    text="Ход " + str(actor.fight.round) + ': ' + 'Уворот')
     else:
         if call.data == 'change_weapon':
             data = bot_handlers.weapon_menu()
