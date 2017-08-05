@@ -6,6 +6,7 @@ import time
 import Weapon_list
 import random
 import special_abilities
+import datahandler
 
 bot = telebot.TeleBot(config.token)
 types = telebot.types
@@ -29,8 +30,9 @@ def get_playerpool(fight):
 
 # Рассылаем варианты действий
 def send_actions(fight):
-    for p in fight.playerpool:
+    for p in fight.actors:
         account_targets(p)
+    for p in fight.playerpool:
         send_action(p, fight)
         print('Послан список действий для ' + p.name)
 
@@ -174,6 +176,8 @@ def manifest_actions(fight):
         p.aiaction2q(fight)
     manifest_second_q(fight)
     fight.string.post(bot, 'Ход ' + str(fight.round))
+
+    print('Закончен')
     apply_effects(fight)
 
     for p in fight.aiplayers:
@@ -217,6 +221,7 @@ def manifest_second_q(fight):
         p.weapon.special_second(p)
         # Перезарядка
         if p.turn == 'reload' + str(fight.round):
+            print(p.name + str(1))
             p.energy = p.maxenergy
             if p.weapon.Melee or isinstance(p.weapon, Weapon_list.BowBleeding):
                 fight.string.add(u'\U0001F624' + "|" +
@@ -230,8 +235,6 @@ def manifest_second_q(fight):
 
         # Стрельба; определение player.target
         elif p.turn == 'attack' + str(fight.round):
-            while p.target is None:
-                pass
             p.action = str(p.attack())
             if p.target == p:
                 p.action = p.action.replace('Противник', 'себя').replace('Игрок', p.name).replace('Цель', p.target.name)
@@ -269,7 +272,7 @@ def manifest_second_q(fight):
             fight.string.add(u'\U00002620' + ' |' + p.name + ' решает покончить жизнь самоубийством.')
         elif p.turn is None:
             print('Ошибка в определении хода' + p.name)
-
+        print(p.name)
 
 # Эффекты
 def apply_effects(fight):
@@ -346,7 +349,6 @@ def refresh_turn(fight):
         p.target = None
         p.tempaccuracy = 0
         p.targets = []
-        p.Blocked = False
         if p.accuracyfix > 0:
             p.accuracy -= p.accuracyfix
             p.accuracyfix = 0
@@ -473,9 +475,13 @@ def kill_players(fight):
 
 def end(fight, game):
     if not fight.Withbots:
+        for p in game.players:
+            datahandler.add_played_games(p.chat_id)
         if not fight.team1.actors and not fight.team2.actors:
             bot.send_message(game.cid, "Обе команды проиграли!")
         elif not fight.team1.actors:
+            for p in game.pending_team2:
+                datahandler.add_won_games(p.chat_id)
             bot.send_message(game.cid, "Команда " + fight.team1.leader.name + " потерпела поражение!")
             try:
                 pic = bot.get_user_profile_photos(fight.team2.leader.chat_id).photos[0][0].file_id
@@ -484,6 +490,8 @@ def end(fight, game):
                 bot.send_message(game.cid, "Команда " + fight.team2.leader.name + " победила!")
         elif not fight.team2.actors:
             bot.send_message(game.cid, "Команда " + fight.team2.leader.name + " потерпела поражение!")
+            for p in game.pending_team1:
+                datahandler.add_won_games(p.chat_id)
             try:
                 pic = bot.get_user_profile_photos(fight.team1.leader.chat_id).photos[0][0].file_id
                 bot.send_photo(game.cid, pic, "Команда " + fight.team1.leader.name + " победила!")
@@ -554,4 +562,3 @@ def account_targets(player):
                 blockers.append(p)
         if blockers:
             player.targets = blockers
-            player.Blocked = True

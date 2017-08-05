@@ -545,7 +545,7 @@ class ThrowingSpear(Item):
         while d != dmax:
             x = random.randint(1, 10)
             print(user.name + ' Выпало ' + str(x))
-            if x > 10 - user.energy - user.accuracy - user.tempaccuracy - 1:
+            if x > 10 - user.energy - user.accuracy - user.tempaccuracy - 1 + user.itemtarget.evasion:
                 n += 1
             d += 1
         for a in user.abilities:

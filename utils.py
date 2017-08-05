@@ -9,6 +9,7 @@ import time
 import threading
 import ai
 import secret_abilities
+import datahandler
 
 types = telebot.types
 bot = telebot.TeleBot(config.token)
@@ -148,12 +149,83 @@ def prepare_fight(game):
     game.startfight()
 
 
+def prepare_custom_fight(game):
+    # Организация словаря
+    game.player_dict = {p.chat_id: p for p in game.players}
+    game.gamestate = 'weapon'
+    bot.send_message(game.cid, 'Бой начинается!')
+
+    # Список активных игроков и раздача итемов
+    for p in game.players:
+        game.fight.activeplayers.append(p)
+        p.team.actors.append(p)
+        data = datahandler.get_current(p.chat_id)
+        weapon_name = data[0]
+        for weapon in Weapon_list.fullweaponlist:
+            if weapon.name == weapon_name:
+                p.weapon = weapon
+                break
+        item_ids = data[1].split(',')
+        print(', '.join(item_ids))
+        for item_id in item_ids:
+            p.itemlist.append(Item_list.items[item_id])
+        skill_names = data[2].split(',')
+        for skill_name in skill_names:
+            for skill in special_abilities.abilities:
+                if skill.name == skill_name:
+                    p.abilities.append(skill)
+                    break
+    # Подключение ai-противников
+    if game.gametype == 'rhino':
+        boss = ai.Rhino('Носорог ' + '|' + u'\U0001F98F', game, game.team2, len(game.team1.players))
+        game.team2.actors.append(boss)
+        game.fight.aiplayers.append(game.team2.actors[-1])
+        game.aiplayers.append(game.team2.actors[-1])
+        game.player_dict[game.fight.aiplayers[-1].chat_id] = game.fight.aiplayers[-1]
+        game.abilitycounter = len(game.players)
+        game.fight.Withbots = True
+    elif game.gametype == 'wolfs':
+        boss = ai.DogLeader('Вожак ' + '|' + u'\U0001F43A', game, game.team2, len(game.team1.players))
+        game.team2.actors.append(boss)
+        game.fight.aiplayers.append(game.team2.actors[-1])
+        game.aiplayers.append(game.team2.actors[-1])
+        game.player_dict[game.fight.aiplayers[-1].chat_id] = game.fight.aiplayers[-1]
+        for x in range(0, len(game.team1.players)):
+            game.team2.actors.append(ai.Dog('Собака ' + str(x + 1) + '|' + u'\U0001F436', game, game.team2))
+            game.fight.aiplayers.append(game.team2.actors[-1])
+            game.aiplayers.append(game.team2.actors[-1])
+            game.player_dict[game.fight.aiplayers[-1].chat_id] = game.fight.aiplayers[-1]
+        game.fight.Withbots = True
+    game.gamestate = 'fight'
+
+    # Последняя подготовка
+    for p in game.players:
+
+        p.fight.string.add('Оружие ' + p.name + ' - ' + p.weapon.name)
+        for a in p.abilities:
+            a.aquare(a, p)
+            a.aquareonce(a, p)
+        if p.weapon.Melee:
+            p.Inmelee = False
+        p.weapon.aquare(p)
+    for p in game.fight.aiplayers:
+        for a in p.abilities:
+            a.aquare(a, p)
+            a.aquareonce(a, p)
+        if p.weapon.Melee:
+            p.Inmelee = False
+        p.weapon.aquare(p)
+    print('Команда 1 - ' + ', '.join([p.name for p in game.team1.players]))
+    print('Команда 2 - ' + ', '.join([p.name for p in game.team2.players]))
+    game.fight.string.post(bot, 'Выбор оружия')
+
+    game.startfight()
+
 def get_other_team(player):
     if player.team == player.fight.team1:
         return player.game.team2
     elif player.team == player.game.team2:
         return player.game.team1
-
 
 
 def remove_player(playerchat_id, game):
@@ -427,4 +499,22 @@ def damage(source, target, damage, type):
     for a in target.abilities:
         a.ondamage(a, source, target, damage, type)
     target.damagetaken += damage
+
+
+def get_weapon_from(name):
+    for weapon in Weapon_list.fullweaponlist:
+        if weapon.name == name:
+            return weapon
+
+def get_weaponlist():
+    return Weapon_list.weaponlist
+
+def get_item_from(id):
+    return Item_list.items[id]
+
+
+def get_skill_from(name):
+    for ability in special_abilities.abilities:
+        if ability.name == name:
+            return ability
 

@@ -476,8 +476,6 @@ class Bleeding(Weapon):
                  standart=True,natural=False):
         Weapon.__init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring,standart=standart,natural=natural)
         self.chance = chance
-        if self.standart == True:
-            weaponlist.append(self)
 
     def hit(self,user):
         n = 0
@@ -543,8 +541,6 @@ class Burning(Weapon):
                  standart=True,natural=False):
         Weapon.__init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring,standart=standart,natural=natural)
         self.chance = chance
-        if self.standart:
-            weaponlist.append(self)
 
     def hit(self,user):
         n = 0
@@ -611,8 +607,6 @@ class Stunning(Weapon):
         Weapon.__init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring,
                         standart=standart,natural=natural)
         self.chance = chance
-        if self.standart == True:
-            weaponlist.append(self)
 
     def hit(self,user):
         n = 0
@@ -679,8 +673,6 @@ class Crippling(Weapon):
         Weapon.__init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring,
                         standart=standart,natural=natural)
         self.chance = chance
-        if self.standart == True:
-            weaponlist.append(self)
 
     def hit(self,user):
         n = 0
@@ -748,8 +740,6 @@ class Dropping(Weapon):
         Weapon.__init__(self, dice, damage, energy, bonus, mult, Melee, TwoHanded, Concealable, name, damagestring,
                         standart=standart,natural=natural)
         self.chance = chance
-        if self.standart:
-            weaponlist.append(self)
 
     def aquare(self, user):
         user.dropcd = 0
