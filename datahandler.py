@@ -77,20 +77,6 @@ def get_dataname(chat_id):
 
 
 
-def add_column():
-    db = psycopg2.connect(
-        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
-    cursor = db.cursor()
-    cursor.execute('CREATE TABLE IF NOT EXISTS players ( id INTEGER ,games_played INTEGER, games_won INTEGER, name text, username text)')
-    cursor.execute('alter table players add column "current_weapon" VARCHAR(40)')
-    cursor.execute('alter table players add column "current_items" VARCHAR(40)')
-    cursor.execute('alter table players add column "current_skills" VARCHAR(40)')
-    cursor.execute('alter table players add column "unique_weapon" VARCHAR(40)')
-    cursor.execute('alter table players add column "unique_items" VARCHAR(40)')
-    cursor.execute('alter table players add column "unique_skills" VARCHAR(40)')
-    db.commit()
-    db.close()
-
 
 def get_current(chat_id):
     db = psycopg2.connect(
@@ -131,7 +117,10 @@ def add_item(cid, item_id):
             if data[0] == '':
                 data[0] = None
                 break
-    cursor.execute('UPDATE players SET current_items = N%s WHERE id = %s', (data[0], cid))
+    if data[0] is None:
+        cursor.execute('UPDATE players SET current_items = %s WHERE id = %s', (None, cid))
+    else:
+        cursor.execute('UPDATE players SET current_items = N%s WHERE id = %s', (data[0], cid))
     db.commit()
     db.close()
     return True
@@ -145,8 +134,6 @@ def delete_item(cid, item_id):
     if data[0] is None:
         return False
     else:
-        print(data[0])
-        print(item_id)
         data[0] = data[0].replace(item_id, '')
         while data[0] != '':
             if data[0][-1] != ',':
@@ -155,8 +142,10 @@ def delete_item(cid, item_id):
             if data[0] == '':
                 data[0] = None
                 break
-        print(data[0])
-    cursor.execute('UPDATE players SET current_items = N%s WHERE id = %s', (data[0], cid))
+    if data[0] is None:
+        cursor.execute('UPDATE players SET current_items = %s WHERE id = %s', (None, cid))
+    else:
+        cursor.execute('UPDATE players SET current_items = N%s WHERE id = %s', (data[0], cid))
     db.commit()
     db.close()
     return True
@@ -183,7 +172,10 @@ def add_skill(cid, skill_name):
             if data[0] == '':
                 data[0] = None
                 break
-    cursor.execute('UPDATE players SET current_skills = N%s WHERE id = %s', (data[0], cid))
+    if data[0] is None:
+        cursor.execute('UPDATE players SET current_skills = %s WHERE id = %s', (None, cid))
+    else:
+        cursor.execute('UPDATE players SET current_skills = N%s WHERE id = %s', (data[0], cid))
     db.commit()
     db.close()
     return True
@@ -197,8 +189,6 @@ def delete_skill(cid, skill_name):
     if data[0] is None:
         return False
     else:
-        print(data[0])
-        print(skill_name)
         data[0] = data[0].replace(skill_name, '')
         while data[0] != '':
             if data[0][-1] != ',':
@@ -207,8 +197,10 @@ def delete_skill(cid, skill_name):
             if data[0] == '':
                 data[0] = None
                 break
-        print(data[0])
-    cursor.execute('UPDATE players SET current_skills = N%s WHERE id = %s', (data[0], cid))
+    if data[0] is None:
+        cursor.execute('UPDATE players SET current_skills = %s WHERE id = %s', (None, cid))
+    else:
+        cursor.execute('UPDATE players SET current_skills = N%s WHERE id = %s', (data[0], cid))
     db.commit()
     db.close()
     return True
