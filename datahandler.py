@@ -135,10 +135,11 @@ def delete_item(cid, item_id):
         return False
     else:
         data[0] = data[0].replace(item_id, '')
-        if data[0][-1] == ',':
-            data[0] = data[0][:-1]
-        if data[0][0] == ',':
-            data[0] = data[0][:1]
+        if len(data[0]) > 0:
+            if data[0][-1] == ',':
+                data[0] = data[0][:-1]
+            if data[0][0] == ',':
+                data[0] = data[0][1:]
         if data[0] == '':
             data[0] = None
     if data[0] is None:
@@ -219,10 +220,11 @@ def delete_unique_weapon(username, weapon_name):
     else:
         if weapon_name in data[0]:
             data[0] = data[0].replace(weapon_name, '')
-            if data[0][-1] == ',':
-                data[0] = data[0][:-1]
-            if data[0][0] == ',':
-                data[0] = data[0][:1]
+            if len(data[0]) > 0:
+                if data[0][-1] == ',':
+                    data[0] = data[0][:-1]
+                if data[0][0] == ',':
+                    data[0] = data[0][1:]
             if data[0] == '':
                 data[0] = None
     cursor.execute('UPDATE players SET unique_weapon = %s WHERE username = %s', (data[0], username))
@@ -249,10 +251,11 @@ def delete_skill(cid, skill_name):
         return False
     else:
         data[0] = data[0].replace(skill_name, '')
-        if data[0][-1] == ',':
-            data[0] = data[0][:-1]
-        if data[0][0] == ',':
-            data[0] = data[0][:1]
+        if len(data[0]) > 0:
+            if data[0][-1] == ',':
+                data[0] = data[0][:-1]
+            if data[0][0] == ',':
+                data[0] = data[0][1:]
         if data[0] == '':
             data[0] = None
     if data[0] is None:
