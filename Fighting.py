@@ -213,10 +213,10 @@ def manifest_first_q(fight):
     for p in fight.actors:
         if p.turn == 'evade' + str(p.fight.round):
             p.fight.string.add(u'\U0001F4A8' + "|" + p.name + ' пытается увернуться от атак.')
-            p.dodgecd += 2
+            p.dodgecd += 3
             for n in utils.get_other_team(p).actors:
                 if n.target == p:
-                    n.tempaccuracy -= 4
+                    n.tempaccuracy -= 3
         elif p.turn[0:4] == 'item':
             for i in p.itemlist:
                 if p.turn[0:7] == i.id:

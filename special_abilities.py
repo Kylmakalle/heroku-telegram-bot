@@ -585,6 +585,7 @@ class IronFist(Ability):
 abilities.append(Piromant)
 abilities.append(Armorer)
 abilities.append(Revenge)
+abilities.append(Hypnosyser)
 abilities.append(Sadist)
 abilities.append(Mentalist)
 abilities.append(Gasmask)
