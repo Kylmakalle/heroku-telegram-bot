@@ -49,6 +49,7 @@ def getallplayers():
     cursor = db.cursor()
     cursor.execute('SELECT id FROM players')
     rows = cursor.fetchall()
+    rows = [x[0] for x in rows]
     db.close()
     print(' '.join(rows))
     return rows
