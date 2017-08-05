@@ -184,7 +184,7 @@ def add_unique_weapon(username, weapon_name):
     db = psycopg2.connect(
         "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
-    cursor.execute('SELECT unique_weapon FROM players WHERE username = ?', (username,))
+    cursor.execute('SELECT unique_weapon FROM players WHERE username = %s', (username,))
     data = list(cursor.fetchone())
     if data[0] is None:
         data[0] = weapon_name
@@ -200,7 +200,7 @@ def add_unique_weapon(username, weapon_name):
             if data[0] == '':
                 data[0] = None
                 break
-    cursor.execute('UPDATE players SET unique_weapon = ? WHERE username = ?', (data[0], username))
+    cursor.execute('UPDATE players SET unique_weapon = %s WHERE username = %s', (data[0], username))
     db.commit()
     db.close()
     return True
