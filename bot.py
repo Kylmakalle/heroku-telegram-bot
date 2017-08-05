@@ -667,9 +667,9 @@ def start(message):
             weapon_name = data[2] + ' ' + data[3]
             username = data[4]
         found = False
-        weapon_names = [x.name for x in Weapon_list.weaponlist]
+        weapon_names = [x.name for x in Weapon_list.fullweaponlist]
         if weapon_name in weapon_names:
-            found = False
+            found = True
         if found:
             check_if_exist = datahandler.delete_unique_weapon(username, weapon_name)
             if check_if_exist:
