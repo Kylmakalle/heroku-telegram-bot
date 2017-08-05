@@ -33,7 +33,6 @@ class Game(object):
         self.player_dict = {}
         self.players = []
         self.aiplayers = []
-
         self.pending_players = []
         self.pending_team1 = []
         self.pending_team2 = []
@@ -87,6 +86,7 @@ class Player(object):
         self.fight = game.fight
         # Переменные для боя
         self.weapon = weapon  # - Временно
+        self.naturalweapon = weapon
         self.maxhp = 4
         self.maxenergy = 5
         self.itemlist = []
@@ -100,6 +100,7 @@ class Player(object):
         self.armor = 0
         self.armorchance = 0
         self.targets = []
+        self.evasion = 0
         # Временные переменные боя
         self.lostweapon = None
         self.toughness = 6
