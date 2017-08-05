@@ -636,8 +636,12 @@ def start(message):
             bot.send_message(x,message.text)
     elif message.text[:19] == 'добавить уникальный' and message.chat.id == 197216910 :
         data = message.text.split(' ')
-        weapon_name = data[2]
-        username = data[3]
+        if len(data) == 4:
+            weapon_name = data[2]
+            username = data[3]
+        else:
+            weapon_name = data[2] + ' ' + data[3]
+            username = data[4]
         found = False
         for weapon in Weapon_list.fullweaponlist:
             if weapon.name == weapon_name:
