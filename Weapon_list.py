@@ -862,7 +862,7 @@ class MasterFist(Weapon):
         return n
 
     def special(self, user, call):
-        user.target = utils.actor_from_id(call, user.game)
+        user.target = utils.actor_from_id(call.data[13:], user.game)
 
     def special_second(self, user):
         if user.turn == 'weaponspecial':
@@ -1140,7 +1140,7 @@ chain.desc3 = 'Игрок бьет Противник Цепью!'
 chain.desc4 = 'Игрок бьет Противник Цепью, но не попадает.'
 chain.desc5 = 'Игрок бьет Противник Цепью, но не попадает.'
 chain.desc6 = 'Игрок бьет Противник Цепью, но не попадает.'
-bow = BowBleeding(3, 1, 2, -2, 0, False, False, False, 'Лук Асгард','1-3!' + u'\U0001F525' + "|" + '2!' + u'\U000026A1', 3, standart=False)
+bow = BowBleeding(3, 1, 2, -1, 0, False, False, False, 'Лук Асгард','1-3!' + u'\U0001F525' + "|" + '2!' + u'\U000026A1', 3, standart=False)
 bow.desc1 = 'Игрок стреляет в Противник из Лука Асгард.'
 bow.desc2 = 'Игрок стреляет в Противник из Лука Асгард.'
 bow.desc3 = 'Игрок стреляет в Противник из Лука Асгард.'
