@@ -335,11 +335,13 @@ def get_weapon(player):
         x = Weapon_list.weaponlist[random.randint(0, len(Weapon_list.weaponlist) - 1)]
         if x not in choice:
             choice.append(x)
-    unique_weapon_names = datahandler.get_unique(player.chat_id)[0].split(',')
-    for name in unique_weapon_names:
-        for weapon in Weapon_list.fullweaponlist:
-            if weapon.name == name:
-                choice.append(weapon)
+    unique_weapon = datahandler.get_unique(player.chat_id)[0]
+    if unique_weapon is not None:
+        unique_weapon_names = unique_weapon.split(',')
+        for name in unique_weapon_names:
+            for weapon in Weapon_list.fullweaponlist:
+                if weapon.name == name:
+                    choice.append(weapon)
     for c in choice:
         callback_button1 = types.InlineKeyboardButton(text=c.name,
                                                       callback_data=str(
