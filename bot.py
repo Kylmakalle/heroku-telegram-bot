@@ -103,7 +103,7 @@ def start_game(message):
         pass
     else:
         bot_handlers.start_game(4, message.chat.id)
-        bot.send_message(message.chat.id, "Используйте команду /join, чтобы вступить в игру. 5 минут до отмены игры.")
+        bot.send_photo(message.chat.id,config.ratid,caption="Используйте команду /join, чтобы вступить в игру. 5 минут до отмены игры.")
 
 
 @bot.message_handler(commands=["fight"])
