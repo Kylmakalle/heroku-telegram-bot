@@ -1,10 +1,13 @@
-import sqlite3
+import psycopg2
+import os
+from urllib.parse import urlparse
 
+url = urlparse(os.environ['DATABASE_URL'])
 
 def get_player(chat_id, username, first_name):
-
     if username is not None:
-        db = sqlite3.connect("player_database")
+        db = psycopg2.connect(
+            "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
         cursor = db.cursor()
         cursor.execute('CREATE TABLE IF NOT EXISTS players ( id INTEGER ,games_played INTEGER, games_won INTEGER, name text, username text)')
         cursor.execute('SELECT name FROM players WHERE id = ?', (chat_id,))
@@ -16,7 +19,8 @@ def get_player(chat_id, username, first_name):
         db.commit()
         db.close()
     else:
-        db = sqlite3.connect("player_database")
+        db = psycopg2.connect(
+            "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
         cursor = db.cursor()
         cursor.execute('SELECT name FROM players WHERE id = ?', (chat_id,))
         data = cursor.fetchone()
@@ -30,7 +34,8 @@ def get_player(chat_id, username, first_name):
 
 
 def get_games(chat_id):
-    db = sqlite3.connect("player_database")
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('SELECT games_played, games_won FROM players WHERE id = ?', (chat_id,))
     data = cursor.fetchone()
@@ -39,7 +44,8 @@ def get_games(chat_id):
 
 
 def add_played_games(chat_id, game=1):
-    db = sqlite3.connect("player_database")
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('SELECT games_played FROM players WHERE id = ?', (chat_id,))
     data = cursor.fetchone()
@@ -51,7 +57,8 @@ def add_played_games(chat_id, game=1):
 
 
 def getallplayers():
-    db = sqlite3.connect("player_database")
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     db.row_factory = lambda cursor, row: row[0]
     cursor = db.cursor()
     ids = cursor.execute('SELECT id FROM players').fetchall()
@@ -60,7 +67,8 @@ def getallplayers():
 
 
 def add_won_games(chat_id, game=1):
-    db = sqlite3.connect("player_database")
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('SELECT games_won FROM players WHERE id = ?', (chat_id,))
     data = cursor.fetchone()
@@ -72,7 +80,8 @@ def add_won_games(chat_id, game=1):
 
 
 def get_dataname(chat_id):
-    db = sqlite3.connect("player_database")
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('SELECT name FROM players WHERE id = ?', (chat_id,))
     data = cursor.fetchone()
@@ -81,7 +90,8 @@ def get_dataname(chat_id):
 
 
 def add_column():
-    db = sqlite3.connect("player_database")
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('CREATE TABLE IF NOT EXISTS players ( id INTEGER ,games_played INTEGER, games_won INTEGER, name text, username text)')
     cursor.execute('alter table players add column "current_weapon" text')
@@ -90,7 +100,8 @@ def add_column():
 
 
 def get_current(chat_id):
-    db = sqlite3.connect("player_database")
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('SELECT current_weapon, current_items, current_skills FROM players WHERE id = ?', (chat_id,))
     data = cursor.fetchone()
@@ -99,7 +110,8 @@ def get_current(chat_id):
 
 
 def get_unique(chat_id):
-    db = sqlite3.connect("player_database")
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('SELECT unique_weapon, unique_items, unique_skills FROM players WHERE id = ?', (chat_id,))
     data = cursor.fetchone()
@@ -108,7 +120,8 @@ def get_unique(chat_id):
 
 
 def change_weapon(cid, weapon_name):
-    db = sqlite3.connect("player_database")
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('UPDATE players SET current_weapon = ? WHERE id = ?', (weapon_name, cid))
     db.commit()
@@ -116,7 +129,8 @@ def change_weapon(cid, weapon_name):
 
 
 def add_item(cid, item_id):
-    db = sqlite3.connect("player_database")
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('SELECT current_items FROM players WHERE id = ?', (cid,))
     data = list(cursor.fetchone())
@@ -143,7 +157,8 @@ def add_item(cid, item_id):
 
 
 def delete_item(cid, item_id):
-    db = sqlite3.connect("player_database")
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('SELECT current_items FROM players WHERE id = ?', (cid,))
     data = list(cursor.fetchone())
@@ -166,7 +181,8 @@ def delete_item(cid, item_id):
 
 
 def add_skill(cid, skill_name):
-    db = sqlite3.connect("player_database")
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('SELECT current_skills FROM players WHERE id = ?', (cid,))
     data = list(cursor.fetchone())
@@ -193,7 +209,8 @@ def add_skill(cid, skill_name):
 
 
 def add_unique_weapon(username, weapon_name):
-    db = sqlite3.connect("player_database")
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('SELECT unique_weapon FROM players WHERE username = ?', (username,))
     data = list(cursor.fetchone())
@@ -222,7 +239,8 @@ def add_unique_weapon(username, weapon_name):
 
 
 def delete_unique_weapon(username, weapon_name):
-    db = sqlite3.connect("player_database")
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('SELECT unique_weapon FROM players WHERE username = ?', (username,))
     data = list(cursor.fetchone())
@@ -245,7 +263,8 @@ def delete_unique_weapon(username, weapon_name):
 
 
 def delete_inventory(username):
-    db = sqlite3.connect("player_database")
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('UPDATE players SET current_skills = ?,current_items = ?, current_weapon = ?  WHERE username = ?', (None, None, None, username))
     db.commit()
@@ -253,7 +272,8 @@ def delete_inventory(username):
 
 
 def delete_skill(cid, skill_name):
-    db = sqlite3.connect("player_database")
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
     cursor.execute('SELECT current_skills FROM players WHERE id = ?', (cid,))
     data = list(cursor.fetchone())
