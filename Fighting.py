@@ -360,9 +360,6 @@ def manifest_last_q(fight):
 # Сброс переменных
 def refresh_turn(fight):
     for p in fight.actors:
-        if not p.Skipped and p.skipcounter > 0:
-            p.skipcounter = 0
-        p.Skipped = False
         p.turn = None
         p.target = None
         p.tempaccuracy = 0
@@ -387,6 +384,10 @@ def refresh_turn(fight):
         if p.energy > p.maxenergy:
             p.energy = p.maxenergy
             fight.string.add(p.name + ' теряет излишек энергии.')
+    for p in fight.activeplayers:
+        if not p.Skipped and p.skipcounter > 0:
+            p.skipcounter = 0
+        p.Skipped = False
 
 
 # Результаты
