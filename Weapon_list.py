@@ -876,8 +876,7 @@ class Crushing(Weapon):
 
     def special_first(self, user):
         if user.turn == 'weaponspecial':
-            user.crushdamage = user.target.maxenergy - user.target.energy
-            print(user.crushdamage)
+            user.crushdamage = user.target.maxenergy - user.target.energy - 1
 
     def special_second(self, user):
         if user.crushcd > 0:

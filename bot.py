@@ -467,7 +467,7 @@ def action(call):
                         print(actor.name + ' целится.')
                         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                               text="Особая атака.")
-                        actor.weapon.special(actor, call)
+                        actor.weapon.special(actor, call.data[13:])
                         actor.turn = 'weaponspecial'
                         actor.fight.playerpool.remove(actor)
                     elif call.data[0:4] == 'draw':
