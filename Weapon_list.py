@@ -118,6 +118,9 @@ class Weapon(object):
     def special_second(self, user):
         pass
 
+    def special_first(self, user):
+        pass
+
     def lose(self,user):
         pass
 
@@ -812,6 +815,94 @@ class Dropping(Weapon):
             user.fight.string.add(d)
 
 
+class Crushing(Weapon):
+
+    def aquare(self, user):
+        user.crushcd = 0
+
+    def lose(self, user):
+        del user.crushcd
+
+    def get_action(self, p, call):
+        keyboard1 = types.InlineKeyboardMarkup()
+        enemyteam = p.targets
+        p.turn = call.data
+        for c in enemyteam:
+            if p.crushcd != 0 or p.energy < 4:
+                keyboard1.add(types.InlineKeyboardButton(text=c.name, callback_data=str('op' + str(c.chat_id))))
+            else:
+                keyboard1.add(types.InlineKeyboardButton(text=c.name, callback_data=str('op' + str(c.chat_id))),
+                              types.InlineKeyboardButton(text="Сокрушить", callback_data=str('weaponspecial'
+                                                                                                 + str(c.chat_id))))
+
+        keyboard1.add(types.InlineKeyboardButton(text='Отмена', callback_data=str('opcancel')))
+        bot.send_message(p.chat_id, 'Выберите противника.', reply_markup=keyboard1)
+
+    def special(self, user, call):
+        user.target = utils.actor_from_id(call, user.game)
+
+    def hit_sp(self, user):
+        n = 0
+        d = 0
+        dmax = self.dice
+        print(user.name + " стреляет из " + str(self.name) + '. Его энергия - ' + str(
+            user.energy) + '. Его точность и бонусная точность оружия - ' + ' '
+              + str(user.accuracy) + ' ' + str(self.bonus) +
+              '. Шанс попасть - ' + str(11 - user.energy - self.bonus - user.accuracy - user.tempaccuracy) + "+!")
+        while d != dmax:
+            x = random.randint(1, 10)
+            print(user.name + ' Выпало ' + str(x))
+            if x > 10 - user.energy - self.bonus - user.accuracy - user.tempaccuracy + user.target.evasion:
+                n += 1
+            d += 1
+        # бонусный урон персонажа
+        # уходит энергия
+        user.energy -= self.energy
+        if n != 0:
+            n += user.bonusdamage + self.damage + user.crushdamage
+
+        for a in user.abilities:
+            n = a.onhit(a, n, user)
+        else:
+            pass
+        n += user.truedamage
+        # энергия загоняется в 0
+
+        if user.energy < 0: user.energy = 0
+
+        print('bleed')
+        utils.damage(user, user.target, n, 'melee')
+        return n
+
+    def special_first(self, user):
+        if user.turn == 'weaponspecial':
+            user.crushdamage = user.target.maxenergy - user.target.energy
+            print(user.crushdamage)
+
+    def special_second(self, user):
+        if user.crushcd > 0:
+            user.crushcd -= 1
+        if user.turn == 'weaponspecial':
+            print(user.crushdamage)
+            user.tempaccuracy -= 1
+            damagetaken = self.hit_sp(user)
+            if damagetaken != 0:
+                d = str(
+                    u'\U0001F528' + "|" + user.name + ' наносит сокрушительный удар по ' + user.target.name
+                    + "! Нанесено " + str(damagetaken) + ' урона.')
+            else:
+                d = str(
+                    u'\U0001F4A8' + "|" + user.name
+                    + ' сокрушительный удар Кувалдой, но не попадает по ' + user.target.name + "!")
+            for a in user.abilities:
+                d = a.onhitdesc(a, d, user)
+            user.fight.string.add(d)
+            user.energy -= 2
+            user.crushcd = 3
+            del user.crushdamage
+
+
+
 class MasterFist(Weapon):
 
     def get_action(self, p, call):
@@ -1140,6 +1231,13 @@ chain.desc3 = 'Игрок бьет Противник Цепью!'
 chain.desc4 = 'Игрок бьет Противник Цепью, но не попадает.'
 chain.desc5 = 'Игрок бьет Противник Цепью, но не попадает.'
 chain.desc6 = 'Игрок бьет Противник Цепью, но не попадает.'
+sledge = Crushing(3, 1, 2, 2, 0, True, False, False, 'Кувалда','1-3' + u'\U0001F525' + "|" + '2' + u'\U000026A1', standart=False)
+sledge.desc1 = 'Игрок бьет Противник Кувалдой!'
+sledge.desc2 = 'Игрок бьет Противник Кувалдой!'
+sledge.desc3 = 'Игрок бьет Противник Кувалдой!'
+sledge.desc4 = 'Игрок бьет Противник Кувалдой, но не попадает.'
+sledge.desc5 = 'Игрок бьет Противник Кувалдой, но не попадает.'
+sledge.desc6 = 'Игрок бьет Противник Кувалдой, но не попадает.'
 bow = BowBleeding(3, 1, 2, -1, 0, False, False, False, 'Лук Асгард','1-3!' + u'\U0001F525' + "|" + '2!' + u'\U000026A1', 3, standart=False)
 bow.desc1 = 'Игрок стреляет в Противник из Лука Асгард.'
 bow.desc2 = 'Игрок стреляет в Противник из Лука Асгард.'

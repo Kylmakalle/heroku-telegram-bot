@@ -228,6 +228,7 @@ def manifest_first_q(fight):
                     break
         for a in p.abilities:
             a.special_first(a, p)
+        p.weapon.special_first(p)
 
 
 # Основные действия
@@ -481,6 +482,7 @@ def kill_players(fight):
             p.team.deadplayers.append(p)
             p.team.actors.remove(p)
             fight.aiplayers.remove(p)
+            fight.deadai.append(p)
             fight.actors.remove(p)
         elif p.Suicide:
             p.Suicide = False
@@ -533,6 +535,13 @@ def end(fight, game):
                 bot.send_photo(game.cid, pic, "Команда " + fight.team1.leader.name + " победила!")
             except:
                 bot.send_message(game.cid, "Команда " + fight.Team1.leader.name + " победила!")
+            for ai in fight.deadai:
+                if ai.dropweapons:
+                    for weapon in ai.dropweapons:
+                        for player in fight.team1.players:
+                            if player.username is not None:
+                                if datahandler.add_unique_weapon(player.username, weapon.name):
+                                    bot.send_message(player.chat_id,'Вы получаете ' + weapon.name + '!')
 
 
 def fight_loop(game, fight):

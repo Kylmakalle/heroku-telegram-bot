@@ -43,6 +43,7 @@ def prepare_fight(game):
         time.sleep(3)
     if game.weaponcounter == 0:
         bot.send_message(game.cid, 'Оружие выбрано.')
+
     else:
         for p in game.players:
             if p.weapon is None:
@@ -114,7 +115,7 @@ def prepare_fight(game):
     elif game.gametype == 'rats':
         for x in range(0,len(game.team1.players)):
             boss = ai.Rat('Крыса '+ str(x+1) + '|' + u'\U0001F42D', game, game.team2,
-                        random.choice([Weapon_list.Bat, Weapon_list.spear, Weapon_list.chain, Weapon_list.knife]))
+                        random.choice([Weapon_list.Bat, Weapon_list.spear, Weapon_list.chain, Weapon_list.knife, Weapon_list.sledge]))
             game.team2.actors.append(boss)
             game.fight.aiplayers.append(game.team2.actors[-1])
             game.aiplayers.append(game.team2.actors[-1])
@@ -134,6 +135,7 @@ def prepare_fight(game):
             game.player_dict[game.fight.aiplayers[-1].chat_id] = game.fight.aiplayers[-1]
         game.fight.Withbots = True
     game.gamestate = 'fight'
+
 
     # Последняя подготовка
     for p in game.players:
@@ -333,12 +335,11 @@ def get_weapon(player):
         x = Weapon_list.weaponlist[random.randint(0, len(Weapon_list.weaponlist) - 1)]
         if x not in choice:
             choice.append(x)
-    if player.chat_id == 197216910 or player.chat_id == 188314207 or player.chat_id == 205959167:
-        choice.append(Weapon_list.katana)
-    if player.chat_id == 197216910 or player.chat_id == 52322637:
-        choice.append(Weapon_list.bow)
-    if player.chat_id == 197216910 or player.chat_id == 324316537:
-        choice.append(Weapon_list.speareternal)
+    unique_weapon_names = datahandler.get_unique(player.chat_id)[0].split(',')
+    for name in unique_weapon_names:
+        for weapon in Weapon_list.fullweaponlist:
+            if weapon.name == name:
+                choice.append(weapon)
     for c in choice:
         callback_button1 = types.InlineKeyboardButton(text=c.name,
                                                       callback_data=str(

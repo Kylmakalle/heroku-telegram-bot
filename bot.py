@@ -224,7 +224,7 @@ def add_player(message):
             if game.gametype == game.gametypes[0] and message.from_user.id not in game.marked_id \
                     and message.chat.id == game.cid and game.gamestate == game.gamestates[0]:
                 player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12], Weapon_list.fists,
-                                         game)
+                                         game, message.from_user.username)
                 game.pending_players.append(player)
                 game.marked_id.append(player.chat_id)
                 Main_classes.dict_players[player.chat_id] = game
@@ -252,7 +252,7 @@ def add_player(message):
                 data = datahandler.get_current(message.from_user.id)
                 if data[0] is not None and data[1] is not None and data[2] is not None:
                     player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12],
-                                                 Weapon_list.fists, game)
+                                                 Weapon_list.fists, game, message.from_user.username)
                     game.pending_players.append(player)
                     game.marked_id.append(player.chat_id)
                     Main_classes.dict_players[player.chat_id] = game
@@ -283,7 +283,7 @@ def add_player(message):
                     bot.send_message(game.cid, message.from_user.first_name + ' успешно присоединился.')
                     datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
                     player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12],
-                                                 None, game)
+                                                 None, game, message.from_user.username)
                     game.pending_players.append(player)
                     game.pending_team1.append(player)
 

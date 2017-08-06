@@ -66,6 +66,7 @@ class Fight(object):
         self.team1 = team1
         self.team2 = team2
         self.playerpool = []
+        self.deadai = []
         self.game = game
         self.string = game.string
         self.Withbots = False
@@ -74,7 +75,7 @@ class Fight(object):
 # Класс игрока
 class Player(object):
     # Инициализация
-    def __init__(self, playerchat_id, player_name, weapon, game):
+    def __init__(self, playerchat_id, player_name, weapon, game, username):
         # Переменные для бота
         self.Suicide = False
         self.Armed = False
@@ -84,6 +85,7 @@ class Player(object):
         self.info = Actionstring(playerchat_id)
         self.game = game
         self.fight = game.fight
+        self.username = '@' + username
         # Переменные для боя
         self.weapon = weapon  # - Временно
         self.naturalweapon = weapon
