@@ -24,7 +24,7 @@ class Team(object):
 # Основной класс игры
 class Game(object):
     gamestates = ['players', 'weapon', 'abilities', 'fight']
-    gametypes = ['game', 'rhino', 'wolfs', 'custom']
+    gametypes = ['game', 'rhino', 'wolfs', 'custom', 'rats']
 
     def __init__(self, cid):
         self.gamestate = None

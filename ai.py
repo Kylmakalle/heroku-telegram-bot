@@ -387,19 +387,32 @@ class Rat(AI_player):
 
     # Основные параметра Носорога
 
-    def __init__(self, name, Game, team):
+    def __init__(self, name, Game, team, weapon):
         AI_player.__init__(self, name, Game, team)
-        self.abilities = [special_abilities.Strength, special_abilities.Sturdy.Sturdy, special_abilities.Berserk]
-        self.itemlist = [Item_list.throwingknife]
+        self.itemlist = [Item_list.throwingknife, Item_list.firegrenade]
         self.maxhp = 4
         self.hp = 4
         self.maxenergy = 5
         self.energy = 5
         self.accuracy = 1
-        self.weapon = Weapon_list.chain
+        self.weapon = weapon
         self.naturalweapon = Weapon_list.fangs
         self.dodgecd = 0
         self.ability_ready = True
+        if self.weapon == Weapon_list.Bat:
+            self.abilities = [special_abilities.Strength, special_abilities.Gasmask, special_abilities.Undead]
+            self.bonusdamage += 1
+        elif self.weapon == Weapon_list.spear:
+            self.abilities = [special_abilities.Sturdy.Sturdy, special_abilities.Blocker, special_abilities.West]
+            self.armor += 1
+        elif self.weapon == Weapon_list.chain:
+            self.abilities = [special_abilities.Sadist, special_abilities.Armorer, special_abilities.Revenge]
+            self.maxenergy += 1
+        elif self.weapon == Weapon_list.knife:
+            self.itemlist.append(Item_list.throwingknife)
+            self.itemlist.append(Item_list.throwingknife)
+            self.evasion += 2
+            self.accuracy += 1
 
     # Определение хода Носорога
 
@@ -414,7 +427,6 @@ class Rat(AI_player):
                     minhp = target.hp
                     self.target = target
 
-
     def get_turn(self, fight):
         self.get_target()
         readycounter = 0
@@ -422,23 +434,37 @@ class Rat(AI_player):
         for x in utils.get_other_team(self).actors:
             if x in self.targets and x.energy == x.maxenergy:
                 readycounter += 1
+
         # Застанен
         if self.Disabled:
             self.target = None
             self.turn = 'disabled'
+
+        # Тушиться
         elif self.firecounter > 1 or self.firecounter > 0 and not self.Inmelee or self.firecounter > 0 and self.energy < 2:
             self.target = None
             self.turn = 'skip' + str(fight.round)
+
         # Подойти в мили
         elif not self.Inmelee and not self.targets:
             if random.randint(1,2) == 1 and Item_list.throwingknife in self.itemlist:
                 self.itemtarget = utils.get_other_team(self).actors[random.randint(0, len(utils.get_other_team(self).actors) - 1)]
                 self.turn = Item_list.throwingknife.id
+            elif self.weapon == Weapon_list.knife and Item_list.throwingknife:
+                self.itemtarget = utils.get_other_team(self).actors[
+                    random.randint(0, len(utils.get_other_team(self).actors) - 1)]
+                self.turn = Item_list.throwingknife.id
+            elif random.randint(1,2) == 1 and Item_list.firegrenade in self.itemlist:
+                self.target = None
+                self.turn = Item_list.firegrenade.id
             else:
                 self.target = None
                 self.turn = 'move' + str(fight.round)
-        # Контратака
-        elif float(readycounter) >= len(self.targets)/2 and self.weapon == Weapon_list.spear and self.firecounter < 1 and self.energy > 3 and random.randint(1, 3) != 1 and self.ability_ready:
+
+        # Спецатаки
+        # Копье
+        elif float(readycounter) >= len(self.targets)/2 and self.weapon == Weapon_list.spear and self.firecounter < 1 \
+                and self.energy > 3 and random.randint(1, 3) != 1 and self.ability_ready:
             if self.countercd == 0:
                 self.target = None
                 self.turn = 'aim'
@@ -446,7 +472,8 @@ class Rat(AI_player):
             else:
                 self.ability_ready = False
                 self.get_turn(self.fight)
-        elif self.target.energy < 2 and self.weapon == Weapon_list.chain and random.randint(1, 3) != 1 and self.energy > 3 and self.ability_ready:
+        # Цепь
+        elif self.target.energy < 2 and self.weapon == Weapon_list.chain and random.randint(1, 4) != 1 and self.energy > 3 and self.ability_ready:
             print('drop')
             if self.dropcd == 0:
                 self.turn = 'weaponspecial'
@@ -457,16 +484,24 @@ class Rat(AI_player):
 
         # Уворот
         elif float(readycounter) >= len(self.targets)/2 and random.randint(1, 3) != 1 \
-                and self.dodgecd == 0 and self.energy != self.maxenergy:
+                and self.dodgecd == 0 and self.energy != self.maxenergy and self.hp <= 2 or float(readycounter) >= len(self.targets)/2 \
+                and self.dodgecd == 0 and self.hp == 1:
             self.turn = 'dodge' + str(fight.round)
+
         # Метательный нож
         elif self.energy > 3 and Item_list.throwingknife in self.itemlist and self.target.energy < 2:
             self.itemtarget = self.target
             self.target = None
             self.turn = Item_list.throwingknife.id
+
+        elif 1 < self.energy < 4 and Item_list.firegrenade in self.itemlist and self.target.energy < 2:
+            self.target = None
+            self.turn = Item_list.firegrenade.id
+
         # Удар (Если больше 2 энергии или 50% если больше 1 энергии или есть энергия, 1 хп и тебя готовы ударить)
         elif self.energy > 2 or random.randint(1, 2) == 1 and self.energy > 1 or readycounter and self.hp==1 and self.energy > 0:
             self.turn = 'attack' + str(fight.round)
+
         # Отдых
         else:
             self.target = None
@@ -477,6 +512,7 @@ class Rat(AI_player):
             self.evasion += 5
             self.dodgecd += 2
             fight.string.add( u'\U0001F4A8' + '|' + self.name + ' пытается увернуться от атак!')
+
     def aiactionend(self, Fight):
         if self.dodgecd > 0:
             self.dodgecd -= 1

@@ -103,13 +103,24 @@ def prepare_fight(game):
 
     # Подключение ai-противников
     if game.gametype == 'rhino':
-        boss = ai.Rhino('Носорог ' + '|' + u'\U0001F98F', game, game.team2, len(game.team1.players))
+        boss = ai.Rhino('Носорог ' + '|' + u'\U0001F42D', game, game.team2,
+                      len(game.team1.players))
         game.team2.actors.append(boss)
         game.fight.aiplayers.append(game.team2.actors[-1])
         game.aiplayers.append(game.team2.actors[-1])
         game.player_dict[game.fight.aiplayers[-1].chat_id] = game.fight.aiplayers[-1]
         game.abilitycounter = len(game.players)
         game.fight.Withbots = True
+    elif game.gametype == 'rats':
+        for x in range(0,len(game.team1.players)):
+            boss = ai.Rat('Крыса '+ str(x+1) + '|' + u'\U0001F42D', game, game.team2,
+                        random.choice([Weapon_list.Bat, Weapon_list.spear, Weapon_list.chain, Weapon_list.knife]))
+            game.team2.actors.append(boss)
+            game.fight.aiplayers.append(game.team2.actors[-1])
+            game.aiplayers.append(game.team2.actors[-1])
+            game.player_dict[game.fight.aiplayers[-1].chat_id] = game.fight.aiplayers[-1]
+            game.abilitycounter = len(game.players)
+            game.fight.Withbots = True
     elif game.gametype == 'wolfs':
         boss = ai.DogLeader('Вожак ' + '|' + u'\U0001F43A', game, game.team2, len(game.team1.players))
         game.team2.actors.append(boss)
@@ -220,6 +231,7 @@ def prepare_custom_fight(game):
     game.fight.string.post(bot, 'Выбор оружия')
 
     game.startfight()
+
 
 def get_other_team(player):
     if player.team == player.fight.team1:

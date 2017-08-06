@@ -97,6 +97,15 @@ def start_game(message):
         bot.send_message(message.chat.id, "Используйте команду /join, чтобы вступить в игру. 5 минут до отмены игры.")
 
 
+@bot.message_handler(commands=["rathunt"])
+def start_game(message):
+    if message.chat.id in Main_classes.existing_games:
+        pass
+    else:
+        bot_handlers.start_game(4, message.chat.id)
+        bot.send_message(message.chat.id, "Используйте команду /join, чтобы вступить в игру. 5 минут до отмены игры.")
+
+
 @bot.message_handler(commands=["fight"])
 def start_game(message):
     game = utils.get_game_from_chat(message.chat.id)
@@ -211,6 +220,7 @@ def add_player(message):
         pass
     elif game is not None:
         try:
+            bot.send_message(message.from_user.id, 'Вы присоединились к игре.', parse_mode='markdown')
             if game.gametype == game.gametypes[0] and message.from_user.id not in game.marked_id \
                     and message.chat.id == game.cid and game.gamestate == game.gamestates[0]:
                 player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12], Weapon_list.fists,
@@ -221,11 +231,9 @@ def add_player(message):
                 bot.send_message(game.cid, message.from_user.first_name + ' успешно присоединился.')
                 if not game.pending_team1:
                     game.pending_team1.append(player)
-                    bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 1.*', parse_mode='markdown')
                     datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
                 elif not game.pending_team2:
                     game.pending_team2.append(player)
-                    bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 2.*', parse_mode='markdown')
                     datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
                 elif len(game.pending_players) >= 3:
                     keyboard = types.InlineKeyboardMarkup()
@@ -248,14 +256,11 @@ def add_player(message):
                     game.pending_players.append(player)
                     game.marked_id.append(player.chat_id)
                     Main_classes.dict_players[player.chat_id] = game
-                    bot.send_message(game.cid, message.from_user.first_name + ' успешно присоединился.')
                     if not game.pending_team1:
                         game.pending_team1.append(player)
-                        bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 1.*', parse_mode='markdown')
                         datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
                     elif not game.pending_team2:
                         game.pending_team2.append(player)
-                        bot.send_message(message.from_user.id, '*Вы становитесь лидером команды 2.*', parse_mode='markdown')
                         datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
                     elif len(game.pending_players) >= 3:
                         keyboard = types.InlineKeyboardMarkup()
