@@ -104,12 +104,9 @@ def send_action(p, fight):
                                                           callback_data=str('reload' + str(fight.round)))
 
             keyboard.add(callback_button2)
-    if p.firecounter > 0:
-        keyboard.add(types.InlineKeyboardButton(text='Потушиться', callback_data=str('skip' + str(fight.round))),
-                     types.InlineKeyboardButton(text='Инфо', callback_data=str('info')))
-    elif p.dodgecd > 0:
-        keyboard.add(types.InlineKeyboardButton(text='Пропустить', callback_data=str('skip' + str(fight.round))),
-                     types.InlineKeyboardButton(text='Инфо', callback_data=str('info')))
+
+    if p.dodgecd > 0:
+        keyboard.add(types.InlineKeyboardButton(text='Инфо', callback_data=str('info')))
     else:
         keyboard.add(types.InlineKeyboardButton(text='Уворот', callback_data=str('evade' + str(fight.round))),
                      types.InlineKeyboardButton(text='Инфо', callback_data=str('info')))
@@ -132,7 +129,10 @@ def send_action(p, fight):
         keyboard.add(callback_button1)
     if p.lostweapon is not None:
         keyboard.add(types.InlineKeyboardButton(text='Подобрать оружие', callback_data=str('take' + str(fight.round))))
-
+    if p.firecounter > 0:
+        keyboard.add(types.InlineKeyboardButton(text='Потушиться', callback_data=str('skip' + str(fight.round))))
+    else:
+        keyboard.add(types.InlineKeyboardButton(text='Пропустить', callback_data=str('skip' + str(fight.round))))
     p.choicemessage = bot.send_message(p.chat_id, utils.player_turn_info(p).string, reply_markup=keyboard)
     p.info.clear()
 
