@@ -402,14 +402,14 @@ class Rat(AI_player):
         self.ability_ready = True
         self.dodge_ready = True
         if self.weapon == Weapon_list.Bat:
-            self.abilities = [special_abilities.Strength, special_abilities.Gasmask, special_abilities.Undead]
+            self.abilities = [special_abilities.Strength, special_abilities.Gasmask]
             self.bonusdamage += 1
         elif self.weapon == Weapon_list.spear:
             self.abilities = [special_abilities.Sturdy.Sturdy, special_abilities.Blocker, special_abilities.West]
             self.armor += 1
             self.accuracy += 1
         elif self.weapon == Weapon_list.chain:
-            self.abilities = [special_abilities.Sadist, special_abilities.Armorer, special_abilities.Revenge]
+            self.abilities = [special_abilities.Sadist, special_abilities.Armorer]
             self.maxenergy += 2
             self.energy += 2
         elif self.weapon == Weapon_list.knife:
@@ -418,7 +418,7 @@ class Rat(AI_player):
             self.evasion += 1
             self.accuracy += 1
         elif self.weapon == Weapon_list.sledge:
-            self.abilities = [special_abilities.Sadist, special_abilities.Undead]
+            self.abilities = [special_abilities.Sadist, special_abilities.Gasmask]
             self.itemlist.append(Item_list.grenade)
             self.dropweapons.append(Weapon_list.sledge)
             self.accuracy += 1
