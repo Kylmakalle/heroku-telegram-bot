@@ -901,7 +901,6 @@ class Crushing(Weapon):
             del user.crushdamage
 
 
-
 class MasterFist(Weapon):
 
     def get_action(self, p, call):
