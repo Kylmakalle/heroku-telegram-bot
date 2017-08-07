@@ -892,7 +892,7 @@ class Crushing(Weapon):
             else:
                 d = str(
                     u'\U0001F4A8' + "|" + user.name
-                    + ' сокрушительный удар Кувалдой, но не попадает по ' + user.target.name + "!")
+                    + ' пытается нанести сокрушительный удар Кувалдой, но не попадает по ' + user.target.name + "!")
             for a in user.abilities:
                 d = a.onhitdesc(a, d, user)
             user.fight.string.add(d)
