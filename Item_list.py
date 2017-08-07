@@ -120,7 +120,7 @@ class GasGrenade(Item):
 
     def use(self, user):
         user.fight.string.add(u'\U0001F635' + " |" + user.name + ' кидает Световую гранату в '
-                              + user.itemtarget.name + '. (- 6 Энергии)')
+                              + user.itemtarget.name + '. (- 8 Энергии)')
         del user.itemtarget
         user.itemlist.remove(self)
 
@@ -131,7 +131,7 @@ class GasGrenade(Item):
             user.fight.string.add(u'\U0000274C' + "|" + user.itemtarget.name + ' защищен от вспышки. (-1 Энергии)')
             user.itemtarget.energy -= 1
         else:
-            user.itemtarget.energy -= 6
+            user.itemtarget.energy -= 8
 
 
 class Shield(Item):
