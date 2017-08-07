@@ -390,7 +390,7 @@ class Rat(AI_player):
 
     def __init__(self, name, Game, team, weapon):
         AI_player.__init__(self, name, Game, team)
-        self.itemlist = [Item_list.throwingknife, Item_list.firegrenade]
+        self.itemlist = [Item_list.firegrenade]
         self.maxhp = 4
         self.hp = 4
         self.maxenergy = 5
@@ -415,7 +415,6 @@ class Rat(AI_player):
         elif self.weapon == Weapon_list.knife:
             self.itemlist.append(Item_list.throwingknife)
             self.itemlist.append(Item_list.throwingknife)
-            self.evasion += 1
             self.accuracy += 1
         elif self.weapon == Weapon_list.sledge:
             self.abilities = [special_abilities.Sadist, special_abilities.Gasmask]
@@ -483,7 +482,8 @@ class Rat(AI_player):
         # Спецатаки
         # Копье
         elif float(readycounter) >= len(self.targets)/2 and self.weapon == Weapon_list.spear and self.firecounter < 1 \
-                and self.energy > 3 and random.randint(1, 3) != 1 and self.ability_ready:
+                and self.energy > 3 and random.randint(1, 3) != 1 and self.ability_ready and \
+                        self.target.stuncounter == 0 and self.target.weapon != Weapon_list.sniper:
             if self.countercd == 0:
                 self.target = None
                 self.turn = 'aim'
@@ -511,7 +511,7 @@ class Rat(AI_player):
                     self.get_turn(self.fight)
 
         # Уворот
-        elif self.target.stuncounter == 0 and self.dodge_ready:
+        elif self.target.stuncounter == 0 and self.target.weapon != Weapon_list.sniper and self.dodge_ready:
             if float(readycounter) >= len(self.targets)/2 and random.randint(1, 3) != 1 \
                     and self.dodgecd == 0 and self.energy != self.maxenergy and self.hp <= 2 or float(readycounter) >= len(self.targets)/2 \
                     and self.dodgecd == 0 and self.hp == 1:
