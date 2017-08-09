@@ -126,7 +126,7 @@ def items_menu(chat_id):
     return ('Выберите предметы', keyboard)
 
 def skills_menu(chat_id):
-    skills = special_abilities.usual_abilities
+    skills = special_abilities.bilities
     data = datahandler.get_current(chat_id)[2]
     if data is not None:
         data = data.split(',')
