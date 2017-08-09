@@ -653,7 +653,7 @@ class Crippling(Weapon):
                         standart=standart,natural=natural)
         self.chance = chance
 
-    def hit(self,user):
+    def hit(self, user):
         n = 0
         d = 0
         dmax = self.dice
@@ -689,10 +689,12 @@ class Crippling(Weapon):
 
     def effect(self, user):
         if random.randint(1, 10) <= self.chance:
-            if user.target.toughness > 1:
+            if user.target.toughness > 2:
                 user.target.toughness -= 1
-            user.fight.string.add(u'\U0001F915' + '|' + user.target.name + ' покалечен ('
-                                  + str(6 - user.target.toughness) + ')!')
+            if user.target.toughness == 2:
+                user.fight.string.add(u'\U0001F915' + '|' + user.target.name + ' покалечен!')
+            else:
+                user.fight.string.add(u'\U0001F915' + '|' + user.target.name + ' покалечен! Эффект максимален.')
         user.weaponeffect.remove(self)
 
     def getDesc(self, damagetaken,user):

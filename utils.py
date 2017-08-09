@@ -75,8 +75,10 @@ def prepare_fight(game):
                 y -= 1
         for p in game.biggerTeam.players:
             p.maxabilities = 1
-        for x in range(0, (len(game.biggerTeam.players) - len(game.lesserTeam.players)) * 2):
-            game.lesserTeam.actors.append(ai.Dog(u'\U0001F436' + '| Собака ' + str(x + 1), game, game.lesserTeam))
+        for x in range(0, (len(game.biggerTeam.players) - len(game.lesserTeam.players))):
+            game.lesserTeam.actors.append(ai.Rat(u'\U0001F42D' + '| Крыса ' + str(x + 1), game, game.lesserTeam,
+                                                 random.choice([Weapon_list.Bat, Weapon_list.spear, Weapon_list.chain,
+                                                                Weapon_list.knife, Weapon_list.sledge])))
             game.aiplayers.append(game.lesserTeam.actors[-1])
             game.fight.aiplayers.append(game.lesserTeam.actors[-1])
             game.player_dict[game.fight.aiplayers[-1].chat_id] = game.fight.aiplayers[-1]
@@ -104,7 +106,7 @@ def prepare_fight(game):
 
     # Подключение ai-противников
     if game.gametype == 'rhino':
-        boss = ai.Rhino('Носорог ' + '|' + u'\U0001F42D', game, game.team2,
+        boss = ai.Rhino('Носорог ' + '|' + u'\U0001F98F', game, game.team2,
                       len(game.team1.players))
         game.team2.actors.append(boss)
         game.fight.aiplayers.append(game.team2.actors[-1])

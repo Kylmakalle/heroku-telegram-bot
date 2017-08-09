@@ -250,6 +250,7 @@ def add_player(message):
                     and message.chat.id == game.cid and game.gamestate == game.gamestates[0]:
                 datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
                 data = datahandler.get_current(message.from_user.id)
+                bot.send_message(game.cid, message.from_user.first_name + ' успешно присоединился к кастомной игре.')
                 if data[0] is not None and data[1] is not None and data[2] is not None:
                     player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12],
                                                  Weapon_list.fists, game, message.from_user.username)
