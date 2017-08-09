@@ -691,7 +691,7 @@ class Crippling(Weapon):
         if random.randint(1, 10) <= self.chance:
             if user.target.toughness > 2:
                 user.target.toughness -= 1
-            if user.target.toughness == 2:
+            if user.target.toughness > 2:
                 user.fight.string.add(u'\U0001F915' + '|' + user.target.name + ' покалечен!')
             else:
                 user.fight.string.add(u'\U0001F915' + '|' + user.target.name + ' покалечен! Эффект максимален.')
