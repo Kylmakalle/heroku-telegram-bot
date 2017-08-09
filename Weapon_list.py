@@ -1138,7 +1138,7 @@ class BowBleeding(Weapon):
             n += user.bonusdamage + self.damage - 1
             if user.bonusaccuracy > 0:
                 n += user.bonusaccuracy*2
-        if n != 0 and random.randint(1,10)< self.chance + user.bonusaccuracy:
+        if n != 0 and random.randint(1, 10) < self.chance + user.bonusaccuracy:
             user.target.bleedcounter += 1
             user.target.bloodloss = False
             user.Hitability = True
@@ -1168,7 +1168,7 @@ class BowBleeding(Weapon):
         bot.send_message(p.chat_id, 'Выберите противника.', reply_markup=keyboard1)
 
     def special(self, user, call):
-        user.bonusaccuracy +=1
+        user.bonusaccuracy += 1
         user.Armed = True
         print ('scheck')
 
