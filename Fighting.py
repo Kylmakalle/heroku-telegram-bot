@@ -108,7 +108,7 @@ def send_action(p, fight):
     if p.dodgecd > 0:
         keyboard.add(types.InlineKeyboardButton(text='Инфо', callback_data=str('info')))
     else:
-        keyboard.add(types.InlineKeyboardButton(text='Уворот', callback_data=str('evade' + str(fight.round))),
+        keyboard.add(types.InlineKeyboardButton(text='Перекат', callback_data=str('evade' + str(fight.round))),
                      types.InlineKeyboardButton(text='Инфо', callback_data=str('info')))
 
     if not p.Armed:
@@ -216,7 +216,7 @@ def manifest_used_q(fight):
 def manifest_first_q(fight):
     for p in fight.actors:
         if p.turn == 'evade' + str(p.fight.round):
-            p.fight.string.add(u'\U0001F4A8' + "|" + p.name + ' пытается увернуться от атак.')
+            p.fight.string.add(u'\U0001F4A8' + "|" + p.name + ' перекатывается.')
             p.dodgecd += 3
             for n in utils.get_other_team(p).actors:
                 if n.target == p:
