@@ -184,6 +184,8 @@ def manifest_actions(fight):
     for p in fight.aiplayers:
         p.aiaction2q(fight)
     manifest_second_q(fight)
+    for p in fight.actors:
+        p.weapon.special_second(p)
     fight.string.post(bot, 'Ход ' + str(fight.round))
 
     print('Закончен')
@@ -234,7 +236,6 @@ def manifest_first_q(fight):
 # Основные действия
 def manifest_second_q(fight):
     for p in fight.actors:
-        p.weapon.special_second(p)
         # Перезарядка
         if p.turn == 'reload' + str(fight.round):
             print(p.name + str(1))
