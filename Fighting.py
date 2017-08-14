@@ -367,6 +367,7 @@ def refresh_turn(fight):
         p.tempaccuracy = 0
         p.targets = []
         p.evasion = 0
+        p.extinguish = False
         if p.accuracyfix > 0:
             p.accuracy -= p.accuracyfix
             p.accuracyfix = 0
