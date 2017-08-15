@@ -60,7 +60,8 @@ def getallplayers():
     db = psycopg2.connect(
         "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
-    ids = cursor.execute('SELECT id FROM players').fetchall()
+    cursor.execute('SELECT id FROM players')
+    ids = cursor.fetchall()
     db.close()
     return ids
 
