@@ -59,7 +59,6 @@ def add_played_games(chat_id, game=1):
 def getallplayers():
     db = psycopg2.connect(
         "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
-    db.row_factory = lambda cursor, row: row[0]
     cursor = db.cursor()
     ids = cursor.execute('SELECT id FROM players').fetchall()
     db.close()

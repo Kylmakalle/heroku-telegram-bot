@@ -641,9 +641,9 @@ def start(message):
     if message.chat.id == 197216910 and Main_classes.ruporready:
         Main_classes.ruporready = False
         list = datahandler.getallplayers()
-        for x in list:
+        for x[0] in list:
             try:
-                bot.send_message(x, message.text)
+                bot.send_message(x[0], message.text)
             except:
                 pass
     elif message.text[:15] == 'добавить оружие' and message.chat.id == 197216910:
