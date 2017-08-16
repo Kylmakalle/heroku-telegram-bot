@@ -196,10 +196,10 @@ def change_private_string(chat_id):
     cursor.execute('SELECT private_string FROM players WHERE id = %s', (chat_id,))
     string = cursor.fetchone()[0]
     db.close()
-    if string == 1:
-        string = 0
-    elif string == 0:
+    if string == 0:
         string = 1
+    else:
+        string = 0
     db = psycopg2.connect(
         "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
