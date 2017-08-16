@@ -52,7 +52,8 @@ def player_menu(name, cid):
     itemnames = []
     skills = []
     private_string = None
-    if datahandler.get_private_string(cid) == 1:
+    if datahandler.get_private_string(cid) != 0:
+        print(strdatahandler.get_private_string(cid)())
         private_string = '|yes'
     if data[0] is None:
         data[0] = ' '
