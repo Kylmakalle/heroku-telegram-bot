@@ -331,9 +331,8 @@ def find_file_ids(message):
 
 @bot.message_handler(commands=['player'])
 def find_file_ids(message):
-    if message.chat.id == message.from_user.id:
-        data = bot_handlers.player_menu(message.from_user.first_name, message.from_user.id)
-        bot.send_message(message.from_user.id, data[0], reply_markup=data[1])
+    data = bot_handlers.player_menu(message.from_user.first_name, message.from_user.id)
+    bot.send_message(message.from_user.id, data[0], reply_markup=data[1])
 
 
 @bot.message_handler(commands=['try'])
