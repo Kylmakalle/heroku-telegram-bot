@@ -203,7 +203,7 @@ def change_private_string(chat_id):
     db = psycopg2.connect(
         "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
-    cursor.execute('UPDATE players SET private_string = ? WHERE id = %s', (string, chat_id))
+    cursor.execute('UPDATE players SET private_string = %s WHERE id = %s', (string, chat_id))
     db.commit()
     db.close()
 
