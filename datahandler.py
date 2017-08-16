@@ -93,8 +93,7 @@ def add_column():
     db = psycopg2.connect(
         "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
-    cursor.execute('CREATE TABLE IF NOT EXISTS players ( id INTEGER ,games_played INTEGER, games_won INTEGER, name text, username text)')
-    cursor.execute('alter table players add column "current_weapon" text')
+    cursor.execute('alter table players add column "private_string" text DEFAULT "0"')
     db.commit()
     db.close()
 
@@ -179,6 +178,33 @@ def delete_item(cid, item_id):
     db.close()
     return True
 
+
+def get_private_string(chat_id):
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
+    cursor = db.cursor()
+    cursor.execute('SELECT private_string FROM players WHERE id = %s', (chat_id,))
+    data = cursor.fetchone()
+    db.close()
+    return data[0]
+
+def change_private_string(chat_id):
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
+    cursor = db.cursor()
+    cursor.execute('SELECT private_string FROM players WHERE id = %s', (chat_id,))
+    string = cursor.fetchone()[0]
+    db.close()
+    if string == 1:
+        string = 0
+    elif string == 0:
+        string = 1
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
+    cursor = db.cursor()
+    cursor.execute('UPDATE players SET private_string = ? WHERE id = %s', (string, chat_id))
+    db.commit()
+    db.close()
 
 def add_skill(cid, skill_name):
     db = psycopg2.connect(
