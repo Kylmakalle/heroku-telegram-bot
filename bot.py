@@ -314,6 +314,9 @@ def start(message):
         bot.send_message(message.chat.id, message.from_user.first_name + ":\n" + str(data[0]) + " игр сыграно."
                          + "\n" + str(data[1]) + " игр выиграно." + "\n" + str(winrate) + "% винрейт.")
 
+@bot.message_handler(commands=["add_new_column_please"])
+def start(message):
+    datahandler.add_column()
 
 @bot.message_handler(commands=['test'])
 def find_file_ids(message):
