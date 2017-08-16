@@ -93,7 +93,8 @@ def add_column():
     db = psycopg2.connect(
         "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
     cursor = db.cursor()
-    cursor.execute('alter table players add column "private_string" text DEFAULT "0"')
+    cursor.execute('alter table players add column "private_string" text')
+    cursor.execute('UPDATE players SET "private_string" = %s', (0,))
     db.commit()
     db.close()
 
