@@ -141,7 +141,8 @@ def prepare_fight(game):
 
     # Последняя подготовка
     for p in game.players:
-        p.private_string = datahandler.get_private_string(p.chat_id)
+        if datahandler.get_private_string(p.chat_id) == '1':
+            p.private_string = True
         p.fight.string.add('Оружие ' + p.name + ' - ' + p.weapon.name)
         for a in p.abilities:
             a.aquare(a, p)
@@ -215,7 +216,8 @@ def prepare_custom_fight(game):
 
     # Последняя подготовка
     for p in game.players:
-
+        if datahandler.get_private_string(p.chat_id) == '1':
+            p.private_string = True
         p.fight.string.add('Оружие ' + p.name + ' - ' + p.weapon.name)
         for a in p.abilities:
             a.aquare(a, p)
