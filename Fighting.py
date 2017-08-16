@@ -186,7 +186,7 @@ def manifest_actions(fight):
     manifest_second_q(fight)
     for p in fight.actors:
         p.weapon.special_second(p)
-    fight.string.post(bot, 'Ход ' + str(fight.round))
+    fight.string.post(bot, 'Ход ' + str(fight.round), fight=fight)
 
     print('Закончен')
     apply_effects(fight)
@@ -194,7 +194,7 @@ def manifest_actions(fight):
     for p in fight.aiplayers:
         p.aiactionlastq(fight)
     manifest_last_q(fight)
-    fight.string.post(bot, 'Эффекты ' + str(fight.round))
+    fight.string.post(bot, 'Эффекты ' + str(fight.round), fight=fight)
 
 
 # Действия до хода
@@ -572,7 +572,7 @@ def fight_loop(game, fight):
         get_results(fight)
         refresh_turn(fight)
         kill_players(fight)
-        fight.string.post(bot, 'Результат хода ' + str(fight.round))
+        fight.string.post(bot, 'Результат хода ' + str(fight.round), fight=fight)
     end(fight, game)
     utils.delete_game(game)
 

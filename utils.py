@@ -141,7 +141,7 @@ def prepare_fight(game):
 
     # Последняя подготовка
     for p in game.players:
-
+        p.private_string = datahandler.get_private_string(p.chat_id)
         p.fight.string.add('Оружие ' + p.name + ' - ' + p.weapon.name)
         for a in p.abilities:
             a.aquare(a, p)

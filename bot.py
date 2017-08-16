@@ -317,7 +317,13 @@ def start(message):
 
 @bot.message_handler(commands=['test'])
 def find_file_ids(message):
-    datahandler.add_column()
+    for file in os.listdir('gif/'):
+        if file.split('.')[-1] == 'jpg' or file.split('.')[-1] == 'png':
+            f = open('gif/'+file,'rb')
+            msg = bot.send_photo(message.chat.id, f, None)
+            # А теперь отправим вслед за файлом его file_id
+            bot.send_message(message.chat.id, msg.photo[0].file_id, reply_to_message_id=msg.message_id)
+        time.sleep(3)
 
 
 @bot.message_handler(commands=['player'])
@@ -579,6 +585,12 @@ def action(call):
             data = bot_handlers.skills_menu(call.from_user.id)
             bot.edit_message_text(data[0], chat_id=call.message.chat.id, message_id=call.message.message_id,
                                   reply_markup=data[1])
+        elif call.data == 'change_string':
+            bot_handlers.change_string(call.from_user.id)
+            bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
+            data = bot_handlers.player_menu(call.from_user.first_name, call.from_user.id)
+            bot.send_message(call.from_user.id, data[0], reply_markup=data[1])
+
         elif call.data[:10] == 'new_weapon':
             weapon = call.data[10:]
             datahandler.change_weapon(call.message.chat.id, weapon)

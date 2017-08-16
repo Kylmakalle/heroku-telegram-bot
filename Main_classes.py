@@ -77,6 +77,7 @@ class Player(object):
     # Инициализация
     def __init__(self, playerchat_id, player_name, weapon, game, username):
         # Переменные для бота
+        self.private_string = False
         self.Suicide = False
         self.Armed = False
         self.choicemessage = None
@@ -164,11 +165,16 @@ class Actionstring(object):
         self.string = self.string + '\n' + strin
         self.mod = True
 
-    def post(self, bot, x, cid=None):
+    def post(self, bot, x, cid=None, fight=None):
         if self.mod:
             string = str(x + ': ' + self.string)
             if cid is None:
                 bot.send_message(self.cid, string)
+                if fight is not None:
+                    for player in fight.activeplayers:
+                        if player.private_string:
+                            bot.send_message(player.chat_id, string)
+
             else:
                 bot.send_message(cid, string)
         self.mod = False

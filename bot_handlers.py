@@ -51,6 +51,9 @@ def player_menu(name, cid):
     data = list(datahandler.get_current(cid))
     itemnames = []
     skills = []
+    private_string = None
+    if datahandler.get_private_string(cid) == 1:
+        private_string = '|yes'
     if data[0] is None:
         data[0] = ' '
     if data[1] is None:
@@ -78,9 +81,19 @@ def player_menu(name, cid):
         text="Изменить предметы", callback_data='change_items')
     callback_button3 = types.InlineKeyboardButton(
         text="Изменить навыки", callback_data='change_skills')
+    if private_string is not None:
+        callback_button4 = types.InlineKeyboardButton(
+            text="Отчеты в личку" + private_string, callback_data='change_string')
+    else:
+        callback_button4 = types.InlineKeyboardButton(
+            text="Отчеты в личку", callback_data='change_string')
     keyboard.add(callback_button1, callback_button2)
     keyboard.add(callback_button3)
+    keyboard.add(callback_button4)
     return (message, keyboard)
+
+def change_string(id):
+    datahandler.change_private_string(id)
 
 def weapon_menu(chat_id):
     weapons = utils.get_weaponlist()
