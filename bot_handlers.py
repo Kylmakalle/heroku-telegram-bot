@@ -12,7 +12,6 @@ bot = telebot.TeleBot(config.token)
 
 # Инициировать игру в чате
 def start_game(gametype, cid):
-
     game = Main_classes.Game(cid)
     Main_classes.existing_games[cid] = game
     game.gamestate = game.gamestates[0]

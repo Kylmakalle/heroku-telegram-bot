@@ -51,6 +51,8 @@ def prepare_fight(game):
         bot.send_message(game.cid, 'Оружие выбрано или случайно распределено.')
     timer.cancel()
     for p in game.players:
+        if p.weapon is None:
+            p.weapon = Weapon_list.fists
         bot.send_message(p.chat_id, 'Ваше оружие - ' + p.weapon.name)
     print('Раздатчик способностей инициирован.')
 
@@ -143,6 +145,9 @@ def prepare_fight(game):
     for p in game.players:
         if datahandler.get_private_string(p.chat_id) == '1':
             p.private_string = True
+
+        if p.weapon is None:
+            p.weapon = Weapon_list.fists
         p.fight.string.add('Оружие ' + p.name + ' - ' + p.weapon.name)
         for a in p.abilities:
             a.aquare(a, p)
@@ -161,8 +166,11 @@ def prepare_fight(game):
     print('Команда 1 - ' + ', '.join([p.name for p in game.team1.players]))
     print('Команда 2 - ' + ', '.join([p.name for p in game.team2.players]))
     game.fight.string.post(bot, 'Выбор оружия')
-
-    game.startfight()
+    try:
+        game.startfight()
+    except:
+        bot.send_message(game.cid, 'Какая-то ошибка. Игра будет сброшена.')
+        delete_game(game)
 
 
 def prepare_custom_fight(game):
@@ -218,6 +226,9 @@ def prepare_custom_fight(game):
     for p in game.players:
         if datahandler.get_private_string(p.chat_id) == '1':
             p.private_string = True
+
+        if p.weapon is None:
+            p.weapon = Weapon_list.fists
         p.fight.string.add('Оружие ' + p.name + ' - ' + p.weapon.name)
         for a in p.abilities:
             a.aquare(a, p)
@@ -235,8 +246,11 @@ def prepare_custom_fight(game):
     print('Команда 1 - ' + ', '.join([p.name for p in game.team1.players]))
     print('Команда 2 - ' + ', '.join([p.name for p in game.team2.players]))
     game.fight.string.post(bot, 'Выбор оружия')
-
-    game.startfight()
+    try:
+        game.startfight()
+    except:
+        bot.send_message(game.cid, 'Какая-то ошибка. Игра будет сброшена.')
+        delete_game(game)
 
 
 def get_other_team(player):
@@ -505,8 +519,15 @@ def delete_game(game):
             del Main_classes.dict_players[p.chat_id]
         except KeyError:
                 pass
-    del Main_classes.existing_games[game.cid]
-    del game
+    try:
+        del Main_classes.existing_games[game.cid]
+    except KeyError:
+        pass
+    try:
+        del game
+    except:
+        pass
+
 
 
 def check_secrets_abilities(p):

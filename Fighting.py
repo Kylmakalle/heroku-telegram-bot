@@ -159,8 +159,11 @@ def wait_response(fight):
             p.skipcounter += 1
             if p.skipcounter >= 3:
                 p.turn = 'suicide'
-            bot.edit_message_text(chat_id=p.chat_id, message_id=p.choicemessage.message_id,
-                                  text="Ход " + str(fight.round) + ': ''Время вышло!')
+            try:
+                bot.edit_message_text(chat_id=p.chat_id, message_id=p.choicemessage.message_id,
+                                    text="Ход " + str(fight.round) + ': ''Время вышло!')
+            except:
+                pass
         fight.playerpool = []
     timer.cancel()
     del timer
