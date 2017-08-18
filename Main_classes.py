@@ -172,7 +172,7 @@ class Actionstring(object):
                 bot.send_message(self.cid, string)
                 if fight is not None:
                     for player in fight.activeplayers:
-                        if player.private_string:
+                        if player.private_string and player.chat_id != self.cid:
                             bot.send_message(player.chat_id, string)
 
             else:
