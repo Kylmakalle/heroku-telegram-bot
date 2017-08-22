@@ -654,6 +654,8 @@ def start(message):
                 bot.send_message(x[0], message.text)
             except:
                 pass
+    elif message.text == 'исправить' and message.chat.id == 197216910:
+        datahandler.refresh_string()
     elif message.text[:15] == 'добавить оружие' and message.chat.id == 197216910:
         data = message.text.split(' ')
         if len(data) == 4:
