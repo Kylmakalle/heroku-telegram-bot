@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a350f3d6-53e5-47c7-bcee-95217470ecac" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Main_classes.py" afterPath="$PROJECT_DIR$/Main_classes.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bot.py" afterPath="$PROJECT_DIR$/bot.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datahandler.py" afterPath="$PROJECT_DIR$/datahandler.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,10 +18,44 @@
       <file leaf-file-name="datahandler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datahandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1071">
-              <caret line="65" column="14" lean-forward="false" selection-start-line="65" selection-start-column="14" selection-end-line="65" selection-end-column="14" />
+            <state relative-caret-position="716">
+              <caret line="326" column="65" lean-forward="false" selection-start-line="326" selection-start-column="65" selection-end-line="326" selection-end-column="65" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
+                <marker date="1503405139523" expanded="true" signature="378:493" ph="CREATE TABLE... IF" />
+                <marker date="1503405139523" expanded="true" signature="520:558" ph="SELECT name players" />
+                <marker date="1503405139523" expanded="true" signature="659:766" ph="INSERT INTO players... " />
+                <marker date="1503405139523" expanded="true" signature="1106:1144" ph="SELECT name players" />
+                <marker date="1503405139523" expanded="true" signature="1245:1319" ph="INSERT INTO players... " />
+                <marker date="1503405139523" expanded="true" signature="1665:1722" ph="SELECT games... players" />
+                <marker date="1503405139523" expanded="true" signature="2019:2065" ph="SELECT games... players" />
+                <marker date="1503405139523" expanded="true" signature="2172:2222" ph="UPDATE playe... " />
+                <marker date="1503405139523" expanded="true" signature="2477:2499" ph="SELECT id FR... players" />
+                <marker date="1503405139523" expanded="true" signature="2779:2822" ph="SELECT games... players" />
+                <marker date="1503405139523" expanded="true" signature="2929:2976" ph="UPDATE playe... " />
+                <marker date="1503405139523" expanded="true" signature="3238:3276" ph="SELECT name players" />
+                <marker date="1503405139523" expanded="true" signature="3555:3607" ph="alter table players... " />
+                <marker date="1503405139523" expanded="true" signature="3630:3670" ph="UPDATE playe... " />
+                <marker date="1503405139523" expanded="true" signature="3919:3998" ph="SELECT curre... players" />
+                <marker date="1503405139523" expanded="true" signature="4281:4357" ph="SELECT uniqu... players" />
+                <marker date="1503405139523" expanded="true" signature="4652:4704" ph="UPDATE playe... " />
+                <marker date="1503405139523" expanded="true" signature="4969:5016" ph="SELECT curre... players" />
+                <marker date="1503405139523" expanded="true" signature="5521:5572" ph="UPDATE playe... " />
+                <marker date="1503405139523" expanded="true" signature="5852:5899" ph="SELECT curre... players" />
+                <marker date="1503405139523" expanded="true" signature="6322:6373" ph="UPDATE playe... " />
+                <marker date="1503405139523" expanded="true" signature="6655:6703" ph="SELECT priva... players" />
+                <marker date="1503405139523" expanded="true" signature="6999:7047" ph="SELECT priva... players" />
+                <marker date="1503405139523" expanded="true" signature="7366:7418" ph="UPDATE playe... " />
+                <marker date="1503405139523" expanded="true" signature="7685:7733" ph="SELECT curre... players" />
+                <marker date="1503405139523" expanded="true" signature="8247:8299" ph="UPDATE playe... " />
+                <marker date="1503405139523" expanded="true" signature="8594:8647" ph="SELECT uniqu... players" />
+                <marker date="1503405139523" expanded="true" signature="9245:9302" ph="UPDATE playe... " />
+                <marker date="1503405139523" expanded="true" signature="9605:9658" ph="SELECT uniqu... players" />
+                <marker date="1503405139523" expanded="true" signature="10092:10149" ph="UPDATE playe... " />
+                <marker date="1503405139523" expanded="true" signature="10435:10534" ph="UPDATE playe... " />
+                <marker date="1503405139523" expanded="true" signature="10816:10864" ph="SELECT curre... players" />
+                <marker date="1503405139523" expanded="true" signature="11292:11344" ph="UPDATE playe... " />
+                <marker date="1503405139523" expanded="true" signature="11615:11653" ph="UPDATE playe... " />
               </folding>
             </state>
           </provider>
@@ -201,7 +237,7 @@
       <file leaf-file-name="Fighting.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Fighting.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="94">
+            <state relative-caret-position="2210">
               <caret line="138" column="0" lean-forward="true" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
@@ -234,11 +270,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Main_classes.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main_classes.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main_classes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="563">
-              <caret line="184" column="3" lean-forward="false" selection-start-line="184" selection-start-column="3" selection-end-line="184" selection-end-column="3" />
+            <state relative-caret-position="699">
+              <caret line="192" column="34" lean-forward="true" selection-start-line="192" selection-start-column="34" selection-end-line="192" selection-end-column="34" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -256,11 +292,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bot.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="bot.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="65" column="31" lean-forward="false" selection-start-line="65" selection-start-column="21" selection-end-line="65" selection-end-column="31" />
+            <state relative-caret-position="206">
+              <caret line="344" column="0" lean-forward="true" selection-start-line="344" selection-start-column="0" selection-end-line="344" selection-end-column="0" />
               <folding>
                 <element signature="e#387#1221#0" expanded="false" />
                 <element signature="e#400#919#0" expanded="false" />
@@ -406,21 +442,13 @@
                 <element signature="e#34740#35123#0" expanded="false" />
                 <element signature="e#34969#35123#0" expanded="false" />
                 <element signature="e#35179#35421#0" expanded="false" />
-                <element signature="e#35493#37717#0" expanded="false" />
                 <element signature="e#35562#35770#0" expanded="false" />
                 <element signature="e#35672#35770#0" expanded="false" />
-                <element signature="e#35861#36735#0" expanded="false" />
-                <element signature="e#35931#35983#0" expanded="false" />
-                <element signature="e#36010#36078#0" expanded="false" />
-                <element signature="e#36163#36244#0" expanded="false" />
-                <element signature="e#36210#36244#0" expanded="false" />
-                <element signature="e#36405#36656#0" expanded="false" />
-                <element signature="e#36825#37557#0" expanded="false" />
-                <element signature="e#36895#36947#0" expanded="false" />
-                <element signature="e#36974#37042#0" expanded="false" />
-                <element signature="e#37228#37478#0" expanded="false" />
-                <element signature="e#37641#37717#0" expanded="false" />
-                <element signature="e#37774#37820#0" expanded="false" />
+                <element signature="e#36932#37664#0" expanded="false" />
+                <element signature="e#37002#37054#0" expanded="false" />
+                <element signature="e#37081#37149#0" expanded="false" />
+                <element signature="e#37335#37585#0" expanded="false" />
+                <element signature="e#37748#37824#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -482,13 +510,13 @@
         <option value="$PROJECT_DIR$/ai.py" />
         <option value="$PROJECT_DIR$/Item_list.py" />
         <option value="$PROJECT_DIR$/Weapon_list.py" />
-        <option value="$PROJECT_DIR$/bot.py" />
-        <option value="$PROJECT_DIR$/datahandler.py" />
         <option value="$PROJECT_DIR$/Известные Ошибки.txt" />
         <option value="$PROJECT_DIR$/bot_handlers.py" />
         <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/Fighting.py" />
         <option value="$PROJECT_DIR$/Main_classes.py" />
+        <option value="$PROJECT_DIR$/datahandler.py" />
+        <option value="$PROJECT_DIR$/bot.py" />
       </list>
     </option>
   </component>
@@ -519,7 +547,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -531,7 +559,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -571,13 +599,13 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -776,21 +804,13 @@
             <element signature="e#34740#35123#0" expanded="false" />
             <element signature="e#34969#35123#0" expanded="false" />
             <element signature="e#35179#35421#0" expanded="false" />
-            <element signature="e#35493#37717#0" expanded="false" />
             <element signature="e#35562#35770#0" expanded="false" />
             <element signature="e#35672#35770#0" expanded="false" />
-            <element signature="e#35861#36735#0" expanded="false" />
-            <element signature="e#35931#35983#0" expanded="false" />
-            <element signature="e#36010#36078#0" expanded="false" />
-            <element signature="e#36163#36244#0" expanded="false" />
-            <element signature="e#36210#36244#0" expanded="false" />
-            <element signature="e#36405#36656#0" expanded="false" />
-            <element signature="e#36825#37557#0" expanded="false" />
-            <element signature="e#36895#36947#0" expanded="false" />
-            <element signature="e#36974#37042#0" expanded="false" />
-            <element signature="e#37228#37478#0" expanded="false" />
-            <element signature="e#37641#37717#0" expanded="false" />
-            <element signature="e#37774#37820#0" expanded="false" />
+            <element signature="e#36932#37664#0" expanded="false" />
+            <element signature="e#37002#37054#0" expanded="false" />
+            <element signature="e#37081#37149#0" expanded="false" />
+            <element signature="e#37335#37585#0" expanded="false" />
+            <element signature="e#37748#37824#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -801,6 +821,40 @@
           <caret line="85" column="8" lean-forward="false" selection-start-line="85" selection-start-column="8" selection-end-line="85" selection-end-column="8" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+            <marker date="1503405139523" expanded="true" signature="378:493" ph="CREATE TABLE... IF" />
+            <marker date="1503405139523" expanded="true" signature="520:558" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="659:766" ph="INSERT INTO players... " />
+            <marker date="1503405139523" expanded="true" signature="1106:1144" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="1245:1319" ph="INSERT INTO players... " />
+            <marker date="1503405139523" expanded="true" signature="1665:1722" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2019:2065" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2172:2222" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="2477:2499" ph="SELECT id FR... players" />
+            <marker date="1503405139523" expanded="true" signature="2779:2822" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2929:2976" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="3238:3276" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="3555:3607" ph="alter table players... " />
+            <marker date="1503405139523" expanded="true" signature="3630:3670" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="3919:3998" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="4281:4357" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="4652:4704" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="4969:5016" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="5521:5572" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="5852:5899" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="6322:6373" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="6655:6703" ph="SELECT priva... players" />
+            <marker date="1503405139523" expanded="true" signature="6999:7047" ph="SELECT priva... players" />
+            <marker date="1503405139523" expanded="true" signature="7366:7418" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="7685:7733" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="8247:8299" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="8594:8647" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="9245:9302" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="9605:9658" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="10092:10149" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="10435:10534" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="10816:10864" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="11292:11344" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="11615:11653" ph="UPDATE playe... " />
           </folding>
         </state>
       </provider>
@@ -1000,21 +1054,13 @@
             <element signature="e#34740#35123#0" expanded="false" />
             <element signature="e#34969#35123#0" expanded="false" />
             <element signature="e#35179#35421#0" expanded="false" />
-            <element signature="e#35493#37717#0" expanded="false" />
             <element signature="e#35562#35770#0" expanded="false" />
             <element signature="e#35672#35770#0" expanded="false" />
-            <element signature="e#35861#36735#0" expanded="false" />
-            <element signature="e#35931#35983#0" expanded="false" />
-            <element signature="e#36010#36078#0" expanded="false" />
-            <element signature="e#36163#36244#0" expanded="false" />
-            <element signature="e#36210#36244#0" expanded="false" />
-            <element signature="e#36405#36656#0" expanded="false" />
-            <element signature="e#36825#37557#0" expanded="false" />
-            <element signature="e#36895#36947#0" expanded="false" />
-            <element signature="e#36974#37042#0" expanded="false" />
-            <element signature="e#37228#37478#0" expanded="false" />
-            <element signature="e#37641#37717#0" expanded="false" />
-            <element signature="e#37774#37820#0" expanded="false" />
+            <element signature="e#36932#37664#0" expanded="false" />
+            <element signature="e#37002#37054#0" expanded="false" />
+            <element signature="e#37081#37149#0" expanded="false" />
+            <element signature="e#37335#37585#0" expanded="false" />
+            <element signature="e#37748#37824#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1196,6 +1242,40 @@
           <caret line="85" column="8" lean-forward="false" selection-start-line="85" selection-start-column="8" selection-end-line="85" selection-end-column="8" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+            <marker date="1503405139523" expanded="true" signature="378:493" ph="CREATE TABLE... IF" />
+            <marker date="1503405139523" expanded="true" signature="520:558" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="659:766" ph="INSERT INTO players... " />
+            <marker date="1503405139523" expanded="true" signature="1106:1144" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="1245:1319" ph="INSERT INTO players... " />
+            <marker date="1503405139523" expanded="true" signature="1665:1722" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2019:2065" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2172:2222" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="2477:2499" ph="SELECT id FR... players" />
+            <marker date="1503405139523" expanded="true" signature="2779:2822" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2929:2976" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="3238:3276" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="3555:3607" ph="alter table players... " />
+            <marker date="1503405139523" expanded="true" signature="3630:3670" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="3919:3998" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="4281:4357" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="4652:4704" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="4969:5016" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="5521:5572" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="5852:5899" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="6322:6373" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="6655:6703" ph="SELECT priva... players" />
+            <marker date="1503405139523" expanded="true" signature="6999:7047" ph="SELECT priva... players" />
+            <marker date="1503405139523" expanded="true" signature="7366:7418" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="7685:7733" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="8247:8299" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="8594:8647" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="9245:9302" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="9605:9658" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="10092:10149" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="10435:10534" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="10816:10864" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="11292:11344" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="11615:11653" ph="UPDATE playe... " />
           </folding>
         </state>
       </provider>
@@ -1385,21 +1465,13 @@
             <element signature="e#34740#35123#0" expanded="false" />
             <element signature="e#34969#35123#0" expanded="false" />
             <element signature="e#35179#35421#0" expanded="false" />
-            <element signature="e#35493#37717#0" expanded="false" />
             <element signature="e#35562#35770#0" expanded="false" />
             <element signature="e#35672#35770#0" expanded="false" />
-            <element signature="e#35861#36735#0" expanded="false" />
-            <element signature="e#35931#35983#0" expanded="false" />
-            <element signature="e#36010#36078#0" expanded="false" />
-            <element signature="e#36163#36244#0" expanded="false" />
-            <element signature="e#36210#36244#0" expanded="false" />
-            <element signature="e#36405#36656#0" expanded="false" />
-            <element signature="e#36825#37557#0" expanded="false" />
-            <element signature="e#36895#36947#0" expanded="false" />
-            <element signature="e#36974#37042#0" expanded="false" />
-            <element signature="e#37228#37478#0" expanded="false" />
-            <element signature="e#37641#37717#0" expanded="false" />
-            <element signature="e#37774#37820#0" expanded="false" />
+            <element signature="e#36932#37664#0" expanded="false" />
+            <element signature="e#37002#37054#0" expanded="false" />
+            <element signature="e#37081#37149#0" expanded="false" />
+            <element signature="e#37335#37585#0" expanded="false" />
+            <element signature="e#37748#37824#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1581,6 +1653,40 @@
           <caret line="85" column="8" lean-forward="false" selection-start-line="85" selection-start-column="8" selection-end-line="85" selection-end-column="8" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+            <marker date="1503405139523" expanded="true" signature="378:493" ph="CREATE TABLE... IF" />
+            <marker date="1503405139523" expanded="true" signature="520:558" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="659:766" ph="INSERT INTO players... " />
+            <marker date="1503405139523" expanded="true" signature="1106:1144" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="1245:1319" ph="INSERT INTO players... " />
+            <marker date="1503405139523" expanded="true" signature="1665:1722" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2019:2065" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2172:2222" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="2477:2499" ph="SELECT id FR... players" />
+            <marker date="1503405139523" expanded="true" signature="2779:2822" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2929:2976" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="3238:3276" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="3555:3607" ph="alter table players... " />
+            <marker date="1503405139523" expanded="true" signature="3630:3670" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="3919:3998" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="4281:4357" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="4652:4704" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="4969:5016" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="5521:5572" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="5852:5899" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="6322:6373" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="6655:6703" ph="SELECT priva... players" />
+            <marker date="1503405139523" expanded="true" signature="6999:7047" ph="SELECT priva... players" />
+            <marker date="1503405139523" expanded="true" signature="7366:7418" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="7685:7733" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="8247:8299" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="8594:8647" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="9245:9302" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="9605:9658" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="10092:10149" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="10435:10534" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="10816:10864" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="11292:11344" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="11615:11653" ph="UPDATE playe... " />
           </folding>
         </state>
       </provider>
@@ -1923,21 +2029,13 @@
             <element signature="e#34740#35123#0" expanded="false" />
             <element signature="e#34969#35123#0" expanded="false" />
             <element signature="e#35179#35421#0" expanded="false" />
-            <element signature="e#35493#37717#0" expanded="false" />
             <element signature="e#35562#35770#0" expanded="false" />
             <element signature="e#35672#35770#0" expanded="false" />
-            <element signature="e#35861#36735#0" expanded="false" />
-            <element signature="e#35931#35983#0" expanded="false" />
-            <element signature="e#36010#36078#0" expanded="false" />
-            <element signature="e#36163#36244#0" expanded="false" />
-            <element signature="e#36210#36244#0" expanded="false" />
-            <element signature="e#36405#36656#0" expanded="false" />
-            <element signature="e#36825#37557#0" expanded="false" />
-            <element signature="e#36895#36947#0" expanded="false" />
-            <element signature="e#36974#37042#0" expanded="false" />
-            <element signature="e#37228#37478#0" expanded="false" />
-            <element signature="e#37641#37717#0" expanded="false" />
-            <element signature="e#37774#37820#0" expanded="false" />
+            <element signature="e#36932#37664#0" expanded="false" />
+            <element signature="e#37002#37054#0" expanded="false" />
+            <element signature="e#37081#37149#0" expanded="false" />
+            <element signature="e#37335#37585#0" expanded="false" />
+            <element signature="e#37748#37824#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1956,6 +2054,40 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+            <marker date="1503405139523" expanded="true" signature="378:493" ph="CREATE TABLE... IF" />
+            <marker date="1503405139523" expanded="true" signature="520:558" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="659:766" ph="INSERT INTO players... " />
+            <marker date="1503405139523" expanded="true" signature="1106:1144" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="1245:1319" ph="INSERT INTO players... " />
+            <marker date="1503405139523" expanded="true" signature="1665:1722" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2019:2065" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2172:2222" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="2477:2499" ph="SELECT id FR... players" />
+            <marker date="1503405139523" expanded="true" signature="2779:2822" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2929:2976" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="3238:3276" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="3555:3607" ph="alter table players... " />
+            <marker date="1503405139523" expanded="true" signature="3630:3670" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="3919:3998" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="4281:4357" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="4652:4704" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="4969:5016" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="5521:5572" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="5852:5899" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="6322:6373" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="6655:6703" ph="SELECT priva... players" />
+            <marker date="1503405139523" expanded="true" signature="6999:7047" ph="SELECT priva... players" />
+            <marker date="1503405139523" expanded="true" signature="7366:7418" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="7685:7733" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="8247:8299" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="8594:8647" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="9245:9302" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="9605:9658" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="10092:10149" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="10435:10534" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="10816:10864" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="11292:11344" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="11615:11653" ph="UPDATE playe... " />
           </folding>
         </state>
       </provider>
@@ -2306,21 +2438,13 @@
             <element signature="e#34740#35123#0" expanded="false" />
             <element signature="e#34969#35123#0" expanded="false" />
             <element signature="e#35179#35421#0" expanded="false" />
-            <element signature="e#35493#37717#0" expanded="false" />
             <element signature="e#35562#35770#0" expanded="false" />
             <element signature="e#35672#35770#0" expanded="false" />
-            <element signature="e#35861#36735#0" expanded="false" />
-            <element signature="e#35931#35983#0" expanded="false" />
-            <element signature="e#36010#36078#0" expanded="false" />
-            <element signature="e#36163#36244#0" expanded="false" />
-            <element signature="e#36210#36244#0" expanded="false" />
-            <element signature="e#36405#36656#0" expanded="false" />
-            <element signature="e#36825#37557#0" expanded="false" />
-            <element signature="e#36895#36947#0" expanded="false" />
-            <element signature="e#36974#37042#0" expanded="false" />
-            <element signature="e#37228#37478#0" expanded="false" />
-            <element signature="e#37641#37717#0" expanded="false" />
-            <element signature="e#37774#37820#0" expanded="false" />
+            <element signature="e#36932#37664#0" expanded="false" />
+            <element signature="e#37002#37054#0" expanded="false" />
+            <element signature="e#37081#37149#0" expanded="false" />
+            <element signature="e#37335#37585#0" expanded="false" />
+            <element signature="e#37748#37824#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2331,6 +2455,40 @@
           <caret line="85" column="8" lean-forward="false" selection-start-line="85" selection-start-column="8" selection-end-line="85" selection-end-column="8" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+            <marker date="1503405139523" expanded="true" signature="378:493" ph="CREATE TABLE... IF" />
+            <marker date="1503405139523" expanded="true" signature="520:558" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="659:766" ph="INSERT INTO players... " />
+            <marker date="1503405139523" expanded="true" signature="1106:1144" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="1245:1319" ph="INSERT INTO players... " />
+            <marker date="1503405139523" expanded="true" signature="1665:1722" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2019:2065" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2172:2222" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="2477:2499" ph="SELECT id FR... players" />
+            <marker date="1503405139523" expanded="true" signature="2779:2822" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2929:2976" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="3238:3276" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="3555:3607" ph="alter table players... " />
+            <marker date="1503405139523" expanded="true" signature="3630:3670" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="3919:3998" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="4281:4357" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="4652:4704" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="4969:5016" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="5521:5572" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="5852:5899" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="6322:6373" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="6655:6703" ph="SELECT priva... players" />
+            <marker date="1503405139523" expanded="true" signature="6999:7047" ph="SELECT priva... players" />
+            <marker date="1503405139523" expanded="true" signature="7366:7418" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="7685:7733" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="8247:8299" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="8594:8647" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="9245:9302" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="9605:9658" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="10092:10149" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="10435:10534" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="10816:10864" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="11292:11344" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="11615:11653" ph="UPDATE playe... " />
           </folding>
         </state>
       </provider>
@@ -2492,21 +2650,13 @@
             <element signature="e#34740#35123#0" expanded="false" />
             <element signature="e#34969#35123#0" expanded="false" />
             <element signature="e#35179#35421#0" expanded="false" />
-            <element signature="e#35493#37717#0" expanded="false" />
             <element signature="e#35562#35770#0" expanded="false" />
             <element signature="e#35672#35770#0" expanded="false" />
-            <element signature="e#35861#36735#0" expanded="false" />
-            <element signature="e#35931#35983#0" expanded="false" />
-            <element signature="e#36010#36078#0" expanded="false" />
-            <element signature="e#36163#36244#0" expanded="false" />
-            <element signature="e#36210#36244#0" expanded="false" />
-            <element signature="e#36405#36656#0" expanded="false" />
-            <element signature="e#36825#37557#0" expanded="false" />
-            <element signature="e#36895#36947#0" expanded="false" />
-            <element signature="e#36974#37042#0" expanded="false" />
-            <element signature="e#37228#37478#0" expanded="false" />
-            <element signature="e#37641#37717#0" expanded="false" />
-            <element signature="e#37774#37820#0" expanded="false" />
+            <element signature="e#36932#37664#0" expanded="false" />
+            <element signature="e#37002#37054#0" expanded="false" />
+            <element signature="e#37081#37149#0" expanded="false" />
+            <element signature="e#37335#37585#0" expanded="false" />
+            <element signature="e#37748#37824#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2525,6 +2675,40 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+            <marker date="1503405139523" expanded="true" signature="378:493" ph="CREATE TABLE... IF" />
+            <marker date="1503405139523" expanded="true" signature="520:558" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="659:766" ph="INSERT INTO players... " />
+            <marker date="1503405139523" expanded="true" signature="1106:1144" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="1245:1319" ph="INSERT INTO players... " />
+            <marker date="1503405139523" expanded="true" signature="1665:1722" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2019:2065" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2172:2222" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="2477:2499" ph="SELECT id FR... players" />
+            <marker date="1503405139523" expanded="true" signature="2779:2822" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2929:2976" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="3238:3276" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="3555:3607" ph="alter table players... " />
+            <marker date="1503405139523" expanded="true" signature="3630:3670" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="3919:3998" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="4281:4357" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="4652:4704" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="4969:5016" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="5521:5572" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="5852:5899" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="6322:6373" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="6655:6703" ph="SELECT priva... players" />
+            <marker date="1503405139523" expanded="true" signature="6999:7047" ph="SELECT priva... players" />
+            <marker date="1503405139523" expanded="true" signature="7366:7418" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="7685:7733" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="8247:8299" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="8594:8647" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="9245:9302" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="9605:9658" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="10092:10149" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="10435:10534" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="10816:10864" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="11292:11344" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="11615:11653" ph="UPDATE playe... " />
           </folding>
         </state>
       </provider>
@@ -2686,21 +2870,13 @@
             <element signature="e#34740#35123#0" expanded="false" />
             <element signature="e#34969#35123#0" expanded="false" />
             <element signature="e#35179#35421#0" expanded="false" />
-            <element signature="e#35493#37717#0" expanded="false" />
             <element signature="e#35562#35770#0" expanded="false" />
             <element signature="e#35672#35770#0" expanded="false" />
-            <element signature="e#35861#36735#0" expanded="false" />
-            <element signature="e#35931#35983#0" expanded="false" />
-            <element signature="e#36010#36078#0" expanded="false" />
-            <element signature="e#36163#36244#0" expanded="false" />
-            <element signature="e#36210#36244#0" expanded="false" />
-            <element signature="e#36405#36656#0" expanded="false" />
-            <element signature="e#36825#37557#0" expanded="false" />
-            <element signature="e#36895#36947#0" expanded="false" />
-            <element signature="e#36974#37042#0" expanded="false" />
-            <element signature="e#37228#37478#0" expanded="false" />
-            <element signature="e#37641#37717#0" expanded="false" />
-            <element signature="e#37774#37820#0" expanded="false" />
+            <element signature="e#36932#37664#0" expanded="false" />
+            <element signature="e#37002#37054#0" expanded="false" />
+            <element signature="e#37081#37149#0" expanded="false" />
+            <element signature="e#37335#37585#0" expanded="false" />
+            <element signature="e#37748#37824#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2711,6 +2887,40 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+            <marker date="1503405139523" expanded="true" signature="378:493" ph="CREATE TABLE... IF" />
+            <marker date="1503405139523" expanded="true" signature="520:558" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="659:766" ph="INSERT INTO players... " />
+            <marker date="1503405139523" expanded="true" signature="1106:1144" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="1245:1319" ph="INSERT INTO players... " />
+            <marker date="1503405139523" expanded="true" signature="1665:1722" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2019:2065" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2172:2222" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="2477:2499" ph="SELECT id FR... players" />
+            <marker date="1503405139523" expanded="true" signature="2779:2822" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2929:2976" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="3238:3276" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="3555:3607" ph="alter table players... " />
+            <marker date="1503405139523" expanded="true" signature="3630:3670" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="3919:3998" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="4281:4357" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="4652:4704" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="4969:5016" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="5521:5572" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="5852:5899" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="6322:6373" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="6655:6703" ph="SELECT priva... players" />
+            <marker date="1503405139523" expanded="true" signature="6999:7047" ph="SELECT priva... players" />
+            <marker date="1503405139523" expanded="true" signature="7366:7418" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="7685:7733" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="8247:8299" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="8594:8647" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="9245:9302" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="9605:9658" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="10092:10149" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="10435:10534" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="10816:10864" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="11292:11344" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="11615:11653" ph="UPDATE playe... " />
           </folding>
         </state>
       </provider>
@@ -2904,24 +3114,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/datahandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1071">
-          <caret line="65" column="14" lean-forward="false" selection-start-line="65" selection-start-column="14" selection-end-line="65" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/special_abilities.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -2932,10 +3124,110 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Известные Ошибки.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="12" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Fighting.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2210">
+          <caret line="138" column="0" lean-forward="true" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main_classes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="699">
+          <caret line="192" column="34" lean-forward="true" selection-start-line="192" selection-start-column="34" selection-end-line="192" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="706">
+          <caret line="158" column="34" lean-forward="true" selection-start-line="158" selection-start-column="34" selection-end-line="158" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bot_handlers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="34" column="51" lean-forward="false" selection-start-line="34" selection-start-column="38" selection-end-line="34" selection-end-column="51" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/datahandler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="716">
+          <caret line="326" column="65" lean-forward="false" selection-start-line="326" selection-start-column="65" selection-end-line="326" selection-end-column="65" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <marker date="1503405139523" expanded="true" signature="378:493" ph="CREATE TABLE... IF" />
+            <marker date="1503405139523" expanded="true" signature="520:558" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="659:766" ph="INSERT INTO players... " />
+            <marker date="1503405139523" expanded="true" signature="1106:1144" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="1245:1319" ph="INSERT INTO players... " />
+            <marker date="1503405139523" expanded="true" signature="1665:1722" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2019:2065" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2172:2222" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="2477:2499" ph="SELECT id FR... players" />
+            <marker date="1503405139523" expanded="true" signature="2779:2822" ph="SELECT games... players" />
+            <marker date="1503405139523" expanded="true" signature="2929:2976" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="3238:3276" ph="SELECT name players" />
+            <marker date="1503405139523" expanded="true" signature="3555:3607" ph="alter table players... " />
+            <marker date="1503405139523" expanded="true" signature="3630:3670" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="3919:3998" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="4281:4357" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="4652:4704" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="4969:5016" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="5521:5572" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="5852:5899" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="6322:6373" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="6655:6703" ph="SELECT priva... players" />
+            <marker date="1503405139523" expanded="true" signature="6999:7047" ph="SELECT priva... players" />
+            <marker date="1503405139523" expanded="true" signature="7366:7418" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="7685:7733" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="8247:8299" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="8594:8647" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="9245:9302" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="9605:9658" ph="SELECT uniqu... players" />
+            <marker date="1503405139523" expanded="true" signature="10092:10149" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="10435:10534" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="10816:10864" ph="SELECT curre... players" />
+            <marker date="1503405139523" expanded="true" signature="11292:11344" ph="UPDATE playe... " />
+            <marker date="1503405139523" expanded="true" signature="11615:11653" ph="UPDATE playe... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="65" column="31" lean-forward="false" selection-start-line="65" selection-start-column="21" selection-end-line="65" selection-end-column="31" />
+        <state relative-caret-position="206">
+          <caret line="344" column="0" lean-forward="true" selection-start-line="344" selection-start-column="0" selection-end-line="344" selection-end-column="0" />
           <folding>
             <element signature="e#387#1221#0" expanded="false" />
             <element signature="e#400#919#0" expanded="false" />
@@ -3081,69 +3373,13 @@
             <element signature="e#34740#35123#0" expanded="false" />
             <element signature="e#34969#35123#0" expanded="false" />
             <element signature="e#35179#35421#0" expanded="false" />
-            <element signature="e#35493#37717#0" expanded="false" />
             <element signature="e#35562#35770#0" expanded="false" />
             <element signature="e#35672#35770#0" expanded="false" />
-            <element signature="e#35861#36735#0" expanded="false" />
-            <element signature="e#35931#35983#0" expanded="false" />
-            <element signature="e#36010#36078#0" expanded="false" />
-            <element signature="e#36163#36244#0" expanded="false" />
-            <element signature="e#36210#36244#0" expanded="false" />
-            <element signature="e#36405#36656#0" expanded="false" />
-            <element signature="e#36825#37557#0" expanded="false" />
-            <element signature="e#36895#36947#0" expanded="false" />
-            <element signature="e#36974#37042#0" expanded="false" />
-            <element signature="e#37228#37478#0" expanded="false" />
-            <element signature="e#37641#37717#0" expanded="false" />
-            <element signature="e#37774#37820#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bot_handlers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="34" column="51" lean-forward="false" selection-start-line="34" selection-start-column="38" selection-end-line="34" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Известные Ошибки.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="12" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Fighting.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="138" column="0" lean-forward="true" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="706">
-          <caret line="158" column="34" lean-forward="true" selection-start-line="158" selection-start-column="34" selection-end-line="158" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Main_classes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="563">
-          <caret line="184" column="3" lean-forward="false" selection-start-line="184" selection-start-column="3" selection-end-line="184" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#36932#37664#0" expanded="false" />
+            <element signature="e#37002#37054#0" expanded="false" />
+            <element signature="e#37081#37149#0" expanded="false" />
+            <element signature="e#37335#37585#0" expanded="false" />
+            <element signature="e#37748#37824#0" expanded="false" />
           </folding>
         </state>
       </provider>

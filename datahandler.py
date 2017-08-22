@@ -13,7 +13,7 @@ def get_player(chat_id, username, first_name):
         cursor.execute('SELECT name FROM players WHERE id = %s', (chat_id,))
         data = cursor.fetchone()
         if data is None:
-            cursor.execute('INSERT INTO players(id, games_played, games_won, name, username)VALUES (%s,%s,%s,N%s,%s)', (chat_id, 0, 0, first_name, '@' + username))
+            cursor.execute('INSERT INTO players(id, games_played, games_won, name, username, private_string)VALUES (%s,%s,%s,N%s,%s,%s)', (chat_id, 0, 0, first_name, '@' + username, '0'))
         else:
             print(data[0])
         db.commit()
@@ -320,3 +320,12 @@ def delete_skill(cid, skill_name):
     db.commit()
     db.close()
     return True
+
+
+def refresh_string():
+    db = psycopg2.connect(
+        "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
+    cursor = db.cursor()
+    cursor.execute('UPDATE players SET private_string = %s', ('0'))
+    db.commit()
+    db.close()
