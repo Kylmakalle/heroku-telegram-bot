@@ -219,7 +219,6 @@ def add_player(message):
     if message.from_user.id in Main_classes.dict_players:
         pass
     elif game is not None:
-        try:
             bot.send_message(message.from_user.id, 'Вы присоединились к игре.', parse_mode='markdown')
             if game.gametype == game.gametypes[0] and message.from_user.id not in game.marked_id \
                     and message.chat.id == game.cid and game.gamestate == game.gamestates[0]:
@@ -292,8 +291,6 @@ def add_player(message):
                     game.marked_id.append(player.chat_id)
             elif game.gamestate != game.gamestates[0]:
                 bot.send_message(message.chat.id, 'Нет запущенной игры или игра уже началась.')
-        except:
-            bot.send_message(message.chat.id, 'Что-то пошло не так. Возможно, стоит начать разговор с ботом @veganwarsbot.')
 
     time.sleep(3)
 
