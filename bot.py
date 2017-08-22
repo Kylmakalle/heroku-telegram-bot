@@ -114,7 +114,7 @@ def start_game(message):
             if game.gametype == 'game':
                 if not game.pending_team1 or not game.pending_team2:
                     bot.send_message(message.chat.id, "Недостаточно игроков для начала игры.")
-                elif len(game.pending_players) > len(game.pending_team1) + len(game.pending_team1):
+                elif len(game.pending_players) > len(game.pending_team1) + len(game.pending_team2):
                     bot.send_message(message.chat.id, "Не все игроки выбрали команду.")
                 elif len(game.pending_players) == len(game.pending_team1) + len(game.pending_team2):
                     game.gamestate = game.gamestates[1]
@@ -130,7 +130,7 @@ def start_game(message):
             elif game.gametype == 'custom':
                 if not game.pending_team1 or not game.pending_team2:
                     bot.send_message(message.chat.id, "Недостаточно игроков для начала игры.")
-                elif len(game.pending_players) > len(game.pending_team1) + len(game.pending_team1):
+                elif len(game.pending_players) > len(game.pending_team1) + len(game.pending_team2):
                     bot.send_message(message.chat.id, "Не все игроки выбрали команду.")
                 elif len(game.pending_players) == len(game.pending_team1) + len(game.pending_team2):
                     game.gamestate = game.gamestates[1]
