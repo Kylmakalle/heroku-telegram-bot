@@ -1073,6 +1073,56 @@ class Katana(Weapon):
             return str(u'\U0001F4A8' + "|" + getattr(self, str('desc' + str(random.randint(4, 6)))))
 
 
+class Knuckles(Weapon):
+
+    def special_end(self, user):
+        if user.turn == 'attack' + str(user.fight.round):
+            if user.target.turn == 'reload' + str(user.fight.round) or 'dog_rest' + str(user.fight.round):
+                user.target.energy -= 2
+                user.fight.string.add(u'\U000026A1' + user.target.name + ' теряет 2 Энергии.')
+
+
+class Club(Weapon):
+
+    def hit(self,user):
+        n = 0
+        d = 0
+        dmax = self.dice
+        while d != dmax:
+            x = random.randint(1, 10)
+            print(user.name + ' Выпало ' + str(x))
+            if x > 10 - user.energy - self.bonus - user.accuracy - user.tempaccuracy + user.target.evasion:
+                n += 1
+            d += 1
+
+        # уходит энергия
+        user.energy -= self.energy
+        if n!=0:
+            n += user.bonusdamage + self.damage + user.combo_counter - 1
+
+        for a in user.abilities:
+            n = a.onhit(a, n, user)
+        else:
+            pass
+        n += user.truedamage
+        # энергия загоняется в 0
+        if user.energy < 0: user.energy = 0
+        utils.damage(user, user.target, n, 'melee')
+        return n
+
+    def aquare(self ,user):
+        user.combo_counter = 0
+
+    def lose(self, user):
+        del user.combo_counter
+
+    def special_end(self, user):
+        if user.turn == 'attack' + str(user.fight.round):
+            user.combo_counter += 1
+        else:
+            user.combo_counter = 0
+
+
 class ULTRA(Weapon):
     def __init__(self, dice, damage, energy, bonus, fixed, Melee, TwoHanded, Concealable, name, damagestring, double,
                  standart=True):
@@ -1182,13 +1232,32 @@ class BowBleeding(Weapon):
 
         user.bonusaccuracy = 0
         user.Armed = False
-katana=Katana(3, 1, 2, 2, 0, True, False, False, 'Катана','1-3' + u'\U0001F525' + "|" + '2' + u'\U000026A1', 3, standart=False)
+
+
+katana = Katana(3, 1, 2, 2, 0, True, False, False, 'Катана','1-3' + u'\U0001F525' + "|" + '2' + u'\U000026A1', 3, standart=False)
 katana.desc1 = 'Игрок бьет Противник Катаной!'
 katana.desc2 = 'Игрок бьет Противник Катаной!'
 katana.desc3 = 'Игрок бьет Противник Катаной!'
 katana.desc4 = 'Игрок бьет Противник Катаной, но не попадает.'
 katana.desc5 = 'Игрок бьет Противник Катаной, но не попадает.'
 katana.desc6 = 'Игрок бьет Противник Катаной, но не попадает.'
+
+knuckles = Knuckles(2, 1, 2, 3, 0, True, False, False, "Кастет",'1-2' + u'\U0001F525' + "|" + '2' + u'\U000026A1', standart=False)
+knuckles.desc1 = 'Игрок бьет Противник Кастетом!'
+knuckles.desc2 = 'Игрок бьет Противник Кастетом!'
+knuckles.desc3 = 'Игрок бьет Противник Кастетом!'
+knuckles.desc4 = 'Игрок бьет Противник Кастетом, но не попадает.'
+knuckles.desc5 = 'Игрок бьет Противник Кастетом, но не попадает.'
+knuckles.desc6 = 'Игрок бьет Противник Кастетом, но не попадает.'
+
+club = Club(3, 1, 2, 2, 0, True, False, False, "Булава",'1-3' + u'\U0001F525' + "|" + '2' + u'\U000026A1', standart=False)
+club.desc1 = 'Игрок бьет Противник Булавой!'
+club.desc2 = 'Игрок бьет Противник Булавой!'
+club.desc3 = 'Игрок бьет Противник Булавой!'
+club.desc4 = 'Игрок бьет Противник Булавой, но не попадает.'
+club.desc5 = 'Игрок бьет Противник Булавой, но не попадает.'
+club.desc6 = 'Игрок бьет Противник Булавой, но не попадает.'
+
 ultra=ULTRA(3,1,2,2,0,True,False,True,'анусосжигатеь','500' , True, standart=False)
 ultra.desc1 = 'Игрок бьет Противник Ножом!'
 ultra.desc2 = 'Игрок бьет Противник Ножом!'
