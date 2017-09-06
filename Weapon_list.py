@@ -1077,7 +1077,8 @@ class Knuckles(Weapon):
 
     def special_end(self, user):
         if user.turn == 'attack' + str(user.fight.round):
-            if user.target.turn == 'reload' + str(user.fight.round) or 'dog_rest' + str(user.fight.round):
+            if user.target.turn == 'reload' + str(user.fight.round) or user.target.turn == \
+                            'dog_rest' + str(user.fight.round):
                 user.target.energy -= 2
                 user.fight.string.add(u'\U000026A1' + user.target.name + ' теряет 2 Энергии.')
 
@@ -1118,7 +1119,8 @@ class Club(Weapon):
 
     def special_end(self, user):
         if user.turn == 'attack' + str(user.fight.round):
-            user.combo_counter += 1
+            if user.combo_counter < 2:
+                user.combo_counter += 1
         else:
             user.combo_counter = 0
 
@@ -1242,7 +1244,7 @@ katana.desc4 = 'Игрок бьет Противник Катаной, но не
 katana.desc5 = 'Игрок бьет Противник Катаной, но не попадает.'
 katana.desc6 = 'Игрок бьет Противник Катаной, но не попадает.'
 
-knuckles = Knuckles(2, 1, 2, 3, 0, True, False, False, "Кастет",'1-2' + u'\U0001F525' + "|" + '2' + u'\U000026A1', standart=False)
+knuckles = Knuckles(2, 1, 2, 3, 0, True, False, False, "Кастет",'1-2' + u'\U0001F525' + "|" + '2' + u'\U000026A1')
 knuckles.desc1 = 'Игрок бьет Противник Кастетом!'
 knuckles.desc2 = 'Игрок бьет Противник Кастетом!'
 knuckles.desc3 = 'Игрок бьет Противник Кастетом!'
@@ -1250,7 +1252,7 @@ knuckles.desc4 = 'Игрок бьет Противник Кастетом, но 
 knuckles.desc5 = 'Игрок бьет Противник Кастетом, но не попадает.'
 knuckles.desc6 = 'Игрок бьет Противник Кастетом, но не попадает.'
 
-club = Club(3, 1, 2, 2, 0, True, False, False, "Булава",'1-3' + u'\U0001F525' + "|" + '2' + u'\U000026A1', standart=False)
+club = Club(3, 1, 2, 2, 0, True, False, False, "Булава",'1-3' + u'\U0001F525' + "|" + '2' + u'\U000026A1')
 club.desc1 = 'Игрок бьет Противник Булавой!'
 club.desc2 = 'Игрок бьет Противник Булавой!'
 club.desc3 = 'Игрок бьет Противник Булавой!'
