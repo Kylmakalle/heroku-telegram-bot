@@ -41,6 +41,7 @@ def send_actions(fight):
 
 # Описание вариантов действий
 def send_action(p, fight):
+    account_targets(p)
     keyboard = types.InlineKeyboardMarkup()
     if p.energy > 0:
         if not p.weapon.Melee:
