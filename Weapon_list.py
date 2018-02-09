@@ -1076,11 +1076,11 @@ class Katana(Weapon):
 class Knuckles(Weapon):
 
     def special_end(self, user):
-        if user.turn == 'attack' + str(user.fight.round) and user.Hit:
+        if user.turn == 'attack' + str(user.fight.round):
             if user.target.turn == 'reload' + str(user.fight.round) or user.target.turn == \
                             'dog_rest' + str(user.fight.round):
                 user.target.energy -= 2
-                user.fight.string.add(u'\U000026A1' + '|' + user.target.name + ' теряет 2 Энергии.')
+                user.fight.string.add(u'\U000026A1' + user.target.name + ' теряет 2 Энергии.')
 
 
 class Club(Weapon):
