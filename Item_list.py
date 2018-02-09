@@ -537,7 +537,7 @@ class WeaponMaster(Item):
         bot.send_message(user.chat_id, 'Вы меняете оружие.')
         user.useditems.append(self)
         user.itemlist.remove(self)
-        user.change_refresh = user.fight.round
+        user.change_refresh = user.fight.round + 2
 
     def used(self, user):
         user.fight.string.add(u'\U0001F60F' + "|" +  user.name + " достает " + user.weapon.name + '!')
