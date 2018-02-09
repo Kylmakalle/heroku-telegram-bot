@@ -1,6 +1,7 @@
 import utils
 import config
 import telebot
+import copy
 import random
 import Weapon_list
 import special_abilities
@@ -527,6 +528,21 @@ class Steal(Item):
         del user.itemtarget
 
 
+class WeaponMaster(Item):
+
+    def useact(self, user):
+        new = copy.copy(user.weapon)
+        user.weapon = user.sec_weapon
+        user.sec_weapon = new
+        bot.send_message(user.chat_id, 'Вы меняете оружие.')
+        user.useditems.append(self)
+        user.itemlist.remove(self)
+        user.change_refresh = user.fight.round
+
+    def used(self, user):
+        user.fight.string.add(u'\U0001F60F' + "|" +  user.name + " достает " + user.weapon.name + '!')
+
+
 class ThrowingSpear(Item):
     def useact(self, user):
         keyboard = types.InlineKeyboardMarkup()
@@ -576,12 +592,14 @@ mental = Mental('Визор', 'mitem01',standart=False)
 engineer = Engineer('Оружейник', 'itemat3',standart=False)
 ritual = Ritual('Ритуал', 'itemat4',standart=False)
 curse = Curse('Проклятие', 'itemat5',standart=False)
+change_weapon = WeaponMaster('Сменить оружие', 'itemh03',standart=False)
 explode_corpse = Explode_corpse('Взорвать труп', 'itema01',standart=False)
 throwspear = ThrowingSpear('Метнуть', 'itemat9',standart=False)
 id_items.append(shieldg)
 id_items.append(hypnosys)
 id_items.append(mental)
 id_items.append(isaev)
+id_items.append(change_weapon)
 id_items.append(engineer)
 id_items.append(ritual)
 id_items.append(curse)
