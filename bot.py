@@ -392,12 +392,13 @@ def action(call):
         elif game.gamestate == 'ability' and found:
             if call.data[0] == 'i'and len(call.data) < 4:
                     bot.send_message(call.from_user.id,special_abilities.abilities[int(call.data[1:])].info)
-            if call.data[:8] == 'unique_i':
-                    bot.send_message(call.from_user.id,special_abilities.unique_abilities[int(call.data[8:])].info)
-            elif call.data[0] == 'a' and len(call.data) < 4:
+            elif call.data[:7] == 'sec-wep':
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                                      text="Способность выбрана: " + special_abilities.abilities[int(call.data[1:])].name)
-                actor.abilities.append(special_abilities.abilities[int(call.data[1:])])
+                                      text="Способность выбрана: Оружейник")
+                for w in Weapon_list.fullweaponlist:
+                    if w.name == call.data[7:]:
+                        actor.sec_weapon = w
+                        break
                 if actor.maxabilities > \
                     len(actor.abilities):
                     utils.get_ability(actor)
@@ -407,6 +408,29 @@ def action(call):
                         print (actor.name + ' выбрал способности.')
                     except:
                         pass
+            elif call.data[:8] == 'unique_i':
+                    bot.send_message(call.from_user.id,special_abilities.unique_abilities[int(call.data[8:])].info)
+            elif call.data[0] == 'a' and len(call.data) < 4:
+                choice_num = int(call.data[1:])
+                print(int(call.data[1:]))
+                print(special_abilities.abilities.index((special_abilities.WeaponMaster)))
+                if choice_num != special_abilities.abilities.index((special_abilities.WeaponMaster)):
+                    bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
+                                          text="Способность выбрана: " + special_abilities.abilities[int(call.data[1:])].name)
+                    actor.abilities.append(special_abilities.abilities[choice_num])
+                    if actor.maxabilities > \
+                        len(actor.abilities):
+                        utils.get_ability(actor)
+                    else:
+                        try:
+                            game.abilitycounter -= 1
+                            print (actor.name + ' выбрал способности.')
+                        except:
+                            pass
+                else:
+                    actor.abilities.append(special_abilities.abilities[choice_num])
+                    special_abilities.WeaponMaster.set(call, actor)
+
             elif call.data[:8] == 'unique_a':
                 bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
                                       text="Способность выбрана: " + special_abilities.unique_abilities[int(call.data[8:])].name)
