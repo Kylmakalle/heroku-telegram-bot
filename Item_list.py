@@ -297,6 +297,7 @@ class Hypnosys(Item):
         bot.send_message(user.chat_id, 'Выберите цель для гипноза.', reply_markup=keyboard)
 
     def usefirst(self, user):
+        user.energy -= 3
         if user.itemtarget.target is None:
             user.fight.string.add(
                     u'\U0001F31D' + "|" + 'Гипнотизеру ' + user.name + " не удается сбить прицел " + user.itemtarget.name
@@ -537,7 +538,7 @@ class WeaponMaster(Item):
         bot.send_message(user.chat_id, 'Вы меняете оружие.')
         user.useditems.append(self)
         user.itemlist.remove(self)
-        user.change_refresh = user.fight.round + 2
+        user.change_refresh = user.fight.round
 
     def used(self, user):
         user.fight.string.add(u'\U0001F60F' + "|" +  user.name + " достает " + user.weapon.name + '!')
