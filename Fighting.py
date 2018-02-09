@@ -582,6 +582,7 @@ def fight_loop(game, fight):
 
 
 def account_targets(player):
+    player.targets = []
     if not player.weapon.Melee:
         player.targets = utils.get_other_team(player).actors
     else:
