@@ -536,9 +536,9 @@ class WeaponMaster(Item):
     def useact(self, user):
         new = copy.copy(user.weapon)
         user.weapon = user.sec_weapon
-        user.weapon.aquare(user)
         user.sec_weapon = new
         bot.send_message(user.chat_id, 'Вы меняете оружие.')
+        user.weapon.aquare(user)
         user.useditems.append(self)
         user.itemlist.remove(self)
         user.change_refresh = user.fight.round
@@ -596,7 +596,7 @@ mental = Mental('Визор', 'mitem01',standart=False)
 engineer = Engineer('Наводчик', 'itemat3',standart=False)
 ritual = Ritual('Ритуал', 'itemat4',standart=False)
 curse = Curse('Проклятие', 'itemat5',standart=False)
-change_weapon = WeaponMaster('Сменить оружие', 'itemh03',standart=False)
+change_weapon = WeaponMaster('Сменить оружие', 'itemh09',standart=False)
 explode_corpse = Explode_corpse('Взорвать труп', 'itema01',standart=False)
 throwspear = ThrowingSpear('Метнуть', 'itemat9',standart=False)
 id_items.append(shieldg)
