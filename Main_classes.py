@@ -90,6 +90,7 @@ class Player(object):
         # Переменные для боя
         self.weapon = weapon  # - Временно
         self.naturalweapon = weapon
+        self.sec_weapon = None
         self.maxhp = 4
         self.maxenergy = 5
         self.itemlist = []
