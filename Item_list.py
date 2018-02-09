@@ -536,6 +536,7 @@ class WeaponMaster(Item):
     def useact(self, user):
         new = copy.copy(user.weapon)
         user.weapon = user.sec_weapon
+        user.weapon.aquare(user)
         user.sec_weapon = new
         bot.send_message(user.chat_id, 'Вы меняете оружие.')
         user.useditems.append(self)
