@@ -373,8 +373,10 @@ class Engineer(Item):
 
 
     def uselast(self, user):
-        user.itemtarget.accuracy += 1
-        user.itemtarget.accuracyfix += 1
+        user.itemtarget.accuracy += 2
+        user.itemtarget.accuracyfix += 2
+        user.itemtarget.bonusdamage += 2
+        user.itemtarget.damagefix += 2
         user.itemlist.remove(self)
         del user.itemtarget
 
@@ -590,7 +592,7 @@ hypnosys = Hypnosys('Гипноз', 'itemat2',standart=False)
 isaev = Isaev('Оскорбления', 'itemat7',standart=False)
 steal = Steal('Украсть', 'itemat8',standart=False)
 mental = Mental('Визор', 'mitem01',standart=False)
-engineer = Engineer('Оружейник', 'itemat3',standart=False)
+engineer = Engineer('Наводчик', 'itemat3',standart=False)
 ritual = Ritual('Ритуал', 'itemat4',standart=False)
 curse = Curse('Проклятие', 'itemat5',standart=False)
 change_weapon = WeaponMaster('Сменить оружие', 'itemh03',standart=False)
