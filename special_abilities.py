@@ -5,6 +5,7 @@ import Item_list
 import random
 import sys
 import Weapon_list
+import bot_handlers
 
 
 bot = telebot.TeleBot(config.token)
@@ -503,6 +504,48 @@ class Thieve(Ability):
                                                + str(user.stealrefresh - user.fight.round) + " ход(ов).")
 
 
+class WeaponMaster(Ability):
+
+    name = 'Оружейник'
+    info = 'Вы можете менять оружие во время игры.'
+    MeleeOnly = False
+    RangeOnly = False
+    TeamOnly = False
+
+    def aquare(self, user):
+        if user.sec_weapon is None:
+            user.sec_weapon = Weapon_list.fists
+        user.change_refresh = 0
+        user.itemlist.append(Item_list.change_weapon)
+
+    def set(self, user):
+        keyboard = types.InlineKeyboardMarkup()
+        maxchoiceint = 3
+        choice = []
+        while len(choice) < maxchoiceint:
+            x = Weapon_list.weaponlist[random.randint(0, len(Weapon_list.weaponlist) - 1)]
+            if x not in choice:
+                choice.append(x)
+        for c in choice:
+            callback_button1 = types.InlineKeyboardButton(text=c.name,
+                                                          callback_data=str(
+                                                              'sec-wep' + c.name))
+            keyboard.add(callback_button1)
+        bot.edit_message_text('Выберите оружие для смены.', message_id=self.message.message_id, chat_id=self.message.chat.id,
+                         reply_markup=keyboard)
+
+    def special_end(self, user):
+        if user.Alive:
+            if user.change_refresh == user.fight.round:
+                user.itemlist.append(Item_list.change_weapon)
+                bot.send_message(user.chat_id, 'Способность "Оружейник" обновлена!')
+            elif user.change_refresh - user.fight.round > 0:
+                bot.send_message(user.chat_id, 'Способность "Оружейник" обновится через '
+                                               + str(user.change_refresh - user.fight.round) + " ход(ов).")
+
+
+
+
 class Jet(Ability):
 
     name = 'Джет'
@@ -591,6 +634,7 @@ abilities.append(Strength)
 abilities.append(Hoarder)
 abilities.append(Undead)
 abilities.append(Engineer)
+abilities.append(WeaponMaster)
 abilities.append(West)
 abilities.append(Healer)
 abilities.append(Ritual)
@@ -619,6 +663,7 @@ usual_abilities.append(Ritual)
 usual_abilities.append(Blocker)
 usual_abilities.append(Berserk)
 usual_abilities.append(Necromancer)
+usual_abilities.append(WeaponMaster)
 usual_abilities.append(Thieve)
 usual_abilities.append(Junkie)
 unique_abilities.append(IronFist)
