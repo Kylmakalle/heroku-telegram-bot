@@ -544,7 +544,7 @@ def action(call):
                             except:
                                 print('Не удалось удалить игрока из пула(прицел).')
                                 pass
-                    elif call.data[0:5] == 'itemh':
+                    elif call.data[0:5] == 'itemh' or call.data[0:6] == 'itemah':
                         Item_list.items[call.data[0:7]].useact(actor)
                         Fighting.send_action(actor, actor.fight)
                     elif call.data[0:7] == 'release':
