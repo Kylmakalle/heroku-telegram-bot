@@ -1079,8 +1079,9 @@ class Knuckles(Weapon):
         if user.turn == 'attack' + str(user.fight.round):
             if user.target.turn == 'reload' + str(user.fight.round) or user.target.turn == \
                             'dog_rest' + str(user.fight.round):
-                user.target.energy -= 4
-                user.fight.string.add(u'\U000026A1' + user.target.name + ' теряет 4 Энергии.')
+                if user.Hit:
+                    user.target.energy -= 4
+                    user.fight.string.add(u'\U000026A1' + user.target.name + ' теряет 4 Энергии.')
 
 
 class Club(Weapon):
