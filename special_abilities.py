@@ -590,13 +590,11 @@ class Junkie(Ability):
     TeamOnly = False
 
     def aquare(self, user):
-        x = random.randint(1, 4)
+        x = random.randint(1, 3)
         if x == 1:
             user.itemlist.append(Item_list.drug)
         elif x == 2:
             user.itemlist.append(Item_list.chitin)
-        elif x == 3:
-            user.itemlist.append(Item_list.heal)
         elif x == 4:
             user.itemlist.append(Item_list.jet)
         user.accuracy -= 1
