@@ -229,7 +229,31 @@ class Sniper(Weapon):
     desc5 = 'Игрок стреляет в Противник из Снайперской винтовки, но не попадает.'
     desc6 = 'Игрок стреляет в Противник из Снайперской винтовки, но не попадает.'
 
+class Gauss(Weapon):
+    def effect(self, user):
+        energy_loss = random.randint(1,2)
+        user.target.energy -= energy_loss
+        self.energy_loss = energy_loss
+        user.weaponeffect.remove(self)
 
+    def getDesc(self, damagetaken, user):
+        if damagetaken != 0:
+            user.weaponeffect.append(self)
+            d = str(u'\U0001F44A' + u'\U000026A1'+ "|" + getattr(self,str('desc' + str(random.randint(1, 3)))) + " Нанесено " + str(damagetaken) + ' урона. ' + user.target.name + ' теряет ' + str(self.energy_loss) + 'Энергии.')
+            for a in user.abilities:
+                d = a.onhitdesc(a,d,user)
+        else:
+            d = str(u'\U0001F4A8' + "|" + getattr(self,str('desc' + str(random.randint(4, 6)))))
+        return d
+
+    desc1 = 'Игрок стреляет в Противник из Гаусс-Пушки.'
+    desc2 = 'Игрок стреляет в Противник из Гаусс-Пушки.'
+    desc3 = 'Игрок стреляет в Противник из Гаусс-Пушки.'
+    desc4 = 'Игрок стреляет в Противник из Гаусс-Пушки, но не попадает.'
+    desc5 = 'Игрок стреляет в Противник из Гаусс-Пушки, но не попадает.'
+    desc6 = 'Игрок стреляет в Противник из Гаусс-Пушки, но не попадает.'
+
+    
 class Spear(Weapon):
     def hit(self,user):
         n = 0
@@ -1358,6 +1382,7 @@ fangs.desc4 = 'Игрок пытается укусить Противник, н
 fangs.desc5 = 'Игрок пытается укусить Противник, но не попадает.'
 fangs.desc6 = 'Игрок пытается укусить Противник, но не попадает.'
 fists = Weapon(1, 1, 2, 4, 0, True, True, True, 'Кулаки', '1' + u'\U0001F4A5' + "|" + '2' + u'\U000026A1', standart=False, natural=True)
+gauss = Gauss(4, 1, 3, 1, 0, False, False, False, 'Гаусс-пушка', '1-4' + u'\U0001F4A5' + "|" + '2' + u'\U000026A1', standart=False)
 fists.desc1 = 'Игрок бьет Противник Кулаком.'
 fists.desc2 = 'Игрок бьет Противник Кулаком.'
 fists.desc3 = 'Игрок бьет Противник Кулаком.'
