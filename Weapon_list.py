@@ -238,7 +238,7 @@ class Gauss(Weapon):
         if damagetaken != 0:
             self.energy_loss = random.randint(1,2)
             user.weaponeffect.append(self)
-            d = str(u'\U0001F44A' + u'\U000026A1'+ "|" + getattr(self,str('desc' + str(random.randint(1, 3)))) + " Нанесено " + str(damagetaken) + ' урона. ' + user.target.name + ' теряет ' + str(self.energy_loss) + 'Энергии.')
+            d = str(u'\U0001F4A5' + "|" + getattr(self,str('desc' + str(random.randint(1, 3)))) + " Нанесено " + str(damagetaken) + ' урона. ' + user.target.name + ' теряет ' + str(self.energy_loss) + u'\U000026A1' + '.')
             for a in user.abilities:
                 d = a.onhitdesc(a,d,user)
         else:
