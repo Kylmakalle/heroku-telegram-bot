@@ -231,13 +231,12 @@ class Sniper(Weapon):
 
 class Gauss(Weapon):
     def effect(self, user):
-        energy_loss = random.randint(1,2)
-        user.target.energy -= energy_loss
-        self.energy_loss = energy_loss
+        user.target.energy -= self.energy_loss
         user.weaponeffect.remove(self)
 
     def getDesc(self, damagetaken, user):
         if damagetaken != 0:
+            self.energy_loss = random.randint(1,2)
             user.weaponeffect.append(self)
             d = str(u'\U0001F44A' + u'\U000026A1'+ "|" + getattr(self,str('desc' + str(random.randint(1, 3)))) + " Нанесено " + str(damagetaken) + ' урона. ' + user.target.name + ' теряет ' + str(self.energy_loss) + 'Энергии.')
             for a in user.abilities:
@@ -246,12 +245,12 @@ class Gauss(Weapon):
             d = str(u'\U0001F4A8' + "|" + getattr(self,str('desc' + str(random.randint(4, 6)))))
         return d
 
-    desc1 = 'Игрок стреляет в Противник из Гаусс-Пушки.'
-    desc2 = 'Игрок стреляет в Противник из Гаусс-Пушки.'
-    desc3 = 'Игрок стреляет в Противник из Гаусс-Пушки.'
-    desc4 = 'Игрок стреляет в Противник из Гаусс-Пушки, но не попадает.'
-    desc5 = 'Игрок стреляет в Противник из Гаусс-Пушки, но не попадает.'
-    desc6 = 'Игрок стреляет в Противник из Гаусс-Пушки, но не попадает.'
+    desc1 = 'Игрок стреляет в Противник из Гаусс-пушки.'
+    desc2 = 'Игрок стреляет в Противник из Гаусс-пушки.'
+    desc3 = 'Игрок стреляет в Противник из Гаусс-пушки.'
+    desc4 = 'Игрок стреляет в Противник из Гаусс-пушки, но не попадает.'
+    desc5 = 'Игрок стреляет в Противник из Гаусс-пушки, но не попадает.'
+    desc6 = 'Игрок стреляет в Противник из Гаусс-пушки, но не попадает.'
 
     
 class Spear(Weapon):
