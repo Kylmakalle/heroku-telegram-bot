@@ -176,17 +176,6 @@ def flee(message):
             bot.send_message(game.cid, message.from_user.first_name + ' сбежал!')
 
 
-@bot.message_handler(commands=["cancel"])
-def cancel_game(message):
-    try:
-        game = Main_classes.existing_games[message.chat.id]
-    except:
-        game = None
-    if game is not None:
-        if game.gamestate == game.gamestates[0]:
-            game.waitingtimer.cancel()
-            bot_handlers.cancel_game(game)
-
 
 @bot.message_handler(commands=["suicide"])
 def suicide(message):
