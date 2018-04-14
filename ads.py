@@ -1,7 +1,7 @@
 import bot_handlers
 import config
 import buttons
-from telebot import types
+import telebot
 
 
 ad_dict = {}
@@ -23,7 +23,7 @@ class Ad:
 
     def post(self):
         text = self.text
-        photo = {types.InputMediaPhoto(file) for file in self.album}
+        photo = {telebot.types.InputMediaPhoto(file) for file in self.album}
         if photo:
             bot_handlers.send_media_group(config.channel_id, photo)
         bot_handlers.send_message(config.channel_id, text)
