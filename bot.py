@@ -19,7 +19,7 @@ def start(message):
 
 @bot.message_handler(content_types=['text'])
 def msg(message):
-    print(message.text)
+    print(message.from_user.first_name + ':' + message.text)
     chat_id = message.from_user.id
     if chat_id in ads.state_dict:
         if ads.state_dict[chat_id] == 'text':
