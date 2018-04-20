@@ -20,7 +20,7 @@ def save_ad(ad):
         db = psycopg2.connect(
             "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname))
         cursor = db.cursor()
-        cursor.execute('INSERT INTO ad (id, images, ad_text) VALUES %s, N%s, %s', (ad.message_id, ad.text, json.dumps(ad.album)))
+        cursor.execute('INSERT INTO ad (id, images, ad_text) VALUES (%s, N%s, %s)', (ad.message_id, ad.text, json.dumps(ad.album)))
         db.commit()
         db.close()
 
