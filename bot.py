@@ -11,11 +11,6 @@ types = telebot.types
 bot = telebot.TeleBot(config.token)
 datahandler.create_table()
 
-telebot.apihelper.proxy = {
-    'http': 'socks5://telegram:telegram@jjxvm.tgproxy.me:1080',
-    'https': 'socks5://telegram:telegram@jjxvm.tgproxy.me:1080'
-}
-
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -58,8 +53,6 @@ def msg(message):
 @bot.callback_query_handler(func=lambda call: call)
 def action(call):
     utils.call_handler(call)
-
-bot.skip_pending = True
 
 if __name__ == '__main__':
     bot.polling(none_stop=True)
