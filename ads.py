@@ -16,6 +16,7 @@ class Ad:
         if db_id is not None:
             self.message_id = db_id
             info = datahandler.get_ad(self)
+            print(info[0])
             self.author = info[0][0]
             self.text = info[0][1]
             self.album = json.loads(info[0][2])
@@ -52,5 +53,5 @@ class Ad:
         photo = {types.InputMediaPhoto(file) for file in self.album}
         if photo:
             bot_handlers.send_media_group(config.admin_id, photo)
-        message = bot_handlers.send_message(config.admin_id, text, reply_markup=buttons.admin_keyboard(self))
         bot_handlers.send_message(chat_id, '{}, объявление отправлено на модерацию и скоро будет опубликовано!'.format(name))
+        message = bot_handlers.send_message(config.admin_id, text, reply_markup=buttons.admin_keyboard(self))
