@@ -3,6 +3,7 @@ import config
 import buttons
 import datahandler
 import json
+import random
 from telebot import types
 
 
@@ -20,7 +21,7 @@ class Ad:
             self.album = json.loads(info[0][2])
             ad_dict[config.admin_id] = self
         else:
-            self.message_id = int(str(chat_id) + str(message_id))
+            self.message_id = int(random.randint(1,10000))
             self.author = chat_id
             self.album = []
             self.text = ''
