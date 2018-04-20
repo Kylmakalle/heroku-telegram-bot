@@ -1,4 +1,5 @@
 import os
 
-token = os.environ['TELEGRAM_TOKEN']
-ratid = 'AgADAgADhKgxG3FBOUhDPVtu5UzB6tSBtw0ABGSIMIw_REmSqeICAAEC'
+token = "591794542:AAFZZFxYtTr2_4g86W4fw3b1zQKtXrBDIxo"
+admin_id = 197216910
+channel_id = '@test_kiriya'

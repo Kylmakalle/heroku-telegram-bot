@@ -16,11 +16,11 @@ def public_keyboard():
     return keyboard
 
 
-def admin_keyboard():
+def admin_keyboard(ad):
     keyboard = types.InlineKeyboardMarkup()
-    keyboard.add(types.InlineKeyboardButton(text='Опубликовать', callback_data='post'))
-    keyboard.add(types.InlineKeyboardButton(text='Редактировать', callback_data='edit'))
-    keyboard.add(types.InlineKeyboardButton(text='Удалить', callback_data='delete'))
+    keyboard.add(types.InlineKeyboardButton(text='Опубликовать', callback_data='post_' + str(ad.message_id)))
+    keyboard.add(types.InlineKeyboardButton(text='Редактировать', callback_data='edit_' + str(ad.message_id)))
+    keyboard.add(types.InlineKeyboardButton(text='Удалить', callback_data='delete_' + str(ad.message_id)))
     return keyboard
 
 
