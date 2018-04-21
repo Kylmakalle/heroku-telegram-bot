@@ -72,7 +72,7 @@ def start_over(call):
 
 
 def call_handler(call):
-    chat_id = call.message.chat.id
+    chat_id = call.from_user.id
     message_id = call.message.message_id
     if call.data == 'skip':
         skip_photo(call)
