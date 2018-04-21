@@ -43,6 +43,8 @@ class Ad:
         bot_handlers.send_message(config.admin_id, 'Объявление опубликовано!')
 
     def public(self, chat_id, name):
+        print(chat_id)
+        print(config.admin_id)
         if chat_id in state_dict:
             del state_dict[chat_id]
         if chat_id == config.admin_id:
