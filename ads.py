@@ -18,8 +18,8 @@ class Ad:
             info = datahandler.get_ad(self)
             print(info[0])
             self.author = info[0][0]
-            self.text = info[0][1]
-            self.album = json.loads(info[0][2])
+            self.text = info[0][2]
+            self.album = json.loads(info[0][1])
             ad_dict[config.admin_id] = self
         else:
             self.message_id = int(random.randint(1,10000))
