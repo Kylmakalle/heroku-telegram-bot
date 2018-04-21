@@ -17,7 +17,7 @@ class Ad:
             self.message_id = db_id
             info = datahandler.get_ad(self)
             print(info[0])
-            self.author = info[0][0]
+            self.author = config.admin_id
             self.text = info[0][2]
             self.album = json.loads(info[0][1])
             ad_dict[config.admin_id] = self
