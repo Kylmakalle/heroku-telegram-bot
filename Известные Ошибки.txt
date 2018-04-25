@@ -1,3 +1,0 @@
-edit_message - при Время вышло
-p.weapon is None при prepare_fight
-remove_player при kill_player (is not in list)
