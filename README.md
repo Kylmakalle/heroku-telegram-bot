@@ -24,6 +24,8 @@ heroku login
 heroku create --region eu appname # create app in eu region, common regions: eu, us
 heroku addons:create heroku-redis:hobby-dev -a appname # (Optionaly) installing redis
 heroku buildpacks:set heroku/python # set python buildpack
+git add . # Include changes
+git commit -am "Initial commit" # Commit the changes
 git push heroku master # deploy app to heroku
 heroku config:set TELEGRAM_TOKEN=123456789:AAABBBCCCDDDEEEFFFGGGHHHIIIJJJKKKLL # set config vars, insert your own
 heroku config:set SOME_API_TOKEN=qwertyuiop1234567890
