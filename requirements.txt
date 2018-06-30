@@ -1,6 +1,4 @@
 pyTelegramBotAPI
-
 requests
-
 psycopg2
 json
