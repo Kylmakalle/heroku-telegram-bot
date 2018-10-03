@@ -218,25 +218,25 @@ def add_player(message):
             if game.gametype == game.gametypes[0] and message.from_user.id not in game.marked_id \
                     and message.chat.id == game.cid and game.gamestate == game.gamestates[0]:
                 no=0
-                for ids in m.from_user.first_name:
+                for ids in message.from_user.first_name:
                     if ids.lower() not in symbols:
                         no=1
                 if no==0:
                     name=message.from_user.first_name.split(' ')[0][:12]
                 else:
-                    name=m.from_user.username
+                    name=message.from_user.username
                 player = Main_classes.Player(message.from_user.id, name, Weapon_list.fists,
                                          game, message.from_user.username)
                 game.pending_players.append(player)
                 game.marked_id.append(player.chat_id)
                 Main_classes.dict_players[player.chat_id] = game
-                bot.send_message(game.cid, message.from_user.first_name + ' успешно присоединился.')
+                bot.send_message(game.cid, name + ' успешно присоединился.')
                 if not game.pending_team1:
                     game.pending_team1.append(player)
-                    datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
+                    datahandler.get_player(message.from_user.id, message.from_user.username, name)
                 elif not game.pending_team2:
                     game.pending_team2.append(player)
-                    datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
+                    datahandler.get_player(message.from_user.id, message.from_user.username, name)
                 elif len(game.pending_players) >= 3:
                     keyboard = types.InlineKeyboardMarkup()
                     callback_button1 = types.InlineKeyboardButton(
@@ -245,26 +245,26 @@ def add_player(message):
                         text=str(len(game.pending_team2)) + ' - ' + game.pending_team2[0].name, callback_data='team2')
                     keyboard.add(callback_button1, callback_button2)
                     bot.send_message(message.from_user.id,
-                                 message.from_user.first_name + ' Выберите, кому вы поможете в этом '
+                                 name + ' Выберите, кому вы поможете в этом '
                                                                 'бою.', reply_markup=keyboard)
-                    datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
+                    datahandler.get_player(message.from_user.id, message.from_user.username, name)
             elif game.gametype == game.gametypes[3] and message.from_user.id not in game.marked_id \
                     and message.chat.id == game.cid and game.gamestate == game.gamestates[0]:
-                datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
+                datahandler.get_player(message.from_user.id, message.from_user.username, name)
                 data = datahandler.get_current(message.from_user.id)
-                bot.send_message(game.cid, message.from_user.first_name + ' успешно присоединился к кастомной игре.')
+                bot.send_message(game.cid, name + ' успешно присоединился к кастомной игре.')
                 if data[0] is not None and data[1] is not None and data[2] is not None:
-                    player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12],
+                    player = Main_classes.Player(message.from_user.id, name.split(' ')[0][:12],
                                                  Weapon_list.fists, game, message.from_user.username)
                     game.pending_players.append(player)
                     game.marked_id.append(player.chat_id)
                     Main_classes.dict_players[player.chat_id] = game
                     if not game.pending_team1:
                         game.pending_team1.append(player)
-                        datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
+                        datahandler.get_player(message.from_user.id, message.from_user.username, name)
                     elif not game.pending_team2:
                         game.pending_team2.append(player)
-                        datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
+                        datahandler.get_player(message.from_user.id, message.from_user.username, name)
                     elif len(game.pending_players) >= 3:
                         keyboard = types.InlineKeyboardMarkup()
                         callback_button1 = types.InlineKeyboardButton(
@@ -284,8 +284,8 @@ def add_player(message):
                     pass
                 else:
                     bot.send_message(game.cid, message.from_user.first_name + ' успешно присоединился.')
-                    datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
-                    player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12],
+                    datahandler.get_player(message.from_user.id, message.from_user.username, name)
+                    player = Main_classes.Player(message.from_user.id, name.split(' ')[0][:12],
                                                  None, game, message.from_user.username)
                     game.pending_players.append(player)
                     game.pending_team1.append(player)
