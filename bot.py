@@ -15,6 +15,11 @@ import datahandler
 types = telebot.types
 bot = telebot.TeleBot(config.token)
 
+
+symbols=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+           'а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я', ' ']
+
+
 # Инлайн тимчата
 @bot.inline_handler(func=lambda query: len(query.query)>0)
 def query_text(query):
@@ -212,7 +217,15 @@ def add_player(message):
             bot.send_message(message.from_user.id, 'Вы присоединились к игре.', parse_mode='markdown')
             if game.gametype == game.gametypes[0] and message.from_user.id not in game.marked_id \
                     and message.chat.id == game.cid and game.gamestate == game.gamestates[0]:
-                player = Main_classes.Player(message.from_user.id, message.from_user.first_name.split(' ')[0][:12], Weapon_list.fists,
+                no=0
+                for ids in m.from_user.first_name:
+                    if ids.lower() not in symbols:
+                        no=1
+                if no==0:
+                    name=message.from_user.first_name.split(' ')[0][:12]
+                else:
+                    name=m.from_user.username
+                player = Main_classes.Player(message.from_user.id, name, Weapon_list.fists,
                                          game, message.from_user.username)
                 game.pending_players.append(player)
                 game.marked_id.append(player.chat_id)
