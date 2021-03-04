@@ -20,37 +20,6 @@ symbols=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r'
            'а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я', ' ']
 
 
-# Инлайн тимчата
-@bot.inline_handler(func=lambda query: len(query.query)>0)
-def query_text(query):
-    try:
-        Game = utils.get_game_from_player(query.from_user.id)
-        r_sum = types.InlineQueryResultArticle(
-            id='11', title="Отправить команде",
-            # Описание отображается в подсказке,
-            # message_text - то, что будет отправлено в виде сообщения
-            description=query.query,
-            input_message_content=types.InputTextMessageContent(
-                message_text=utils.teamchat(query.query, Game.player_dict[query.from_user.id])))
-        bot.answer_inline_query(query.id, [r_sum])
-    except:
-        r_sum = types.InlineQueryResultArticle(
-            id='22', title="Ошибка!",
-            description='Команда не найдена.',
-            input_message_content=types.InputTextMessageContent(
-                message_text='Ошибка!'))
-        bot.answer_inline_query(query.id, [r_sum])
-
-
-@bot.chosen_inline_handler(func=lambda chosen_inline_result: True )
-def test_chosen(chosen_inline_result):
-    if chosen_inline_result.result_id == '11':
-        Game = utils.get_game_from_player(chosen_inline_result.from_user.id)
-        player = Game.player_dict[chosen_inline_result.from_user.id]
-        for p in player.team.players:
-            bot.send_message(p.chat_id, player.message)
-
-
 @bot.message_handler(commands=["start"])
 def start(message):
     datahandler.get_player(message.from_user.id, message.from_user.username, message.from_user.first_name)
