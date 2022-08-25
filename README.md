@@ -1,4 +1,11 @@
-# Hosting telegram bot on [Heroku](https://heroku.com) for free.
+> # Starting November 28, 2022, free Heroku Dynos, Redis and PostgreSQL will no longer be available
+> https://blog.heroku.com/next-chapter
+
+> Since then this repository is archived. Get [Github Developers student pack](https://education.github.com/pack) if you're looking for free hosting and other services.
+> Try [Docker](https://www.docker.com), [docker-compose](https://docs.docker.com/compose/gettingstarted/) and [kubernetes](https://kubernetes.io) to build, deploy, run & orchestrate your applications.
+
+
+# Hosting telegram bot on [Heroku](https://heroku.com) ~~for free~~.
 Easy way to host your python telegram bot on Heroku
 
 ## Deploying via [Heroku Toolbelt](https://toolbelt.heroku.com/) (CLI)
